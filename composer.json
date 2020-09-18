@@ -1,0 +1,51 @@
+{
+  "name": "gpalab/lab-webroot",
+  "description": "Webroot for the GPA/LAB WordPress site",
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "wordpress/wordpress",
+        "type": "webroot",
+        "version": "5.5.1",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/WordPress/WordPress/archive/5.5.1.zip"
+        },
+        "require": {
+          "fancyguy/webroot-installer": "1.1.0"
+        }
+      }
+    },
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:IIP-Design/Stories-theme.git"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:humanmade/S3-Uploads.git"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:IIP-Design/wp-hide-login-form.git"
+    }
+  ],
+  "require": {
+    "wordpress/wordpress": "5.5.1",
+    "fancyguy/webroot-installer": "1.1.0",
+    "humanmade/s3-uploads": "2.2.2",
+    "iip-design/wp-hide-login-form": "v1.1.0",
+    "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.5",
+    "wpackagist-plugin/google-apps-login": "3.4.2",
+    "wpackagist-plugin/wp-ses": "1.4.3",
+    "wpackagist-theme/twentytwenty": "1.5"
+  },
+  "extra": {
+    "webroot-dir": "wp",
+    "webroot-package": "wordpress/wordpress"
+  }
+}
