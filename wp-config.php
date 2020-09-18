@@ -75,6 +75,11 @@ if ( isset( $_SERVER['LAB_S3_UPLOADS_REGION'] ) ) {
   define('S3_UPLOADS_REGION', getenv('LAB_S3_UPLOADS_REGION'));
 }
 
+/** AWS SES Service Account Keys */
+define( 'WPOSES_AWS_ACCESS_KEY_ID', 'LAB_SES_ACCESS_KEY' );
+define( 'WPOSES_AWS_SECRET_ACCESS_KEY', 'LAB_SES_SECRET_KEY' );
+
+
 /**#@-*/
 
 /**
@@ -115,8 +120,6 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PRO
   define('WP_HOME', 'http://' . $_SERVER['SERVER_NAME']);
 }
 
-/* That's all, stop editing! Happy publishing. */
-
 /* Multisite */
 define( 'WP_ALLOW_MULTISITE', true);
 define( 'SUBDOMAIN_INSTALL', true);
@@ -126,6 +129,8 @@ define( 'SITE_ID_CURRENT_SITE', 1 );
 define( 'BLOG_ID_CURRENT_SITE', 1 );
 
 define( 'WP_DEFAULT_THEME', 'twentytwenty' );
+
+/* That's all, stop editing! Happy publishing. */
 
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
