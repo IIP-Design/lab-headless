@@ -121,9 +121,10 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PRO
 }
 
 /* Multisite */
-define( 'WP_ALLOW_MULTISITE', true);
-define( 'SUBDOMAIN_INSTALL', true);
-define( 'DOMAIN_CURRENT_SITE', getenv('LAB_DOMAIN_CURRENT_SITE' ));
+define( 'WP_ALLOW_MULTISITE', true );
+define( 'SUBDOMAIN_INSTALL', true );
+define( 'MULTISITE', true );
+define( 'DOMAIN_CURRENT_SITE', getenv( 'LAB_DOMAIN_CURRENT_SITE' ) );
 define( 'PATH_CURRENT_SITE', '/' );
 define( 'SITE_ID_CURRENT_SITE', 1 );
 define( 'BLOG_ID_CURRENT_SITE', 1 );
