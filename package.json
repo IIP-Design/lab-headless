@@ -1,6 +1,13 @@
 {
-  "name": "cms-wordpress",
+  "name": "@gpa-lab/lab-headless",
   "version": "1.0.0",
+  "license": "MIT",
+  "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpadigitalhelp@state.gov>",
+  "contributors": [
+    {
+      "name": "Marek Rewers"
+    }
+  ],
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -26,6 +33,5 @@
     "postcss-flexbugs-fixes": "4.2.1",
     "postcss-preset-env": "^6.7.0",
     "tailwindcss": "^1.4.6"
-  },
-  "license": "MIT"
+  }
 }
