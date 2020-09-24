@@ -1,0 +1,16 @@
+@import '../../styles/colors.scss';
+
+.footer {
+  background-color: $darkBlue;
+  margin-top: 6rem;
+}
+
+.text {
+  align-items: center;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}

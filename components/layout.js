@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { GovBanner } from '@trussworks/react-uswds';
 import propTypes from 'prop-types';
 
-import Alert from './alert';
+import Alert from './Alert/Alert';
 import Footer from './Footer/Footer';
 import Meta from './meta';
 

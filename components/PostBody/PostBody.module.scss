@@ -36,15 +36,25 @@
 }
 
 .content h2 {
-  @apply text-3xl mt-12 mb-4 leading-snug;
+  font-size: 3rem;
+  font-weight: 700;
+  @apply mt-12 mb-4 leading-snug;
 }
 
 .content h3 {
-  @apply text-2xl mt-8 mb-4 leading-snug;
+  font-size: 2.5rem;
+  font-weight: 700;
+  @apply mt-8 mb-4 leading-snug;
 }
 
 .content h4 {
   @apply text-xl mt-6 mb-4 leading-snug;
+}
+
+.content h6 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .content pre {
