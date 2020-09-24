@@ -48,9 +48,7 @@ const Index = ( { homePage, preview } ) => {
 Index.propTypes = {
   preview: propTypes.bool,
   homePage: propTypes.shape( {
-    edges: propTypes.arrayOf( {
-      node: propTypes.object,
-    } ),
+    edges: propTypes.arrayOf( propTypes.object ),
   } ),
 };
 

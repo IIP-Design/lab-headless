@@ -1,3 +1,5 @@
+import propTypes from 'prop-types';
+
 import styles from './PostBody.module.scss';
 
 const PostBody = ( { content } ) => (
@@ -8,5 +10,9 @@ const PostBody = ( { content } ) => (
     />
   </div>
 );
+
+PostBody.propTypes = {
+  content: propTypes.string,
+};
 
 export default PostBody;
