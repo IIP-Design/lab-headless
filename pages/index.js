@@ -1,44 +1,65 @@
-import Head from 'next/head'
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
-import Layout from '../components/layout'
-import { getAllPostsForHome } from '../lib/api'
-import { CMS_NAME } from '../lib/constants'
+import Head from 'next/head';
+import propTypes from 'prop-types';
 
-export default function Index({ allPosts: { edges }, preview }) {
-  const heroPost = edges[0]?.node
-  const morePosts = edges.slice(1)
+import Container from '../components/container';
+import Intro from '../components/Intro/Intro';
+import Layout from '../components/layout';
+import PostBody from '../components/PostBody/PostBody';
+
+import { getHomePage } from '../lib/api';
+
+const Index = ( { homePage, preview } ) => {
+  const home = homePage?.edges?.[0]?.node;
+  const source = home?.featuredImage?.node?.sourceUrl;
+
+  const bgImage = url => ( {
+    backgroundImage: `url('${url}')`,
+    backgroundAttachment: 'fixed',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    height: '45vh',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  } );
 
   return (
-    <>
-      <Layout preview={preview}>
-        <Head>
-          <title>Next.js Blog Example with {CMS_NAME}</title>
-        </Head>
+    <Layout preview={ preview }>
+      <Head>
+        <title>
+          Hello. | GPA Digital Lab
+        </title>
+      </Head>
+      <div style={ bgImage( source ) }>
         <Container>
           <Intro />
-          {heroPost && (
-            <HeroPost
-              title={heroPost.title}
-              coverImage={heroPost.featuredImage.node}
-              date={heroPost.date}
-              author={heroPost.author.node}
-              slug={heroPost.slug}
-              excerpt={heroPost.excerpt}
-            />
-          )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         </Container>
-      </Layout>
-    </>
-  )
-}
+      </div>
+      <Container>
+        { home && (
+          <PostBody content={ home.content } />
+        ) }
+      </Container>
+    </Layout>
+  );
+};
 
-export async function getStaticProps({ preview = false }) {
-  const allPosts = await getAllPostsForHome(preview)
+Index.propTypes = {
+  preview: propTypes.bool,
+  homePage: propTypes.shape( {
+    edges: propTypes.arrayOf( {
+      node: propTypes.object,
+    } ),
+  } ),
+};
+
+export default Index;
+
+export async function getStaticProps( { preview = false } ) {
+  const homePage = await getHomePage();
+
   return {
-    props: { allPosts, preview },
-  }
+    props: { homePage, preview },
+  };
 }
