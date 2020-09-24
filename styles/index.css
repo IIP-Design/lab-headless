@@ -14,6 +14,20 @@
 
 /* Your own custom utilities */
 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+html {
+  font-size: 16px;
+}
+
+a {
+  text-decoration: underline;
+}
+
 .has-text-align-left {
   @apply text-left;
 }
@@ -101,4 +115,27 @@
 
 .wp-block-media-text {
   @apply grid grid-cols-2 gap-4;
+}
+
+.wp-block-column {
+  display: flex;
+}
+
+.wp-block-column > p {
+  margin: 1rem 0.5rem;
+}
+
+.wp-block-buttons {
+  margin: 2rem 0;
+}
+
+.is-style-outline .wp-block-button__link {
+  padding: calc(1.1em - 0.2rem) calc(1.44em - 0.2rem);
+  background-color: transparent;
+  border: 2px solid;
+  text-transform: uppercase;
+}
+
+.is-style-outline .wp-block-button__link:hover {
+  background-color: transparent;
 }
