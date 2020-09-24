@@ -1,7 +1,7 @@
-import '../styles/index.css'
+import '../styles/index.css';
+import '../node_modules/@trussworks/react-uswds/lib/index.css';
+import '../node_modules/@trussworks/react-uswds/lib/uswds.css';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const MyApp = ( { Component, pageProps } ) => <Component { ...pageProps } />;
 
-export default MyApp
+export default MyApp;

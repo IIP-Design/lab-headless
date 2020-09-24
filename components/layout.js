@@ -1,16 +1,26 @@
-import Alert from '../components/alert'
-import Footer from '../components/footer'
-import Meta from '../components/meta'
+import { Fragment } from 'react';
+import { GovBanner } from '@trussworks/react-uswds';
+import propTypes from 'prop-types';
 
-export default function Layout({ preview, children }) {
-  return (
-    <>
-      <Meta />
-      <div className="min-h-screen">
-        <Alert preview={preview} />
-        <main>{children}</main>
-      </div>
-      <Footer />
-    </>
-  )
-}
+import Alert from './alert';
+import Footer from './Footer/Footer';
+import Meta from './meta';
+
+const Layout = ( { preview, children } ) => (
+  <Fragment>
+    <Meta />
+    <div className="min-h-screen">
+      <Alert preview={ preview } />
+      <GovBanner />
+      <main>{ children }</main>
+    </div>
+    <Footer />
+  </Fragment>
+);
+
+Layout.propTypes = {
+  children: propTypes.node,
+  preview: propTypes.bool,
+};
+
+export default Layout;
