@@ -2,9 +2,9 @@ import { Fragment } from 'react';
 import { GovBanner } from '@trussworks/react-uswds';
 import propTypes from 'prop-types';
 
-import Alert from './Alert/Alert';
-import Footer from './Footer/Footer';
-import Meta from './meta';
+import Alert from '../Alert/Alert';
+import Footer from '../Footer/Footer';
+import Meta from '../Meta/Meta';
 
 const Layout = ( { preview, children } ) => (
   <Fragment>

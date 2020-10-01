@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import propTypes from 'prop-types';
 
-import Container from '../components/container';
+import Container from '../components/Container/Container';
 import Intro from '../components/Intro/Intro';
-import Layout from '../components/layout';
+import Layout from '../components/Layout/Layout';
 import PostBody from '../components/PostBody/PostBody';
 
 import { getHomePage } from '../lib/api';
@@ -52,8 +52,6 @@ Index.propTypes = {
   } ),
 };
 
-export default Index;
-
 export async function getStaticProps( { preview = false } ) {
   const homePage = await getHomePage();
 
@@ -61,3 +59,5 @@ export async function getStaticProps( { preview = false } ) {
     props: { homePage, preview },
   };
 }
+
+export default Index;

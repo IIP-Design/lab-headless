@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import propTypes from 'prop-types';
 
-import Container from '../container';
+import Container from '../Container/Container';
 
 const Alert = ( { preview } ) => (
   <div
