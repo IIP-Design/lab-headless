@@ -38,7 +38,6 @@
     "wordpress/wordpress": "5.5.1",
     "fancyguy/webroot-installer": "1.1.0",
     "humanmade/s3-uploads": "2.2.2",
-    "wp-graphql/wp-graphql": "v0.12.3",
     "gpalab/uswpds": "dev-master",
     "iip-design/wp-hide-login-form": "v1.1.0",
     "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.5",
