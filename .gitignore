@@ -5,3 +5,4 @@ composer.lock
 # Wordpress Core and Theme/Plugin Files
 wp/
 wp-content/**/*
+!wp-content/sunrise.php
