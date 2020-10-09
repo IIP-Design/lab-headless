@@ -5,9 +5,10 @@ class Guillotine {
   /**
    * The loader that's responsible for maintaining and registering all hooks that power the plugin.
    *
-   * @since    0.0.1
-   * @access   protected
-   * @var      Guillotine_Loader    $loader    Maintains and registers all hooks for the plugin.
+   * @var Guillotine_Loader $loader    Maintains and registers all hooks for the plugin.
+   *
+   * @since 0.0.1
+   * @access protected
    */
 
   protected $loader;
@@ -15,11 +16,21 @@ class Guillotine {
   /**
    * The unique identifier and version of this plugin.
    *
-   * @since    0.0.1
-   * @access   protected
+   * @var string $plugin_name
+   * 
+   * @access protected
+   * @since 0.0.1
    */
-
   protected $plugin_name;
+
+  /**
+   * The version of this plugin.
+   *
+   * @var string $version
+   *
+   * @access protected
+   * @since 0.0.1
+   */
   protected $version;
 
   /**
@@ -29,12 +40,11 @@ class Guillotine {
    * Load the dependencies and set the hooks for the admin area and
    * the public-facing side of the site.
    *
-   * @since    0.0.1
+   * @since 0.0.1
    */
-
   public function __construct() {
     $this->plugin_name = 'guillotine';
-    $this->version = '0.0.1';
+    $this->version     = '0.0.1';
     $this->load_dependencies();
     $this->define_admin_hooks();
     $this->define_public_hooks();
@@ -51,45 +61,50 @@ class Guillotine {
    *
    * Create an instance of the loader which will be used to register the hooks with WordPress.
    *
-   * @since    0.0.1
-   * @access   private
+   * @access private
+   * @since 0.0.1
    */
-
   private function load_dependencies() {
     // The class responsible for orchestrating the actions and filters of the core plugin.
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-guillotine-loader.php';
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-loader.php';
 
     // The class responsible for defining all actions that occur in the admin area.
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-guillotine-admin.php';
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
 
     // The class responsible for defining all actions that occur in the public-facing side of the site.
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-guillotine-public.php';
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-public.php';
     $this->loader = new Guillotine\Loader();
   }
 
-  // Register all of the hooks related to the admin area functionality of the plugin.
+  /**
+   * Register all of the hooks related to the admin area functionality of the plugin.
+   *
+   * @since 0.0.1
+   */
   private function define_admin_hooks() {
     $plugin_admin = new Guillotine\Admin( $this->get_plugin_name(), $this->get_version() );
 
-    // Admin hooks
-
+    // Admin hooks.
     $this->loader->add_action( 'INSERT_WP_HOOK', $plugin_admin, 'INSERT_CALLBACK' );
   }
 
-  // Register all of the hooks related to the public-facing functionality
+  /**
+   * Register all of the hooks related to the public-facing functionality
+   *
+   * @since 0.0.1
+   */
   private function define_public_hooks() {
     $plugin_frontend = new Guillotine\Frontend( $this->get_plugin_name(), $this->get_version() );
 
-    // Frontend hooks
+    // Frontend hooks.
     $this->loader->add_action( 'INSERT_WP_HOOK', $plugin_frontend, 'INSERT_CALLBACK' );
   }
 
   /**
    * Run the loader to execute all of the hooks with WordPress.
    *
-   * @since    0.0.1
+   * @since 0.0.1
    */
-
   public function run() {
     $this->loader->run();
   }
@@ -97,19 +112,28 @@ class Guillotine {
   /**
    * The reference to the class that orchestrates the hooks with the plugin.
    *
-   * @since     0.0.1
-   * @return    Guillotine_Loader    Orchestrates the hooks of the plugin.
+   * @return Guillotine_Loader    Orchestrates the hooks of the plugin.
+   *
+   * @since 0.0.1
    */
-
   public function get_loader() {
     return $this->loader;
   }
 
-  // Retrieve the name & version number of the plugin.
+  /**
+   * Retrieve the name of the plugin.
+   *
+   * @since 0.0.1
+   */
   public function get_plugin_name() {
     return $this->plugin_name;
   }
 
+  /**
+   * Retrieve the version number of the plugin.
+   *
+   * @since 0.0.1
+   */
   public function get_version() {
     return $this->version;
   }

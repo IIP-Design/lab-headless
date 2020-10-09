@@ -1,13 +1,16 @@
-# Editor
-.vscode
-.DS_Store
+# Build
+dist/
+
+# Dependencies
+node_modules/
+vendor/
 
 # Environment
 .env
 
-# Dependencies
-node_modules/
-npm-debug.log*
+# Local Settings
+.vscode
+.DS_Store
 
-#Development Build
-dist/guillotine-admin.js
+# Logs
+npm-debug.log*
