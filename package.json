@@ -1,0 +1,23 @@
+{
+  "name": "@gpa-lab/guillotine",
+  "version": "0.0.1",
+  "description": "Plugin to accompany the GPA/LAB headless WordPress theme",
+  "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npm run lint:PHP",
+    "lint:PHP": "./vendor/bin/phpcs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IIP-Design/lab-guillotine.git"
+  },
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/IIP-Design/lab-guillotine/issues"
+  },
+  "homepage": "https://github.com/IIP-Design/lab-guillotine#readme",
+  "devDependencies": {
+  }
+}

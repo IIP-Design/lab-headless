@@ -5,6 +5,7 @@
  * @package Guillotine\Admin
  * @since 0.0.1
  */
+
 namespace Guillotine;
 
 /**
@@ -20,7 +21,7 @@ class Admin {
    *
    * @param string $plugin     The plugin name.
    * @param string $version    The plugin version number.
-   * 
+   *
    * @since 0.0.1
    */
   public function __construct( $plugin, $version ) {

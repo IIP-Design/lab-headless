@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: GPA/LAB Guillotine
  * Plugin URI: https://github.com/IIP-Design/lab-guillotine
@@ -25,7 +24,7 @@ define( 'GUILLOTINE_URL', plugin_dir_url( dirname( __FILE__ ) ) . 'lab-guillotin
 // Imports Guillotine class.
 require plugin_dir_path( __FILE__ ) . 'includes/class-guillotine.php';
 
-/** 
+/**
  * Begin execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,

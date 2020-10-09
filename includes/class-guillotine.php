@@ -1,5 +1,16 @@
 <?php
+/**
+ * Registers the Guillotine class.
+ *
+ * @package Guillotine
+ * @since 0.0.1
+ */
 
+ /**
+  * Register all hooks to be run by the plugin.
+  *
+  * @package Guillotine
+  */
 class Guillotine {
 
   /**
@@ -7,8 +18,8 @@ class Guillotine {
    *
    * @var Guillotine_Loader $loader    Maintains and registers all hooks for the plugin.
    *
-   * @since 0.0.1
    * @access protected
+   * @since 0.0.1
    */
 
   protected $loader;
@@ -17,7 +28,7 @@ class Guillotine {
    * The unique identifier and version of this plugin.
    *
    * @var string $plugin_name
-   * 
+   *
    * @access protected
    * @since 0.0.1
    */
