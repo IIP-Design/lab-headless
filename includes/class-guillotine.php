@@ -83,7 +83,7 @@ class Guillotine {
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
 
     // The class responsible for defining all actions that occur in the public-facing side of the site.
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-public.php';
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-frontend.php';
     $this->loader = new Guillotine\Loader();
   }
 
@@ -96,7 +96,7 @@ class Guillotine {
     $plugin_admin = new Guillotine\Admin( $this->get_plugin_name(), $this->get_version() );
 
     // Admin hooks.
-    $this->loader->add_action( 'INSERT_WP_HOOK', $plugin_admin, 'INSERT_CALLBACK' );
+    $this->loader->add_action( 'init', $plugin_admin, 'register_custom_post_types' );
   }
 
   /**

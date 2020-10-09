@@ -28,7 +28,6 @@ class Loader {
    * @access protected
    * @since 0.0.1
    */
-
   protected $actions;
 
   /**

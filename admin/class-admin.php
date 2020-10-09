@@ -29,6 +29,17 @@ class Admin {
     $this->version = $version;
   }
 
-  // INSERT YOUR FRONTEND FUNCTIONS HERE.
+  /**
+   * Initialize all custom post types registered by plugin.
+   *
+   * @since 0.0.1
+   */
+  public function register_custom_post_types() {
+    // Load in documentation custom post type.
+    include_once GUILLOTINE_DIR . 'admin/post-types/class-docs-cpt.php';
+    $docs = new Docs_CPT();
+
+    $docs->register_docs_cpt();
+  }
 
 }
