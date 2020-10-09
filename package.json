@@ -5,7 +5,8 @@
   "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>",
   "main": "index.js",
   "scripts": {
-    "lint": "npm run lint:PHP",
+    "lint": "npm run lint:JS && npm run lint:PHP",
+    "lint:JS": "eslint --ext .js --quiet ./",
     "lint:PHP": "./vendor/bin/phpcs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +20,11 @@
   },
   "homepage": "https://github.com/IIP-Design/lab-guillotine#readme",
   "devDependencies": {
+    "@gpa-lab/eslint-config": "^1.3.1",
+    "eslint": "^7.10.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "jest": "^26.5.2"
   }
 }
