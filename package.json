@@ -5,8 +5,8 @@
   "author": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>",
   "main": "index.js",
   "scripts": {
-    "build": "wp-scripts build admin/sidebars/docs-sidebar.js --output-path=admin/build",
-    "dev": "wp-scripts start admin/sidebars/docs-sidebar.js --output-path=admin/build",
+    "build": "wp-scripts build admin/plugins/docs-sidebar.js --output-path=admin/build",
+    "dev": "wp-scripts start admin/plugins/docs-sidebar.js --output-path=admin/build",
     "lint": "npm run lint:JS && npm run lint:PHP",
     "lint:JS": "eslint --ext .js --quiet ./",
     "lint:PHP": "./vendor/bin/phpcs",
@@ -32,5 +32,10 @@
     "eslint-plugin-react": "^7.21.3",
     "eslint-plugin-react-hooks": "^4.1.2",
     "jest": "^26.5.2"
+  },
+  "dependencies": {
+    "@wordpress/components": "^11.0.0",
+    "@wordpress/edit-post": "^3.24.0",
+    "@wordpress/plugins": "^2.22.0"
   }
 }

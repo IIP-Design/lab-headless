@@ -42,4 +42,40 @@ class Admin {
     $docs->register_docs_cpt();
   }
 
+  /**
+   * Register the JavaScript required for customizations of the Gutenberg Editor.
+   *
+   * @since 0.0.1
+   */
+  public function register_gutenberg_plugins() {
+    // Adds a documentation sidebar to the Gutenberg documents panel.
+    $script_asset = require GUILLOTINE_ADMIN_BUILD_DIR . 'docs-sidebar.asset.php';
+
+    wp_register_script(
+      'docs-sidebar-js',
+      GUILLOTINE_ADMIN_BUILD_URL . 'docs-sidebar.js',
+      $script_asset['dependencies'],
+      $script_asset['version'],
+      true
+    );
+  }
+
+  /**
+   * Enqueue docs custom sidebar on the docs custom post type admin page.
+   *
+   * @param string $hook_suffix    The current admin page.
+   *
+   * @since 0.0.1
+   */
+  public function enqueue_docs_sidebar( $hook_suffix ) {
+    $cpt = 'gpalab-docs';
+
+    if ( in_array( $hook_suffix, array( 'post.php', 'post-new.php' ), true ) ) {
+      $screen = get_current_screen();
+
+      if ( is_object( $screen ) && $cpt === $screen->post_type ) {
+        wp_enqueue_script( 'docs-sidebar-js' );
+      }
+    }
+  }
 }
