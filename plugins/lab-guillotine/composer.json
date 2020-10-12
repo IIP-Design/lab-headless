@@ -1,0 +1,23 @@
+{
+  "name": "gpalab/lab-guillotine",
+  "type": "wordpress-plugin",
+  "description" : "Plugin to accompany the GPA/LAB headless WordPress theme",
+  "authors": [
+    {
+      "name": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>"
+    },
+    {
+      "name": "Marek Rewers"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "composer/installers": "~1.0"
+  },
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "squizlabs/php_codesniffer": "^3.5",
+    "wp-coding-standards/wpcs": "^2.3"
+  }
+}

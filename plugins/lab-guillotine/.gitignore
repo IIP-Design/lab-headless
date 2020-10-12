@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Dev Builds
+*.js.map
+
+# Environment
+.env
+
+# Local Settings
+.vscode
+.DS_Store
+
+# Logs
+npm-debug.log*
