@@ -1,7 +1,6 @@
 {
   "name": "gpalab/lab-guillotine",
   "type": "wordpress-plugin",
-  "version": "v1.0.0",
   "description" : "Plugin to accompany the GPA/LAB headless WordPress theme",
   "authors": [
     {
