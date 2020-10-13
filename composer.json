@@ -64,5 +64,6 @@
         "gpalab/lab-webroot": "self.version"
     },
     "description": "Mono-repository for the GPA/LAB WordPress based headless CMS",
-    "minimum-stability": "stable"
+    "minimum-stability": "dev",
+    "prefer-stable" : true
 }
