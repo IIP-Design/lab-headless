@@ -24,9 +24,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --fil
 RUN groupadd -g 1001 deploy && \
   useradd -r -u 1001 -g deploy deploy
 
-# Create directory for site and give deploy user permissions to it.
-COPY --chown=deploy:deploy tmp /www/local/sites-enabled/lab_dev
-
 # Customize PHP settings.
 RUN sed -i 's/user = apache/user = deploy/g' $FPM_POOL && \
   sed -i 's/group = apache/user = deploy/g' $FPM_POOL && \
