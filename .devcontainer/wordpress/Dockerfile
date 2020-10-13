@@ -9,21 +9,23 @@ ENV FPM_CONF /etc/php-fpm.conf
 ENV PHP_CONF /etc/php.ini
 ENV TZ America/New_York
 
-# Install dependencies (Apache, PHP).
+# Install core dependencies (Apache, PHP, Git).
 RUN yum update -y && \
   amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2 && \
   yum install -y httpd httpd-tools procps php-cli php-common \
   php-fpm php-gd php-json php-mbstring php-mcrypt php-mysqlnd \
-  php-pdo php7.2-pdo-dblib php-xml php-xmlrpc php-zip && \
+  php-pdo php7.2-pdo-dblib php-xml php-xmlrpc php-zip git && \
   yum clean all
+
+# Install Composer.
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer
 
 # Add deploy user.
 RUN groupadd -g 1001 deploy && \
   useradd -r -u 1001 -g deploy deploy
 
 # Create directory for site and give deploy user permissions to it.
-RUN mkdir -p /www/local/sites-enabled/lab_dev
-RUN chown -R deploy:deploy /www/local/sites-enabled/lab_dev
+COPY --chown=deploy:deploy tmp /www/local/sites-enabled/lab_dev
 
 # Customize PHP settings.
 RUN sed -i 's/user = apache/user = deploy/g' $FPM_POOL && \

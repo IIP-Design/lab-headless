@@ -16,7 +16,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Environmental Variables
+# Environmental Variables & Secrets
 *.pem
 .env
 .env.local

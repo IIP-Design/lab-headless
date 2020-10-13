@@ -15,6 +15,7 @@ services:
       - ../plugins:/www/local/sites-enabled/lab_dev/wp-content/plugins
       - ../themes:/www/local/sites-enabled/lab_dev/wp-content/themes
       - ./config/lab.conf:/etc/httpd/conf.d/lab.conf
+      - ~/.ssh:/root/.ssh:ro
 
   db:
     container_name: lab_db

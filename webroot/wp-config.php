@@ -79,9 +79,6 @@ if ( isset( $_SERVER['LAB_S3_UPLOADS_REGION'] ) ) {
 define( 'WPOSES_AWS_ACCESS_KEY_ID', getenv( 'LAB_SES_ACCESS_KEY' ) );
 define( 'WPOSES_AWS_SECRET_ACCESS_KEY', getenv( 'LAB_SES_SECRET_KEY' ) );
 
-
-/**#@-*/
-
 /**
  * WordPress Database Table prefix.
  *
