@@ -1,5 +1,7 @@
 {
     "name": "gpalab/lab-headless",
+    "description": "Mono-repository for the GPA/LAB WordPress based headless CMS",
+    "version": "v1.0.0",
     "require": {
         "composer/installers": "~1.0",
         "fancyguy/webroot-installer": "1.1.0",
@@ -63,7 +65,6 @@
         "gpalab/lab-guillotine": "self.version",
         "gpalab/lab-webroot": "self.version"
     },
-    "description": "Mono-repository for the GPA/LAB WordPress based headless CMS",
     "minimum-stability": "dev",
     "prefer-stable" : true
 }

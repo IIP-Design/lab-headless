@@ -1,6 +1,7 @@
 {
   "name": "gpalab/lab-webroot",
   "description": "Webroot for the GPA/LAB WordPress site",
+  "version": "v1.0.0",
   "repositories": [
     {
       "type": "package",
