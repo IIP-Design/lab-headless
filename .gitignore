@@ -42,6 +42,6 @@ plugins/*
 !plugins/lab-guillotine/
 themes/*
 !themes/.gitkeep
-wp/
-wp-content/*
+webroot/wp/
+webroot/wp-content/*
 !wp-content/sunrise.php
