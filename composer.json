@@ -1,0 +1,68 @@
+{
+    "name": "gpalab/lab-headless",
+    "require": {
+        "composer/installers": "~1.0",
+        "fancyguy/webroot-installer": "1.1.0",
+        "gpalab/uswpds": "dev-master",
+        "humanmade/s3-uploads": "2.2.2",
+        "iip-design/wp-hide-login-form": "v1.1.0",
+        "wordpress/wordpress": "5.5.1",
+        "wp-graphql/wp-graphiql": "^1.0",
+        "wp-graphql/wp-graphql": "^0.13.3",
+        "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.5",
+        "wpackagist-plugin/google-apps-login": "3.4.2",
+        "wpackagist-plugin/wordpress-mu-domain-mapping": "0.5.5.1",
+        "wpackagist-plugin/wp-ses": "1.4.3",
+        "wpackagist-theme/twentytwenty": "1.5"
+    },
+    "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+        "phpcompatibility/phpcompatibility-wp": "^2.1",
+        "squizlabs/php_codesniffer": "^3.5",
+        "wp-coding-standards/wpcs": "^2.3"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:IIP-Design/uswpds"
+        },
+        {
+            "type": "git",
+            "url": "git@github.com:IIP-Design/wp-hide-login-form.git"
+        },
+        {
+            "package": {
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/WordPress/WordPress/archive/5.5.1.zip"
+                },
+                "name": "wordpress/wordpress",
+                "require": {
+                    "fancyguy/webroot-installer": "1.1.0"
+                },
+                "type": "webroot",
+                "version": "5.5.1"
+            },
+            "type": "package"
+        }
+    ],
+    "extra": {
+        "dropin-paths": {
+            "wp-content/": [
+                "package:wpackagist-plugin/wordpress-mu-domain-mapping:sunrise.php"
+            ]
+        },
+        "webroot-dir": "wp",
+        "webroot-package": "wordpress/wordpress"
+    },
+    "replace": {
+        "gpalab/lab-guillotine": "self.version",
+        "gpalab/lab-webroot": "self.version"
+    },
+    "description": "Mono-repository for the GPA/LAB WordPress based headless CMS",
+    "minimum-stability": "stable"
+}
