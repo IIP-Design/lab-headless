@@ -1,0 +1,8 @@
+{
+  "name": "Lab WordPress",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "wordpress",
+  "runServices": ["db", "wordpress"],
+  "shutdownAction": "stopCompose",
+  "workspaceFolder": "/www/local/sites-enabled/lab_dev"
+}

@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  wordpress:
+    container_name: lab_web
+    image: gpalab/wordpress:latest
+    depends_on:
+      - db
+    environment:
+      - 'DB_PORT=3306'
+      - 'DB_HOST=db'
+    ports:
+      - 80:80
+    volumes:
+      - ../plugins:/www/local/sites-enabled/lab_dev/wp-content/plugins
+      - ../themes:/www/local/sites-enabled/lab_dev/wp-content/themes
+      - ./config/lab.conf:/etc/httpd/conf.d/lab.conf
+
+  db:
+    container_name: lab_db
+    image: gpalab/mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb:/var/lib/mysql
+
+volumes:
+  mariadb:
+    driver: local
