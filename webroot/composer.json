@@ -23,10 +23,6 @@
     },
     {
       "type": "git",
-      "url": "git@github.com:humanmade/S3-Uploads.git"
-    },
-    {
-      "type": "git",
       "url": "git@github.com:IIP-Design/uswpds"
     },
     {
@@ -38,6 +34,8 @@
     "wordpress/wordpress": "5.5.1",
     "fancyguy/webroot-installer": "1.1.0",
     "humanmade/s3-uploads": "2.2.2",
+    "wp-graphql/wp-graphiql": "^1.0",
+    "wp-graphql/wp-graphql": "^0.13.3",
     "gpalab/uswpds": "dev-master",
     "iip-design/wp-hide-login-form": "v1.1.0",
     "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.5",
