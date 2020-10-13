@@ -1,32 +1,47 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Dependencies
-node_modules/
-frontend/.pnp
-.pnp.js
-
-# Testing
-coverage/
-
-# Next.js
-.next/
-/out/
-
-# Production Build
+# Build Artifacts
+*.js.map
 frontend/build/
+webroot/composer.lock
 
-# Misc
-.DS_Store
-*.pem
-.vscode/
+# Dependencies
+.pnp.js
+frontend/*.pnp
+node_modules/
+vendor/
 
 # Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Local env files
+# Environmental Variables
+*.pem
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.devcontainer/config/*
+!.devcontainer/config/template.conf
+
+# Local Settings
+.DS_Store
+.vscode/
+
+# Next.js
+.next/
+out/
+
+# Testing
+coverage/
+
+# Wordpress Core and Theme/Plugin Files
+plugins/*
+!plugins/lab-guillotine/
+themes/*
+!themes/.gitkeep
+wp/
+wp-content/*
+!wp-content/sunrise.php
