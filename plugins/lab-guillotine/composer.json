@@ -10,7 +10,6 @@
       "name": "Marek Rewers"
     }
   ],
-  "minimum-stability": "stable",
   "require": {
     "composer/installers": "~1.0"
   },
@@ -19,5 +18,7 @@
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "squizlabs/php_codesniffer": "^3.5",
     "wp-coding-standards/wpcs": "^2.3"
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable" : true
 }

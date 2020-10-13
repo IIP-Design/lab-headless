@@ -52,5 +52,7 @@
     },
     "webroot-dir": "wp",
     "webroot-package": "wordpress/wordpress"
-  }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable" : true
 }
