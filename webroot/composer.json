@@ -18,8 +18,8 @@
       }
     },
     {
-      "type": "composer",
-      "url": "https://wpackagist.org"
+      "type": "path",
+      "url": "../plugins/lab-guillotine"
     },
     {
       "type": "git",
@@ -28,6 +28,10 @@
     {
       "type": "git",
       "url": "git@github.com:IIP-Design/wp-hide-login-form.git"
+    },
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
     }
   ],
   "require": {
@@ -37,6 +41,7 @@
     "wp-graphql/wp-graphiql": "^1.0",
     "wp-graphql/wp-graphql": "^0.13.3",
     "gpalab/uswpds": "dev-master",
+    "gpalab/lab-guillotine": "*",
     "iip-design/wp-hide-login-form": "v1.1.0",
     "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.5",
     "wpackagist-plugin/google-apps-login": "3.4.2",
