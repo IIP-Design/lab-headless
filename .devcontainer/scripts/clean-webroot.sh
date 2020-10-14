@@ -1,9 +1,8 @@
 WEBROOT="../webroot"
 
+echo "\n\xF0\x9F\x97\x91  Deleting core files from webroot to avoid conflicts during build.\n"
 
-echo "\xF0\x9F\x97\x91  Delete core files from webroot to avoid conflicts during build.\n"
-
-rm $WEBROOT/composer.lock 2> /dev/null
+rm -f $WEBROOT/composer.lock
 
 rm -rf $WEBROOT/vendor
 rm -rf $WEBROOT/wp

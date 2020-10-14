@@ -1,6 +1,6 @@
 # GPA/LAB Headless
 
-## Setup
+## Dev Environment Setup
 
 Clone this repository onto your local machine (by running the command `git clone git@github.com:IIP-Design/gpalab-headless.git`) and follow the below instructions.
 
@@ -56,3 +56,13 @@ Enter `Ctrl + o` and `Ctrl + x` to save the file and exit. The URL `lab.dev.loca
 ### 5. Login to the WordPress Admin
 
 You can now login into the WordPress backend by going to [lab.dev.local/wp-admin](http://lab.dev.local/wp-admin) in your browser. The site is set up with a default super admin user. You can login as this user with the username `dev_admin` and the password `admin`.
+
+## Dev Helper Scripts
+
+In addition to the setup script, we provide several scripts to help manage the development container. Run the following scripts from the project root to rebuild the project's Docker images, reinstall the development WordPress instance, or refresh the WordPress site's database. _[Note that you must have make installed on your computer for these scripts to work]_
+
+| Command              | Description                                               |
+| -------------------- | --------------------------------------------------------- |
+| `npm run images`     | Rebuild the WP and MariaDB Docker images                  |
+| `npm run rebuild-wp` | Reinstall WordPress and plugins on the dev container      |
+| `npm run reset-db`   | Drop the dev site's database and recreate with a clean db |
