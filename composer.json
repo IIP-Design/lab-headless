@@ -1,6 +1,14 @@
 {
   "name": "gpalab/lab-headless",
   "description": "Mono-repository for the GPA/LAB WordPress based headless CMS",
+  "authors": [
+    {
+      "name": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>"
+    },
+    {
+      "name": "Marek Rewers"
+    }
+  ],
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1",

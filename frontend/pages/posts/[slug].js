@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import Container from '../../components/Container/Container';
 import PostBody from '../../components/PostBody/PostBody';
-import MoreStories from '../../components/MoreStoreis/MoreStories';
+import MoreStories from '../../components/MoreStories/MoreStories';
 import Header from '../../components/Header/Header';
 import Layout from '../../components/Layout/Layout';
 import PostHeader from '../../components/PostHeader/PostHeader';

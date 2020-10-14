@@ -12,6 +12,28 @@
     "images": "make images -s -C .devcontainer",
     "rebuild-wp": "make wp -s -C .devcontainer",
     "reset-db": "make db -s -C .devcontainer",
-    "setup": "make setup -s -C .devcontainer"
-  }
+    "setup": "make setup -s -C .devcontainer",
+    "lint": "npm run lint:JS && npm run lint:PHP",
+    "lint:JS": "eslint --ext .js --quiet ./frontend ./plugins/lab-guillotine",
+    "lint:PHP": "./vendor/bin/phpcs"
+  },
+  "devDependencies": {
+    "@gpa-lab/eslint-config": "^1.3.1",
+    "eslint": "^7.9.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "jest": "^26.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IIP-Design/lab-headless.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IIP-Design/lab-headless/issues"
+  },
+  "homepage": "https://github.com/IIP-Design/lab-headless#readme"
 }
