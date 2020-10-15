@@ -19,7 +19,10 @@
     },
     {
       "type": "path",
-      "url": "../plugins/lab-guillotine"
+      "url": "../plugins/lab-guillotine",
+      "options": {
+        "symlink": false
+      }
     },
     {
       "type": "git",

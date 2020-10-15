@@ -15,7 +15,7 @@ docker exec -i lab_web sed -i '/iip-design\/wp-hide-login-form/d' $DIR/composer.
 docker exec -i lab_web sed -i '/gpalab\/lab-guillotine/d' $DIR/composer.json
 
 # Delete all the repository references to monorepo
-docker exec -i lab_web sed -i '/"type": "path"/I,+3 d' $DIR/composer.json
+docker exec -i lab_web sed -i '/"type": "path"/I,+6 d' $DIR/composer.json
 
 # Run Composer to install WordPress and all the site dependencies
 echo "\xE2\x8F\xB1  Installing site dependencies with Composer, this may take a few minutes...\n"
