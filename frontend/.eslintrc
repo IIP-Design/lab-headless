@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": [ ".next", "node_modules/" ],
+  "ignorePatterns": [ ".next/", "node_modules/" ],
   "rules": {
     "node/no-unpublished-import": [
       "error", {

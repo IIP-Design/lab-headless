@@ -63,6 +63,7 @@ In addition to the setup script, we provide several scripts to help manage the d
 
 | Command              | Description                                               |
 | -------------------- | --------------------------------------------------------- |
+| `npm run cleanup`    | Removes extraneous files from the webroot sub-directory   |
 | `npm run images`     | Rebuild the WP and MariaDB Docker images                  |
 | `npm run rebuild-wp` | Reinstall WordPress and plugins on the dev container      |
 | `npm run reset-db`   | Drop the dev site's database and recreate with a clean db |

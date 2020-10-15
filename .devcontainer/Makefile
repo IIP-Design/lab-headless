@@ -1,3 +1,6 @@
+cleanup:
+	./scripts/clean-webroot.sh
+
 db:
 	./scripts/docker-up.sh N
 	./scripts/create-db.sh

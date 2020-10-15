@@ -9,6 +9,7 @@
     }
   ],
   "scripts": {
+    "cleanup": "make cleanup -s -C .devcontainer",
     "images": "make images -s -C .devcontainer",
     "rebuild-wp": "make wp -s -C .devcontainer",
     "reset-db": "make db -s -C .devcontainer",
