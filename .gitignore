@@ -41,7 +41,7 @@ coverage/
 plugins/*
 !plugins/lab-guillotine/
 themes/*
-!themes/.gitkeep
+!themes/ichabod/
 webroot/wp/
 webroot/wp-content/*
-!wp-content/sunrise.php
+!webroot/wp-content/sunrise.php
