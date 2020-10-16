@@ -2,9 +2,19 @@
 
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 
+import MetaTextInput from './MetaTextInput';
+
 const DocsDocumentPanel = () => (
-  <PluginDocumentSettingPanel name="github-link-panel" title="Link GitHub Repo" className="github-link-panel">
-    Link to documentation in a GitHub repository
+  <PluginDocumentSettingPanel
+    className="github-link-panel"
+    name="github-link-panel"
+    title="Link a GitHub Repository"
+  >
+    <MetaTextInput
+      label="Add repo URL:"
+      metaValue="gpalab_docs_github_repo"
+      placeholder="https://github.com/..."
+    />
   </PluginDocumentSettingPanel>
 );
 

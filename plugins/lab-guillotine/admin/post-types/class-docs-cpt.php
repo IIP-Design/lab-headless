@@ -9,7 +9,7 @@
 namespace Guillotine;
 
 /**
- * Register the documentation custom post type.
+ * Register a documentation page custom post type.
  * This post type is intended to provide a platform for writing technical documentation.
  *
  * @package Guillotine\Docs_CPT
@@ -18,7 +18,9 @@ namespace Guillotine;
 class Docs_CPT {
 
   /**
-   * Register the Documentation Page custom post type.
+   * Register the documentation page custom post type.
+   *
+   * @since 0.0.1
    */
   public function register_docs_cpt() {
     $capabilities = array(
@@ -69,7 +71,7 @@ class Docs_CPT {
       'with_front' => true,
     );
 
-    $supports = array( 'author', 'editor', 'excerpt', 'revisions', 'title' );
+    $supports = array( 'author', 'custom-fields', 'editor', 'excerpt', 'revisions', 'title' );
 
     $args = array(
       'can_export'            => true,
@@ -104,5 +106,48 @@ class Docs_CPT {
     );
 
     register_post_type( 'gpalab-docs', $args );
+
+    $this->register_docs_meta();
+  }
+
+  /**
+   * Register the metadata fields for the documentation page custom post type.
+   *
+   * @since 0.0.1
+   */
+  private function register_docs_meta() {
+    register_post_meta(
+      'gpalab-docs',
+      'gpalab_docs_github_repo',
+      array(
+        'show_in_rest' => true,
+        'single'       => true,
+        'type'         => 'string',
+      )
+    );
+  }
+
+  /**
+   * Register the metadata fields for the documentation page in the GraphQL API.
+   *
+   * @since 0.0.1
+   */
+  public function register_docs_graphql() {
+    // Fetch the linked repo for a docs posts.
+    $resolve = function( $post ) {
+      $repo = get_post_meta( $post->ID, 'gpalab_docs_github_repo', true );
+
+      return ! empty( $repo ) ? $repo : '';
+    };
+
+    register_graphql_field(
+      'doc',
+      'repo',
+      array(
+        'description' => __( 'A linked GitHub repository', 'gpalab-guillotine' ),
+        'resolve'     => $resolve,
+        'type'        => 'String',
+      )
+    );
   }
 }

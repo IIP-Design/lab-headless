@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@wordpress/components": "^11.0.0",
+    "@wordpress/compose": "^3.21.0",
+    "@wordpress/data": "^4.24.0",
     "@wordpress/edit-post": "^3.24.0",
     "@wordpress/plugins": "^2.22.0"
   }

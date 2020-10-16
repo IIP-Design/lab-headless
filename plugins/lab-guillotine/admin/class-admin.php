@@ -43,6 +43,19 @@ class Admin {
   }
 
   /**
+   * Initialize all custom metadata fields in the GraphQL API.
+   *
+   * @since 0.0.1
+   */
+  public function register_custom_graphql_types() {
+    // Load in documentation custom post type.
+    include_once GUILLOTINE_DIR . 'admin/post-types/class-docs-cpt.php';
+    $docs = new Docs_CPT();
+
+    $docs->register_docs_graphql();
+  }
+
+  /**
    * Register the JavaScript required for customizations of the Gutenberg Editor.
    *
    * @since 0.0.1

@@ -99,6 +99,7 @@ class Guillotine {
     $this->loader->add_action( 'init', $plugin_admin, 'register_custom_post_types' );
     $this->loader->add_action( 'init', $plugin_admin, 'register_gutenberg_plugins' );
     $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_docs_sidebar' );
+    $this->loader->add_action( 'graphql_register_types', $plugin_admin, 'register_custom_graphql_types' );
   }
 
   /**
