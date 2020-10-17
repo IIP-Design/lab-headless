@@ -103,6 +103,9 @@ define( 'WP_DEBUG', false );
 define( 'WP_DEBUG_LOG', true );
 define( 'WP_DEBUG_DISPLAY', false );
 
+/** Disable the installation of default themes and plugins. */
+define( 'CORE_UPGRADE_SKIP_NEW_BUNDLED', true );
+
 /** Tells WordPress to look for the wp-content directory in a non-standard location. */
 define( 'WP_CONTENT_DIR', __DIR__ . '/wp-content' );
 
@@ -128,7 +131,7 @@ define( 'BLOG_ID_CURRENT_SITE', 1 );
 
 define( 'SUNRISE', 'on' );
 
-define( 'WP_DEFAULT_THEME', 'twentytwenty' );
+define( 'WP_DEFAULT_THEME', 'gpalab-ichabod' );
 
 /* That's all, stop editing! Happy publishing. */
 
