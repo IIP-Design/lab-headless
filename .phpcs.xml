@@ -5,12 +5,13 @@
 
 <!-- List of files/directories to check. -->
 <file>./plugins/lab-guillotine</file>
+<file>./themes/ichabod</file>
 
 <!-- Exclude empty index.php files from testing. -->
-<exclude-pattern>*/index.php</exclude-pattern>
 <exclude-pattern>*/vendor</exclude-pattern>
-<exclude-pattern>./webroot</exclude-pattern>
+<exclude-pattern>./plugins/lab-guillotine/*/index.php</exclude-pattern>
 <exclude-pattern>./plugins/lab-guillotine/admin/build</exclude-pattern>
+<exclude-pattern>./webroot</exclude-pattern>
 
 <arg name="colors"/>
 <arg name="extensions" value="php" />
