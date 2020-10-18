@@ -25,6 +25,14 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
 
+  adminer:
+    container_name: lab_adminer
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: lab_db
+    ports:
+      - 8080:8080
+
 volumes:
   mariadb:
     driver: local
