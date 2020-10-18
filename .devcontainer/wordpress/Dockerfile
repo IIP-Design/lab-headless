@@ -14,7 +14,8 @@ RUN yum update -y && \
   amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2 && \
   yum install -y httpd httpd-tools procps php-cli php-common \
   php-fpm php-gd php-json php-mbstring php-mcrypt php-mysqlnd \
-  php-pdo php7.2-pdo-dblib php-xml php-xmlrpc php-zip git tar && \
+  php-pdo php7.2-pdo-dblib php-xml php-xmlrpc php-zip \
+  git tar zip unzip && \
   yum clean all
 
 # Install Composer.
