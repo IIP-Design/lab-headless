@@ -160,6 +160,16 @@ function change_admin_footer_version() {
 }
 
 /**
+ * Add support for featured images in posts and pages.
+ *
+ * @since 1.0.0
+ */
+add_theme_support(
+  'post-thumbnails',
+  array( 'page', 'post' )
+);
+
+/**
  * All theme filters.
  */
 add_filter( 'admin_footer_text', 'change_admin_footer_text' );
