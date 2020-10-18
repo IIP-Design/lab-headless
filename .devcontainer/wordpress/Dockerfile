@@ -36,7 +36,9 @@ RUN sed -i 's/user = apache/user = deploy/g' $FPM_POOL && \
   sed -i 's/error_log = \/var\/log\/php-fpm\/error.log/error_log = \/proc\/self\/fd\/2/g' $FPM_CONF && \
   sed -i 's/\/var\/log\/php-fpm\/www-error.log/\/proc\/self\/fd\/2/g' $FPM_CONF && \
   # php.ini
-  sed -i 's/memory_limit = 128M/memory_limit = 256M/g' $PHP_CONF && \
+  sed -i 's/memory_limit = 128M/memory_limit = 3000M/g' $PHP_CONF && \
+  sed -i 's/post_max_size = 8M/post_max_size = 2500M/g' $PHP_CONF && \
+  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 2000M/g' $PHP_CONF && \
   sed -i 's/;date.timezone =/date.timezone = "America\/New_York"/g' $PHP_CONF
 
 # Customize Apache settings.

@@ -522,7 +522,7 @@ INSERT INTO `wp_sitemeta` VALUES (3,1,'admin_user_id','1');
 INSERT INTO `wp_sitemeta` VALUES (4,1,'registration','none');
 INSERT INTO `wp_sitemeta` VALUES (5,1,'upload_filetypes','jpg jpeg png gif mov avi mpg 3gp 3g2 midi mid pdf doc ppt odt pptx docx pps ppsx xls xlsx key mp3 ogg flac m4a wav mp4 m4v webm ogv flv');
 INSERT INTO `wp_sitemeta` VALUES (6,1,'blog_upload_space','100');
-INSERT INTO `wp_sitemeta` VALUES (7,1,'fileupload_maxk','1500');
+INSERT INTO `wp_sitemeta` VALUES (7,1,'fileupload_maxk','2000000');
 INSERT INTO `wp_sitemeta` VALUES (8,1,'site_admins','a:1:{i:0;s:9:\"dev_admin\";}');
 INSERT INTO `wp_sitemeta` VALUES (9,1,'allowedthemes','a:1:{s:12:\"twentytwenty\";b:1;}');
 INSERT INTO `wp_sitemeta` VALUES (10,1,'illegal_names','a:8:{i:0;s:3:\"www\";i:1;s:3:\"web\";i:2;s:4:\"root\";i:3;s:5:\"admin\";i:4;s:4:\"main\";i:5;s:6:\"invite\";i:6;s:13:\"administrator\";i:7;s:5:\"files\";}');
