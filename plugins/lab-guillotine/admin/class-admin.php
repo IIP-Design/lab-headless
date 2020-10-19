@@ -43,6 +43,35 @@ class Admin {
   }
 
   /**
+   * Initialize all custom primitive types on which more complex types depend in the GraphQL API.
+   * Complex types include unions and custom post types.
+   *
+   * @since 0.0.1
+   */
+  public function register_custom_graphql_primitives() {
+    // Load in Types class in order to register custom types.
+    include_once GUILLOTINE_DIR . 'admin/graphql/class-types.php';
+    $types = new Types();
+
+    $types->register_styled_block_meta_types();
+  }
+
+  /**
+   * Initialize all custom union types in the GraphQL API.
+   *
+   * @param array $type_registry  List of available types.
+   *
+   * @since 0.0.1
+   */
+  public function register_custom_graphql_unions( $type_registry ) {
+    // Load in Types class in order to register custom types.
+    include_once GUILLOTINE_DIR . 'admin/graphql/class-types.php';
+    $types = new Types();
+
+    $types->register_styled_blocks_union( $type_registry );
+  }
+
+  /**
    * Initialize all custom metadata fields in the GraphQL API.
    *
    * @since 0.0.1
@@ -52,7 +81,20 @@ class Admin {
     include_once GUILLOTINE_DIR . 'admin/post-types/class-docs-cpt.php';
     $docs = new Docs_CPT();
 
+    // Load in Fields class in order to register miscellaneous fields.
+    include_once GUILLOTINE_DIR . 'admin/graphql/class-fields.php';
+    $fields = new Fields();
+
+    // Load in Types class in order to register custom types.
+    include_once GUILLOTINE_DIR . 'admin/graphql/class-types.php';
+    $types = new Types();
+
+    // Documentation page custom post type.
     $docs->register_docs_graphql();
+
+    // Styled Block Builder compatibility types.
+    $types->register_styled_block_type();
+    $fields->register_style_blocks_graphql();
   }
 
   /**

@@ -9,7 +9,8 @@
  * License: GNU General Public License v2.0
  * License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
  *
- * @package Guillotine
+ * @package GPALAB_Headless
+ * @subpackage Guillotine
  */
 
 // If this file is called directly, abort.
