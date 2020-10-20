@@ -1,6 +1,6 @@
 const API_URL = process.env.WORDPRESS_API_URL;
 
-async function fetchAPI( query, { variables } = {} ) {
+export const fetchAPI = async ( query, { variables } = {} ) => {
   const headers = { 'Content-Type': 'application/json' };
 
   if ( process.env.WORDPRESS_AUTH_REFRESH_TOKEN ) {
@@ -24,7 +24,7 @@ async function fetchAPI( query, { variables } = {} ) {
   }
 
   return json.data;
-}
+};
 
 export async function getPreviewPost( id, idType = 'DATABASE_ID' ) {
   const data = await fetchAPI(
