@@ -15,7 +15,7 @@ RUN yum update -y && \
   yum install -y httpd httpd-tools procps php-cli php-common \
   php-fpm php-gd php-json php-mbstring php-mcrypt php-mysqlnd \
   php-pdo php7.2-pdo-dblib php-xml php-xmlrpc php-zip \
-  git tar zip unzip && \
+  nano git tar zip unzip && \
   yum clean all
 
 # Install Composer.
@@ -36,6 +36,7 @@ RUN sed -i 's/user = apache/user = deploy/g' $FPM_POOL && \
   sed -i 's/error_log = \/var\/log\/php-fpm\/error.log/error_log = \/proc\/self\/fd\/2/g' $FPM_CONF && \
   sed -i 's/\/var\/log\/php-fpm\/www-error.log/\/proc\/self\/fd\/2/g' $FPM_CONF && \
   # php.ini
+  sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 0/g' $PHP_CONF && \
   sed -i 's/memory_limit = 128M/memory_limit = 3000M/g' $PHP_CONF && \
   sed -i 's/post_max_size = 8M/post_max_size = 2500M/g' $PHP_CONF && \
   sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 2000M/g' $PHP_CONF && \
