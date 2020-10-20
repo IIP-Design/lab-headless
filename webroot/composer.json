@@ -37,6 +37,10 @@
     },
     {
       "type": "git",
+      "url": "git@github.com:IIP-Design/styled-block-builder"
+    },
+    {
+      "type": "git",
       "url": "git@github.com:IIP-Design/wp-hide-login-form.git"
     },
     {
@@ -50,6 +54,7 @@
     "gpalab/ichabod": "*",
     "gpalab/lab-guillotine": "*",
     "gpalab/uswpds": "dev-master",
+    "iip-design/styled-block-builder": "v3.0.2",
     "iip-design/wp-hide-login-form": "v1.1.0",
     "humanmade/s3-uploads": "2.2.2",
     "wp-graphql/wp-graphiql": "^1.0",
