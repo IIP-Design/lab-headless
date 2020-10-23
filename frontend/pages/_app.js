@@ -1,6 +1,7 @@
 import '../styles/index.css';
 import '../node_modules/@trussworks/react-uswds/lib/index.css';
 import '../node_modules/@trussworks/react-uswds/lib/uswds.css';
+import '../node_modules/@gpa-lab/styled-blocks/lib/lab-blocks.css';
 
 const MyApp = ( { Component, pageProps } ) => <Component { ...pageProps } />;
 

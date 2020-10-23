@@ -14,10 +14,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@gpa-lab/styled-blocks": "^1.0.0",
     "@trussworks/react-uswds": "^1.9.2",
     "classnames": "2.2.6",
     "date-fns": "2.14.0",
-    "next": "latest",
+    "next": "^9.5.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

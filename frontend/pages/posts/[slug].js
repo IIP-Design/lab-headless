@@ -1,7 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import ErrorPage from 'next/error';
 import Head from 'next/head';
+import propTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import { renderBlocks } from '../../node_modules/@gpa-lab/styled-blocks';
 
 import Container from '../../components/Container/Container';
 import PostBody from '../../components/PostBody/PostBody';
@@ -14,10 +16,15 @@ import SectionSeparator from '../../components/SectionSeparator/SectionSeparator
 import Tags from '../../components/Tags/Tags';
 
 import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api';
+import { getRelatedBlocks } from '../../lib/graphql/styled-blocks';
 
-const Post = ( { post, posts, preview } ) => {
+const Post = ( { blocks, post, posts, preview } ) => {
   const router = useRouter();
   const morePosts = posts?.edges;
+
+  useEffect( () => {
+    renderBlocks( blocks );
+  }, [blocks] );
 
   if ( !router.isFallback && !post?.slug ) {
     return <ErrorPage statusCode={ 404 } />;
@@ -43,9 +50,9 @@ const Post = ( { post, posts, preview } ) => {
                 </Head>
                 <PostHeader
                   title={ post.title }
-                  coverImage={ post.featuredImage.node }
+                  coverImage={ post?.featuredImage?.node }
                   date={ post.date }
-                  author={ post.author.node }
+                  author={ post?.author?.node }
                   categories={ post.categories }
                 />
                 <PostBody content={ post.content } />
@@ -66,8 +73,11 @@ const Post = ( { post, posts, preview } ) => {
 export async function getStaticProps( { params, preview = false, previewData } ) {
   const data = await getPostAndMorePosts( params.slug, preview, previewData );
 
+  const blocks = await getRelatedBlocks( params.slug );
+
   return {
     props: {
+      blocks,
       preview,
       post: data.post,
       posts: data.posts,
@@ -83,5 +93,12 @@ export async function getStaticPaths() {
     fallback: true,
   };
 }
+
+Post.propTypes = {
+  blocks: propTypes.array,
+  post: propTypes.object,
+  posts: propTypes.object,
+  preview: propTypes.bool,
+};
 
 export default Post;
