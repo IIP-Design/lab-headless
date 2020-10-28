@@ -1,6 +1,6 @@
 {
   "name": "gpalab/ichabod",
-  "type": "wordpress-plugin",
+  "type": "wordpress-theme",
   "description" : "Blank theme to run when using WordPress as a headless CMS",
   "authors": [
     {
