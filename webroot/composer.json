@@ -33,11 +33,15 @@
     },
     {
       "type": "git",
-      "url": "git@github.com:IIP-Design/uswpds"
+      "url": "git@github.com:IIP-Design/social-link-optimizer"
     },
     {
       "type": "git",
       "url": "git@github.com:IIP-Design/styled-block-builder"
+    },
+    {
+      "type": "git",
+      "url": "git@github.com:IIP-Design/uswpds"
     },
     {
       "type": "git",
@@ -53,6 +57,7 @@
     "fancyguy/webroot-installer": "1.1.0",
     "gpalab/ichabod": "*",
     "gpalab/lab-guillotine": "*",
+    "gpalab/social-link-optimizer": "dev-main",
     "gpalab/uswpds": "dev-master",
     "iip-design/styled-block-builder": "v3.0.2",
     "iip-design/wp-hide-login-form": "v1.1.0",
