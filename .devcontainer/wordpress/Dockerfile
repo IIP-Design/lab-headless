@@ -18,6 +18,13 @@ RUN yum update -y && \
   nano git tar zip unzip && \
   yum clean all
 
+# Colorize terminal.
+RUN touch ~/.bashrc && \
+  echo "export LS_OPTIONS='--color=auto'" >> ~/.bashrc && \
+  echo 'eval "$(dircolors -b)"' >> ~/.bashrc && \
+  echo 'alias ls="ls $LS_OPTIONS"' >> ~/.bashrc && \
+  source ~/.bashrc
+
 # Install Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer
 
