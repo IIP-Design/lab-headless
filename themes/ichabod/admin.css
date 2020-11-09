@@ -1,0 +1,35 @@
+button.button.sleepy-button {
+  background-color: #333333;
+  border-color: #333333;
+  color: #ffffff;
+  display: none;
+  transition: all ease 0.5s;
+}
+
+button.button.sleepy-button:hover {
+  background-color: #444444;
+  border-color: #333333;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.sleepy-hollow {
+  background-color: #f1f1f1;
+  display: none;
+  padding-right: 20px;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.close-sleepy {
+  background-color: #333333;
+  border-color: #333333;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 5px 10px;
+  position: fixed;
+  right: 20px;
+  top: 40px;
+}

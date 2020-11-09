@@ -49,6 +49,14 @@ function render_settings_page_content() {
         submit_button();
       ?>
       </form>
+      <button
+        class="button sleepy-button"
+        id="sleepy-button"
+        type="button"
+      >
+        Read the <em>Legend of Sleepy Hollow<em>
+      </button>
+      <?php echo wp_kses( file_get_contents( get_template_directory_uri() . '/templates/sleepy.html', true ), 'post' ); ?>
   </div>
   <?php
 }
@@ -100,6 +108,37 @@ function populate_ichabod_settings() {
       'gpalab-ichabod',
       'gpalab-ichabod-redirect'
     );
+}
+
+/**
+ * Enqueues the theme's admin stylesheet only on the settings page.
+ *
+ * @param string $hook   Name of the current page.
+ *
+ * @since 1.0.0
+ */
+function enqueue_ichabod_admin( $hook ) {
+  global $ichabod_version;
+
+  if ( 'appearance_page_gpalab-ichabod' !== $hook ) {
+    return;
+  }
+
+  wp_enqueue_script(
+    'ichabod-admin',
+    get_template_directory_uri() . '/js/sleepy.js',
+    array(),
+    $ichabod_version,
+    true
+  );
+
+  wp_enqueue_style(
+    'ichabod-admin',
+    get_template_directory_uri() . '/admin.css',
+    array(),
+    $ichabod_version,
+    'all'
+  );
 }
 
 /**
@@ -181,3 +220,4 @@ add_filter( 'update_footer', 'change_admin_footer_version', 9999 );
 add_action( 'wp_enqueue_scripts', 'enqueue_ichabod' );
 add_action( 'admin_menu', 'add_ichabod_settings_page' );
 add_action( 'admin_init', 'populate_ichabod_settings' );
+add_action( 'admin_enqueue_scripts', 'enqueue_ichabod_admin' );
