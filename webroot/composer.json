@@ -32,6 +32,13 @@
       }
     },
     {
+      "type": "path",
+      "url": "../themes/neck-brace",
+      "options": {
+        "symlink": false
+      }
+    },
+    {
       "type": "git",
       "url": "git@github.com:IIP-Design/social-link-optimizer"
     },
@@ -56,6 +63,7 @@
     "wordpress/wordpress": "5.5.1",
     "fancyguy/webroot-installer": "1.1.0",
     "gpalab/ichabod": "*",
+    "gpalab/neck-brace": "*",
     "gpalab/lab-guillotine": "*",
     "gpalab/social-link-optimizer": "dev-main",
     "gpalab/uswpds": "dev-master",
