@@ -1,0 +1,18 @@
+{
+  "name": "gpalab/neck-brace",
+  "type": "wordpress-theme",
+  "description" : "Minimal theme to style the lab homepage when not using the headless setup",
+  "authors": [
+    {
+      "name": "U.S. Department of State, Bureau of Global Public Affairs Digital Lab <gpa-lab@america.gov>"
+    },
+    {
+      "name": "Marek Rewers"
+    }
+  ],
+  "require": {
+    "composer/installers": "~1.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable" : true
+}
