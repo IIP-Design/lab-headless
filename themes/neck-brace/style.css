@@ -1,0 +1,211 @@
+/*
+Theme Name: Neck Brace
+Theme URI: https://github.com/IIP-Design/lab-headless/themes/neck-brace/
+Author: U.S. Department of State, Bureau of Global Public Affairs Digital Lab
+Author URI: https://lab.america.gov/
+Template: twentytwenty
+Description: Minimal theme to style the lab homepage when not using the headless setup (i.e. traditional theme setup).
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: gpalab-basic
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
+
+* {
+  font-family: 'Open Sans', sans-serif;
+  color: #212121;
+}
+
+.to-the-top > span,
+.to-the-top > span > span,
+small {
+  color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  letter-spacing: 0.02rem;
+  color: #0a2240;
+}
+
+.entry-content h3 {
+  margin-top: 3rem;
+}
+
+.entry-content h2,
+.entry-content h5 {
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.wp-block-button__link {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.to-the-content-wrapper {
+  display: none;
+}
+
+@media screen and (max-height: 500px) {
+  .header-titles {
+    display: none;
+  }
+}
+
+.site-logo {
+  max-width: 350px;
+}
+
+.cover-header-inner-wrapper {
+  justify-content: center;
+}
+
+#site-header .header-navigation-wrapper,
+#site-header .mobile-nav-toggle,
+.footer-credits {
+  display: none;
+}
+
+.footer-widgets {
+  width: 100% !important;
+  text-align: center;
+}
+
+.footer-nav-widgets-wrapper,
+.widgets-outer-wrapper {
+  border: none;
+}
+
+.footer-widgets-outer-wrapper {
+  border: none;
+  padding: 4rem;
+}
+
+.footer-widgets a {
+  color: white;
+}
+
+.entry-content
+  > *:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.is-style-wide) {
+  max-width: 72rem;
+}
+
+.screen-height {
+  min-height: calc(45vh);
+}
+
+.admin-bar .screen-height {
+  min-height: calc(45vh - 32px);
+}
+
+.cover-header + .post-inner {
+  padding-top: 6rem;
+}
+.cover-header .entry-header h1 {
+  color: #0a2240;
+  font-weight: 700;
+  font-size: 16rem;
+  letter-spacing: 0.15rem;
+  text-align: left;
+}
+
+@media screen and (max-width: 700px) {
+  .cover-header .entry-header h1 {
+    font-size: 15rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .cover-header .entry-header h1 {
+    font-size: 8rem;
+  }
+}
+
+h1.entry-title::after {
+  content: '.';
+  color: #038098;
+}
+
+/* .entry-header-inner.section-inner.medium::after {
+    content: "We are the Digital Lab";
+	color: #0A2240;
+    font-family: 'Open Sans', sans-serif;
+	font-size: 4.8rem;
+	font-weight: 700;
+	text-align: left;
+	margin-top: 0.5rem !important;
+} */
+
+@media screen and (max-width: 500px) {
+  h2.home-subhead {
+    transform: translateY(-20vh);
+  }
+}
+
+.cover-header-inner {
+  padding: 0rem !important;
+}
+
+.site-title.faux-heading {
+  color: #0a2240;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.05rem;
+}
+
+.site-title a:hover,
+.site-title a:focus:hover {
+  text-decoration: none;
+  cursor: default;
+}
+
+.entry-header-inner.section-inner.medium {
+  max-width: 72rem;
+}
+
+.cover-header + .post-inner {
+  padding-top: 4rem;
+}
+
+.wp-block-button {
+  margin-top: 0;
+}
+
+.textwidget.custom-html-widget {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.footer-line-one {
+  display: flex;
+  justify-content: center;
+}
+
+.textwidget.custom-html-widget > img {
+  margin-right: 1rem;
+}
+
+@media screen and (max-width: 780px) {
+  .textwidget.custom-html-widget {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .textwidget.custom-html-widget > img {
+    margin-bottom: 1rem;
+  }
+}
+
+.semi-bold {
+  font-weight: 600;
+}
+
+#site-header {
+  display: none;
+}
