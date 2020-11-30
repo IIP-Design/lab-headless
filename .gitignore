@@ -42,6 +42,7 @@ plugins/*
 !plugins/lab-guillotine/
 themes/*
 !themes/ichabod/
+!themes/neck-brace/
 webroot/wp/
 webroot/wp-content/*
 !webroot/wp-content/sunrise.php
