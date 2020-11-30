@@ -13,6 +13,7 @@ docker exec -i lab_web sed -i '/iip-design\/wp-hide-login-form/d' $DIR/composer.
 
 # Delete themes and plugins that are part of the monorepo
 docker exec -i lab_web sed -i '/gpalab\/ichabod/d' $DIR/composer.json
+docker exec -i lab_web sed -i '/gpalab\/neck-brace/d' $DIR/composer.json
 docker exec -i lab_web sed -i '/gpalab\/lab-guillotine/d' $DIR/composer.json
 
 # Delete all the repository references to monorepo
