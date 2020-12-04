@@ -1,0 +1,56 @@
+# Copyright (C) 2020 U.S. Department of State, Bureau of Global Public Affairs Digital Lab
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ichabod 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/ichabod\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-12-04T23:05:33+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: gpalab-ichabod\n"
+
+#. Theme Name of the theme
+msgid "Ichabod"
+msgstr ""
+
+#. Theme URI of the theme
+msgid "https://github.com/IIP-Design/lab-headless/themes/ichabod/"
+msgstr ""
+
+#. Description of the theme
+msgid "Blank theme to run when using WordPress as a headless CMS. Redirects users to the specified headless frontend URL. (Photo by Marylou Fortier on Unsplash)"
+msgstr ""
+
+#. Author of the theme
+msgid "U.S. Department of State, Bureau of Global Public Affairs Digital Lab"
+msgstr ""
+
+#. Author URI of the theme
+msgid "https://lab.america.gov/"
+msgstr ""
+
+#: functions.php:28
+#: functions.php:44
+msgid "Ichabod Theme Settings"
+msgstr ""
+
+#: functions.php:29
+msgid "Configure Ichabod"
+msgstr ""
+
+#: functions.php:83
+msgid "Frontend Redirect URL"
+msgstr ""
+
+#: functions.php:92
+msgid "Set the redirect URL:"
+msgstr ""
+
+#: functions.php:188
+msgid "Ichabod Theme Version"
+msgstr ""
