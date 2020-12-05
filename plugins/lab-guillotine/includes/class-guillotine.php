@@ -59,6 +59,7 @@ class Guillotine {
     $this->load_dependencies();
     $this->define_admin_hooks();
     $this->define_public_hooks();
+    $this->define_docs_hub_hooks();
   }
 
   /**
@@ -81,6 +82,9 @@ class Guillotine {
 
     // The class responsible for defining all actions that occur in the admin area.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
+
+    // The class responsible for defining all hooks that provide the documentation hub capabilities.
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'docs-hub/class-docs-settings.php';
 
     // The class responsible for defining all actions that occur in the public-facing side of the site.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-frontend.php';
@@ -116,6 +120,19 @@ class Guillotine {
 
     // Frontend hooks.
     $this->loader->add_action( 'INSERT_WP_HOOK', $plugin_frontend, 'INSERT_CALLBACK' );
+  }
+
+  /**
+   * Register all of the hooks related to the Documentation Hub.
+   *
+   * @since 0.0.1
+   */
+  private function define_docs_hub_hooks() {
+    $docs_settings = new Guillotine\Docs_Settings( $this->get_plugin_name(), $this->get_version() );
+
+    // Documentation hub settings page hooks.
+    $this->loader->add_action( 'admin_menu', $docs_settings, 'add_docs_hub_page' );
+    $this->loader->add_action( 'admin_init', $docs_settings, 'populate_docs_settings' );
   }
 
   /**
