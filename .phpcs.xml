@@ -12,6 +12,7 @@
 <exclude-pattern>*/node_modules</exclude-pattern>
 <exclude-pattern>./plugins/lab-guillotine/*/index.php</exclude-pattern>
 <exclude-pattern>./plugins/lab-guillotine/admin/build</exclude-pattern>
+<exclude-pattern>./plugins/lab-guillotine/docs-hub/build</exclude-pattern>
 <exclude-pattern>./webroot</exclude-pattern>
 
 <arg name="colors"/>
