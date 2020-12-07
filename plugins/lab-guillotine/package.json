@@ -10,7 +10,9 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "wp-scripts build admin/plugins/docs-sidebar.js --output-path=admin/build",
+    "build": "npm run build:docs && npm run build:plugin",
+    "build:docs": "wp-scripts build docs-hub/js/admin.js --output-path=docs-hub/build",
+    "build:plugin": "wp-scripts build admin/plugins/docs-sidebar.js --output-path=admin/build",
     "dev": "wp-scripts start admin/plugins/docs-sidebar.js --output-path=admin/build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -15,6 +15,20 @@ namespace Guillotine;
  * @since 0.0.1
  */
 class Docs_Settings {
+
+  /**
+   * Initializes the class with the plugin name and version.
+   *
+   * @param string $plugin     The plugin name.
+   * @param string $version    The plugin version number.
+   *
+   * @since 0.0.1
+   */
+  public function __construct( $plugin, $version ) {
+    $this->plugin  = $plugin;
+    $this->version = $version;
+  }
+
   /**
    * Add a page for the Documentation Hub to the admin menu.
    *
@@ -107,5 +121,37 @@ class Docs_Settings {
       'gpalab-docs-hub',
       'gpalab-guillotine-docs-settings'
     );
+  }
+
+  /**
+   * Register the JavaScript bundle used to run the Docs Hub page.
+   *
+   * @since 0.0.1
+   */
+  public function register_docs_hub_scripts() {
+    $script_asset = require GUILLOTINE_DIR . 'docs-hub/build/admin.asset.php';
+
+    wp_register_script(
+      'gpalab-guillotine-docs-hub-js',
+      GUILLOTINE_URL . 'docs-hub/build/admin.js',
+      $script_asset['dependencies'],
+      $script_asset['version'],
+      true
+    );
+  }
+
+  /**
+   * Enqueue the Docs Hub Javascript bundle if on teh the Docs Hub page.
+   *
+   * @param string $hook   Name of the current page.
+   *
+   * @since 0.0.1
+   */
+  public function enqueue_docs_hub( $hook ) {
+    if ( 'toplevel_page_gpalab-docs-hub' !== $hook ) {
+      return;
+    }
+
+    wp_enqueue_script( 'gpalab-guillotine-docs-hub-js' );
   }
 }

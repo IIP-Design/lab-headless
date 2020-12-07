@@ -131,8 +131,10 @@ class Guillotine {
     $docs_settings = new Guillotine\Docs_Settings( $this->get_plugin_name(), $this->get_version() );
 
     // Documentation hub settings page hooks.
+    $this->loader->add_action( 'init', $docs_settings, 'register_docs_hub_scripts' );
     $this->loader->add_action( 'admin_menu', $docs_settings, 'add_docs_hub_page' );
     $this->loader->add_action( 'admin_init', $docs_settings, 'populate_docs_settings' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $docs_settings, 'enqueue_docs_hub' );
   }
 
   /**
