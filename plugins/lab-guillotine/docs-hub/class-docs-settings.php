@@ -66,12 +66,22 @@ class Docs_Settings {
       </form>
       <hr>
       <div id="gpalab-docs-hub">Docs Go Here</div>
+      <style>
+        .gpalab-docs-hub-label{
+          align-items: center;
+          display: flex;
+          justify-content: space-between;
+          width: 275px;
+        }
+      </style>
     </div>
     <?php
   }
 
   /**
    * Register the plugin settings and add to the settings page.
+   *
+   * @since 0.0.1
    */
   public function populate_docs_settings() {
     register_setting(
@@ -103,7 +113,7 @@ class Docs_Settings {
         $label = __( 'Set repo owner', 'gpalab-guillotine' );
         $org   = get_option( 'gpalab_guillotine_docs_org', '' );
 
-        echo '<label for="gpalab-guillotine-docs-org">' . esc_html( $label ) . ': <input id="gpalab-guillotine-docs-org" name="gpalab_guillotine_docs_org" value="' . esc_html( $org ) . '" type="text" /></label>';
+        echo '<label for="gpalab-guillotine-docs-org" class="gpalab-docs-hub-label">' . esc_html( $label ) . ': <input id="gpalab-guillotine-docs-org" name="gpalab_guillotine_docs_org" value="' . esc_html( $org ) . '" type="text" /></label>';
       },
       'gpalab-docs-hub',
       'gpalab-guillotine-docs-settings'
@@ -116,7 +126,7 @@ class Docs_Settings {
         $label = __( 'Add token', 'gpalab-guillotine' );
         $token = get_option( 'gpalab_guillotine_docs_token', '' );
 
-        echo '<label for="gpalab-guillotine-docs-token">' . esc_html( $label ) . ': <input id="gpalab-guillotine-docs-token" name="gpalab_guillotine_docs_token" value="' . esc_html( $token ) . '" type="password" /></label>';
+        echo '<label for="gpalab-guillotine-docs-token" class="gpalab-docs-hub-label">' . esc_html( $label ) . ': <input id="gpalab-guillotine-docs-token" name="gpalab_guillotine_docs_token" value="' . esc_html( $token ) . '" type="password" /></label>';
       },
       'gpalab-docs-hub',
       'gpalab-guillotine-docs-settings'
