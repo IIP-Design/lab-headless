@@ -29,9 +29,29 @@ const isNotAssetsDir = entries => entries.filter( entry => {
 const noLeadingUnderscore = entries => entries.filter( entry => entry.name.charAt( 0 ) !== '_' );
 
 /**
+ * If object entry is a file remove it's object property, otherwise convert that to a sub-tree.
+ *
+ * @param {Object[]} entries  A list of files/sub-directories in a repo directory.
+ * @returns {Object[]}        A list of files/sub-directories mapped contents.
+ */
+const mapContents = entries => entries.map( entry => {
+  const { object, ...rest } = entry;
+
+  if ( entry.type === 'blob' ) {
+    return rest;
+  }
+
+  const contents = object.entries.map( child => child );
+
+  rest.contents = contents;
+
+  return rest;
+} );
+
+/**
  * Filters a list of directory contents to remove unwanted files and directories.
  *
  * @param {Object[]} entries  A list of files/sub-directories in a repo directory.
  * @returns {Object[]}        A list of files/sub-directories excluding unwanted files/directories.
  */
-export const filterTree = entries => isNotAssetsDir( noLeadingUnderscore( isNotGemfile( entries ) ) );
+export const filterTree = entries => mapContents( isNotAssetsDir( noLeadingUnderscore( isNotGemfile( entries ) ) ) );

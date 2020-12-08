@@ -27,6 +27,15 @@ export const QueryDirectoryTree = `
             name
             path
             type
+            object {
+              ... on Tree {
+                entries {
+                  name
+                  path
+                  type
+                }
+              }
+            }
           }
         }
       }
