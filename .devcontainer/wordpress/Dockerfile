@@ -55,9 +55,9 @@ RUN sed -i 's/var\/www\/html/www\/local\/sites-enabled\//g' $HTTPD_CONF && \
   sed -i 's/Group apache/Group deploy/g' $HTTPD_CONF
 
 # Link error logs to docker logs.
-RUN ln -sf /dev/stdout var/log/httpd/error.log
+# RUN ln -sf /dev/stdout var/log/httpd/error.log
 RUN ln -sf /dev/stdout var/log/httpd/lab_error.log
-RUN ln -sf /dev/stdout var/log/httpd/lab_access.log
+# RUN ln -sf /dev/stdout var/log/httpd/lab_access.log
 
 # Set timezone on instance.
 RUN ln -snf /user/share/zoneinfo/$TZ /etc/localtime 
