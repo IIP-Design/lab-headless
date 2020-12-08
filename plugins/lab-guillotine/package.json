@@ -13,17 +13,22 @@
     "build": "npm run build:docs && npm run build:plugin",
     "build:docs": "wp-scripts build docs-hub/js/admin.js --output-path=docs-hub/build",
     "build:plugin": "wp-scripts build admin/plugins/docs-sidebar.js --output-path=admin/build",
-    "dev": "wp-scripts start admin/plugins/docs-sidebar.js --output-path=admin/build",
+    "dev": "npm run dev:docs && npm run dev:plugin",
+    "dev:docs": "wp-scripts start docs-hub/js/admin.js --output-path=docs-hub/build",
+    "dev:plugin": "wp-scripts start admin/plugins/docs-sidebar.js --output-path=admin/build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^12.3.0"
+    "@wordpress/scripts": "^12.3.0",
+    "prop-types": "^15.7.2"
   },
   "dependencies": {
     "@wordpress/components": "^11.0.0",
     "@wordpress/compose": "^3.21.0",
     "@wordpress/data": "^4.24.0",
     "@wordpress/edit-post": "^3.24.0",
+    "@wordpress/element": "^2.18.0",
+    "@wordpress/i18n": "^3.16.0",
     "@wordpress/plugins": "^2.22.0"
   }
 }

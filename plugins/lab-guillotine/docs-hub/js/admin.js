@@ -1,6 +1,10 @@
-const { element } = window.wp;
+import { render } from '@wordpress/element';
 
-element.render(
-  <h3>Hello</h3>,
+import RepoWizard from './components/RepoWizard';
+
+const { githubDefaultOrg, githubToken } = window.gpalabDocsHub;
+
+render(
+  <RepoWizard owner={ githubDefaultOrg } token={ githubToken } />,
   document.getElementById( 'gpalab-docs-hub' ),
 );

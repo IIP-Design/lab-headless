@@ -162,6 +162,15 @@ class Docs_Settings {
       return;
     }
 
+    wp_localize_script(
+      'gpalab-guillotine-docs-hub-js',
+      'gpalabDocsHub',
+      array(
+        'githubDefaultOrg' => get_option( 'gpalab_guillotine_docs_org' ),
+        'githubToken'      => get_option( 'gpalab_guillotine_docs_token' ),
+      )
+      );
+
     wp_enqueue_script( 'gpalab-guillotine-docs-hub-js' );
   }
 }
