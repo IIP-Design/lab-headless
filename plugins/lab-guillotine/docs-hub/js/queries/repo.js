@@ -25,12 +25,14 @@ export const QueryDirectoryTree = `
         ... on Tree {
           entries {
             name
+            oid
             path
             type
             object {
               ... on Tree {
                 entries {
                   name
+                  oid
                   path
                   type
                 }

@@ -4,10 +4,12 @@ import { useState } from '@wordpress/element';
 
 import { getDefaultBranch, getRepoFiles } from '../api';
 
+import Tree from './Tree/Tree';
+
 const RepoWizard = ( { owner, token } ) => {
   const [repo, setRepo] = useState( '' );
   const [branch, setBranch] = useState( '' );
-  const [tree, setTree] = useState( {} );
+  const [tree, setTree] = useState( null );
 
   const handleInput = e => {
     const { value } = e.target;
@@ -53,9 +55,10 @@ const RepoWizard = ( { owner, token } ) => {
           type="button"
           onClick={ () => getTree() }
         >
-          Get Repo
+          { __( 'Get Repo File Tree', 'gpalab-guillotine' ) }
         </button>
       ) }
+      { tree && ( <Tree tree={ tree } /> ) }
     </div>
   );
 };
