@@ -1,0 +1,11 @@
+.gpalab-docs-leaves {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.gpalab-docs-file-tree {
+  display: flex;
+  flex-direction: column;
+}
+

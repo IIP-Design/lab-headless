@@ -134,7 +134,7 @@ class Docs_Settings {
   }
 
   /**
-   * Register the JavaScript bundle used to run the Docs Hub page.
+   * Register the JavaScript and CSS bundles used to run the Docs Hub page.
    *
    * @since 0.0.1
    */
@@ -148,10 +148,17 @@ class Docs_Settings {
       $script_asset['version'],
       true
     );
+
+    wp_register_style(
+      'gpalab-guillotine-docs-hub-css',
+      GUILLOTINE_URL . 'docs-hub/build/admin.css',
+      array(),
+      $this->version
+    );
   }
 
   /**
-   * Enqueue the Docs Hub Javascript bundle if on teh the Docs Hub page.
+   * Enqueue the Docs Hub Javascript and CSS bundles if on teh the Docs Hub page.
    *
    * @param string $hook   Name of the current page.
    *
@@ -172,5 +179,6 @@ class Docs_Settings {
       );
 
     wp_enqueue_script( 'gpalab-guillotine-docs-hub-js' );
+    wp_enqueue_style( 'gpalab-guillotine-docs-hub-css' );
   }
 }
