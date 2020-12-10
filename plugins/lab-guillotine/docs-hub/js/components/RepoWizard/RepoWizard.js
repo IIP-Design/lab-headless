@@ -3,12 +3,15 @@ import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
 import { getBranches, getRepoFiles } from '../../api';
+import { steps } from './progress-steps';
 
+import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
 import './RepoWizard.css';
 
 const RepoWizard = ( { owner: defaultOwner, token } ) => {
+  const [step, setStep] = useState( 0 );
   const [branch, setBranch] = useState( '' );
   const [branches, setBranches] = useState( null );
   const [branchSet, setBranchSet] = useState( false );
@@ -46,6 +49,17 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
 
     setBranches( allBranches );
     setBranch( defaultBranch );
+    setStep( 1 );
+  };
+
+  const selectBranch = () => {
+    setBranchSet( true );
+    setStep( 2 );
+  };
+
+  const selectDirectory = () => {
+    setSubdirSet( true );
+    setStep( 3 );
   };
 
   const getTree = async () => {
@@ -57,9 +71,11 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
     );
 
     setTree( repoTree );
+    setStep( 4 );
   };
 
   const reset = () => {
+    setStep( 0 );
     setBranch( '' );
     setBranches( null );
     setBranchSet( false );
@@ -72,10 +88,17 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
 
   return (
     <div className="gpalab-docs-wizard-container">
+      <ProgressBar active={ step } steps={ steps } />
       <div className="gpalab-docs-wizard-section">
         <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-owner">
           { `${__( 'Identify repo owner', 'gpalab-guillotine' )}:` }
-          <input id="gpalab-docs-owner" type="text" value={ owner } onChange={ e => handleInput( e, 'owner' ) } />
+          <input
+            disabled={ !!branch }
+            id="gpalab-docs-owner"
+            type="text"
+            value={ owner }
+            onChange={ e => handleInput( e, 'owner' ) }
+          />
         </label>
       </div>
       <div className="gpalab-docs-wizard-section">
@@ -120,7 +143,7 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
             className="gpalab-docs-wizard-button"
             disabled={ !!branchSet }
             type="button"
-            onClick={ () => setBranchSet( true ) }
+            onClick={ () => selectBranch() }
           >
             { __( 'Use This Branch', 'gpalab-guillotine' ) }
           </button>
@@ -142,7 +165,7 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
             className="gpalab-docs-wizard-button"
             disabled={ !!subdirSet }
             type="button"
-            onClick={ () => setSubdirSet( true ) }
+            onClick={ () => selectDirectory() }
           >
             { subdirectory ? __( 'Search This Directory', 'gpalab-guillotine' ) : __( 'No, Search Root', 'gpalab-guillotine' ) }
           </button>

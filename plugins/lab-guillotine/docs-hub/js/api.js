@@ -49,7 +49,7 @@ export const getRepoFiles = async ( variables, token, branch, subdirectory ) => 
 
   const files = [
     { alias: 'changelog', path: buildPath( branch, 'CHANGELOG.md', subdirectory ) },
-    { alias: 'readme', path: buildPath( branch, 'READE.md', subdirectory ) },
+    { alias: 'readme', path: buildPath( branch, 'README.md', subdirectory ) },
   ];
 
   const data = await fetchAPI( QueryDirectoryTree( dirs, files ), variables, token );

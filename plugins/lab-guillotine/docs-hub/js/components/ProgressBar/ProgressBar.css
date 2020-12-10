@@ -1,0 +1,21 @@
+.gpalab-docs-progress-bar {
+  display: grid;
+  list-style: none;
+  margin: 0;
+}
+
+.gpalab-docs-progress-step {
+  display: flex;
+  flex-direction: column;
+  font-style: italic;
+  align-items: center;
+  padding: 1rem;
+}
+
+.gpalab-docs-progress-step.active {
+  background-color: rgba(0, 124, 186, 0.8);
+  border-radius: 5px;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 700;
+}
