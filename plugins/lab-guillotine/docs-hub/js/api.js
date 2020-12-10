@@ -40,16 +40,28 @@ const fetchAPI = async ( query, variables, token ) => {
  *
  * @param {Object} variables Variables to be passed to the GraphQL query.
  * @param {string} token     GitHub personal access token.
- * @returns {Object[]}       A list of files/sub-directories in a repo directory.
+ * @param {string} branch    The repo branch name against which to search.
+ * @returns {Object}         A list of files/sub-directories in a repo directory.
  */
-export const getRepoFiles = async ( variables, token ) => {
-  const data = await fetchAPI( QueryDirectoryTree, variables, token );
+export const getRepoFiles = async ( variables, token, branch ) => {
+  const files = [
+    { alias: 'changelog', path: `${branch}:CHANGELOG.md` },
+    { alias: 'readme', path: `${branch}:README.md` },
+  ];
+
+  const data = await fetchAPI( QueryDirectoryTree( files ), variables, token );
 
   const { entries } = data.repository.object;
 
   const filtered = filterTree( entries );
 
-  return filtered;
+  const fullTree = {
+    changelog: data.repository.changelog,
+    readme: data.repository.readme,
+    tree: filtered,
+  };
+
+  return fullTree;
 };
 
 /**

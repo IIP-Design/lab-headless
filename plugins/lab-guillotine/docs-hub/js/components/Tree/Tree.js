@@ -7,8 +7,10 @@ import { leafType } from '../../utils/reusable-proptypes';
 
 import './Tree.css';
 
-const Tree = ( { tree } ) => (
+const Tree = ( { changelog, readme, tree } ) => (
   <div className="gpalab-docs-file-tree">
+    { changelog && <Leaf data={ { name: 'CHANGELOG' } } style={ { marginLeft: 0 } } /> }
+    { readme && <Leaf data={ { name: 'README' } } style={ { marginLeft: 0 } } /> }
     <strong>docs/</strong>
     { tree && tree.map( ( twig, idx ) => {
       if ( twig.type === 'blob' ) {
@@ -25,6 +27,12 @@ const Tree = ( { tree } ) => (
 );
 
 Tree.propTypes = {
+  changelog: propTypes.shape( {
+    oid: propTypes.string,
+  } ),
+  readme: propTypes.shape( {
+    oid: propTypes.string,
+  } ),
   tree: propTypes.arrayOf(
     propTypes.shape( {
       contents: propTypes.arrayOf( leafType ),

@@ -4,8 +4,8 @@ import { leafType } from '../../utils/reusable-proptypes';
 
 import './Leaf.css';
 
-const Leaf = ( { data, final } ) => (
-  <span className="gpalab-docs-leaf">{ `${final ? '└──' : '├──'} ${data.name}` }</span>
+const Leaf = ( { data, final, ...rest } ) => (
+  <span className="gpalab-docs-leaf" { ...rest }>{ `${final ? '└──' : '├──'} ${data.name}` }</span>
 );
 
 Leaf.propTypes = {

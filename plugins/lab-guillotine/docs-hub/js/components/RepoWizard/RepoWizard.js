@@ -42,6 +42,7 @@ const RepoWizard = ( { owner, token } ) => {
     const repoTree = await getRepoFiles(
       { owner, repo, dir: `${branch}:docs/` },
       token,
+      branch,
     );
 
     setTree( repoTree );
@@ -94,7 +95,11 @@ const RepoWizard = ( { owner, token } ) => {
       { tree && (
         <div className="gpalab-docs-tree-container">
           <strong>{ `${__( 'Results', 'gpalab-guillotine' )}:` }</strong>
-          <Tree tree={ tree } />
+          <Tree
+            changelog={ tree.changelog }
+            readme={ tree.readme }
+            tree={ tree.tree }
+          />
         </div>
       ) }
     </div>

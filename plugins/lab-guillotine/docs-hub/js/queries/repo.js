@@ -14,13 +14,20 @@ export const QueryFileText = `
   }
 `;
 
-export const QueryDirectoryTree = `
+export const QueryDirectoryTree = ( files = [] ) => `
   query QueryDirectoryTree(
     $owner: String!,
     $repo: String!,
     $dir: String!
   ){
     repository( name: $repo, owner: $owner ) {
+      ${files.map( file => `
+        ${file.alias}:object( expression: "${file.path}" ) {
+          ... on Blob {
+            oid
+          }
+        }
+      ` )}
       object( expression: $dir ) {
         ... on Tree {
           entries {
