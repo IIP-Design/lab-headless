@@ -57,7 +57,15 @@ class Docs_Connect_Repo {
     ?>
     <div class="wrap">
       <h1><?php esc_html_e( 'Connect a New GitHub Repo', 'gpalab-guillotine' ); ?></h1>
-      <div id="gpalab-docs-hub" style="margin:2rem 0.5rem;"></div>
+      <p>
+        <?php
+        esc_html_e(
+          'Use the wizard below to search a GitHub repo for documentation files and add them to the docs site.',
+          'gpalab-guillotine'
+        );
+        ?>
+      </p>
+      <div id="gpalab-docs-hub" style="margin:1rem 0rem;"></div>
     </div>
     <?php
   }

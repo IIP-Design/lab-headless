@@ -89,119 +89,119 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
   return (
     <div className="gpalab-docs-wizard-container">
       <ProgressBar active={ step } steps={ steps } />
-      <div className="gpalab-docs-wizard-section">
-        <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-owner">
-          { `${__( 'Identify repo owner', 'gpalab-guillotine' )}:` }
-          <input
-            disabled={ !!branch }
-            id="gpalab-docs-owner"
-            type="text"
-            value={ owner }
-            onChange={ e => handleInput( e, 'owner' ) }
-          />
-        </label>
-      </div>
-      <div className="gpalab-docs-wizard-section">
-        <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-repo">
-          { `${__( 'Add the repo name', 'gpalab-guillotine' )}:` }
-          <input
-            disabled={ !!branch }
-            id="gpalab-docs-repo"
-            type="text"
-            value={ repo }
-            onChange={ e => handleInput( e, 'repo' ) }
-          />
-        </label>
-        { repo && (
-          <button
-            className="gpalab-docs-wizard-button"
-            type="button"
-            disabled={ !!branch }
-            onClick={ () => getBranch() }
-          >
-            { __( 'Get GitHub Branches', 'gpalab-guillotine' ) }
-          </button>
-        ) }
-      </div>
-      { branches && (
+      <div className="gpalab-docs-wizard-contents">
         <div className="gpalab-docs-wizard-section">
-          <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-default-branch">
-            { `${__( 'Choose the branch', 'gpalab-guillotine' )}:` }
-            <select
-              disabled={ !!branchSet }
-              id="gpalab-docs-default-branch"
-              value={ branch }
-              onBlur={ e => handleInput( e, 'branch' ) }
-              onChange={ e => handleInput( e, 'branch' ) }
-            >
-              { branches.map( branchRef => (
-                <option key={ branchRef } value={ branchRef }>{ branchRef }</option>
-              ) ) }
-            </select>
-          </label>
-          <button
-            className="gpalab-docs-wizard-button"
-            disabled={ !!branchSet }
-            type="button"
-            onClick={ () => selectBranch() }
-          >
-            { __( 'Use This Branch', 'gpalab-guillotine' ) }
-          </button>
-        </div>
-      ) }
-      { branchSet && (
-        <div className="gpalab-docs-wizard-section">
-          <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-subdir">
-            { `${__( 'Search sub-directory', 'gpalab-guillotine' )}:` }
+          <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-owner">
+            { `${__( 'Identify repo owner', 'gpalab-guillotine' )}:` }
             <input
-              disabled={ !!subdirSet }
-              id="gpalab-docs-subdir"
+              disabled={ !!branch }
+              id="gpalab-docs-owner"
               type="text"
-              value={ subdirectory }
-              onChange={ e => handleInput( e, 'subdir' ) }
+              value={ owner }
+              onChange={ e => handleInput( e, 'owner' ) }
             />
           </label>
+        </div>
+        <div className="gpalab-docs-wizard-section">
+          <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-repo">
+            { `${__( 'Add the repo name', 'gpalab-guillotine' )}:` }
+            <input
+              disabled={ !!branch }
+              id="gpalab-docs-repo"
+              type="text"
+              value={ repo }
+              onChange={ e => handleInput( e, 'repo' ) }
+            />
+          </label>
+          { repo && (
+            <button
+              className="gpalab-docs-wizard-button"
+              type="button"
+              disabled={ !!branch }
+              onClick={ () => getBranch() }
+            >
+              { __( 'Get GitHub Branches', 'gpalab-guillotine' ) }
+            </button>
+          ) }
+        </div>
+        { branches && (
+          <div className="gpalab-docs-wizard-section">
+            <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-default-branch">
+              { `${__( 'Choose the branch', 'gpalab-guillotine' )}:` }
+              <select
+                disabled={ !!branchSet }
+                id="gpalab-docs-default-branch"
+                value={ branch }
+                onBlur={ e => handleInput( e, 'branch' ) }
+                onChange={ e => handleInput( e, 'branch' ) }
+              >
+                { branches.map( branchRef => (
+                  <option key={ branchRef } value={ branchRef }>{ branchRef }</option>
+                ) ) }
+              </select>
+            </label>
+            <button
+              className="gpalab-docs-wizard-button"
+              disabled={ !!branchSet }
+              type="button"
+              onClick={ () => selectBranch() }
+            >
+              { __( 'Use This Branch', 'gpalab-guillotine' ) }
+            </button>
+          </div>
+        ) }
+        { branchSet && (
+          <div className="gpalab-docs-wizard-section">
+            <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-subdir">
+              { `${__( 'Search sub-directory', 'gpalab-guillotine' )}:` }
+              <input
+                disabled={ !!subdirSet }
+                id="gpalab-docs-subdir"
+                type="text"
+                value={ subdirectory }
+                onChange={ e => handleInput( e, 'subdir' ) }
+              />
+            </label>
+            <button
+              className="gpalab-docs-wizard-button"
+              disabled={ !!subdirSet }
+              type="button"
+              onClick={ () => selectDirectory() }
+            >
+              { subdirectory ? __( 'Search This Directory', 'gpalab-guillotine' ) : __( 'No, Search Root', 'gpalab-guillotine' ) }
+            </button>
+          </div>
+        ) }
+        { tree && (
+          <div className="gpalab-docs-tree-container">
+            <strong>{ `${__( 'Results', 'gpalab-guillotine' )}:` }</strong>
+            <Tree
+              changelog={ tree.changelog }
+              readme={ tree.readme }
+              tree={ tree.docs }
+            />
+          </div>
+        ) }
+        <div className="gpalab-docs-wizard-controls">
           <button
             className="gpalab-docs-wizard-button"
-            disabled={ !!subdirSet }
+            style={ { padding: '0.3rem 0' } }
             type="button"
-            onClick={ () => selectDirectory() }
+            onClick={ () => reset() }
           >
-            { subdirectory ? __( 'Search This Directory', 'gpalab-guillotine' ) : __( 'No, Search Root', 'gpalab-guillotine' ) }
+            { __( 'Reset Form', 'gpalab-guillotine' ) }
+          </button>
+
+          <button
+            className="gpalab-docs-wizard-button"
+            style={ { display: subdirSet && !tree ? 'block' : 'none', padding: '0.3rem 0' } }
+            type="button"
+            onClick={ () => getTree() }
+          >
+            { __( 'Get Repo File Tree', 'gpalab-guillotine' ) }
           </button>
         </div>
-      ) }
-      { tree && (
-        <div className="gpalab-docs-tree-container">
-          <strong>{ `${__( 'Results', 'gpalab-guillotine' )}:` }</strong>
-          <Tree
-            changelog={ tree.changelog }
-            readme={ tree.readme }
-            tree={ tree.docs }
-          />
-        </div>
-      ) }
-
-      <div className="gpalab-docs-wizard-controls">
-        <button
-          className="gpalab-docs-wizard-button"
-          style={ { padding: '0.3rem 0' } }
-          type="button"
-          onClick={ () => reset() }
-        >
-          { __( 'Reset Form', 'gpalab-guillotine' ) }
-        </button>
-
-        <button
-          className="gpalab-docs-wizard-button"
-          style={ { display: subdirSet && !tree ? 'block' : 'none', padding: '0.3rem 0' } }
-          type="button"
-          onClick={ () => getTree() }
-        >
-          { __( 'Get Repo File Tree', 'gpalab-guillotine' ) }
-        </button>
       </div>
-
     </div>
   );
 };

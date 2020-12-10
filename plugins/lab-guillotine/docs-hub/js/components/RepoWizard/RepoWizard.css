@@ -1,20 +1,28 @@
 .gpalab-docs-wizard-container {
+  background-color: #ffffff;
+  border: 1px solid #ccd0d4;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
+  padding: 1rem 0.5rem;
+}
+
+.gpalab-docs-wizard-contents {
+  margin: 0 1rem;
+  width: calc(560px + 1rem);
 }
 
 .gpalab-docs-wizard-controls {
   display: flex;
   justify-content: space-between;
-  margin: 0.5rem 0;
-  width: calc(560px + 1rem);
+  margin: 1rem 0.5rem;
 }
 
 .gpalab-docs-wizard-section {
   display: flex;
   grid-template-columns: auto 1fr;
   margin: 0.5rem 0;
-  width: calc(560px + 1rem);
 }
 
 .gpalab-docs-wizard-label {
@@ -30,12 +38,12 @@
 }
 
 .gpalab-docs-tree-container {
-  background-color: #ffffff;
+  background-color: #f6f6f6;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
-  margin: 0.5rem;
+  margin: 1rem 0;
   padding: 0.5rem;
 }
