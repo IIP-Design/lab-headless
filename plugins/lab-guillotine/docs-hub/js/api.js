@@ -1,4 +1,4 @@
-import { filterTree } from './utils/filters';
+import { buildPath, filterTree } from './utils/filters';
 import { QueryDefaultBranch, QueryDirectoryTree } from './queries/repo';
 
 /**
@@ -38,27 +38,30 @@ const fetchAPI = async ( query, variables, token ) => {
 /**
  * Returns a list of files or
  *
- * @param {Object} variables Variables to be passed to the GraphQL query.
- * @param {string} token     GitHub personal access token.
- * @param {string} branch    The repo branch name against which to search.
- * @returns {Object}         A list of files/sub-directories in a repo directory.
+ * @param {Object} variables     Variables to be passed to the GraphQL query.
+ * @param {string} token         GitHub personal access token.
+ * @param {string} branch        The repo branch name against which to search.
+ * @param {string} subdirectory  Directory relative to the repo root.
+ * @returns {Object}             A list of files/sub-directories in a repo directory.
  */
-export const getRepoFiles = async ( variables, token, branch ) => {
+export const getRepoFiles = async ( variables, token, branch, subdirectory ) => {
+  const dirs = [{ alias: 'docs', path: buildPath( branch, 'docs/', subdirectory ) }];
+
   const files = [
-    { alias: 'changelog', path: `${branch}:CHANGELOG.md` },
-    { alias: 'readme', path: `${branch}:README.md` },
+    { alias: 'changelog', path: buildPath( branch, 'CHANGELOG.md', subdirectory ) },
+    { alias: 'readme', path: buildPath( branch, 'READE.md', subdirectory ) },
   ];
 
-  const data = await fetchAPI( QueryDirectoryTree( files ), variables, token );
+  const data = await fetchAPI( QueryDirectoryTree( dirs, files ), variables, token );
 
-  const { entries } = data.repository.object;
+  const entries = data?.repository?.docs?.entries;
 
-  const filtered = filterTree( entries );
+  const filtered = entries ? filterTree( entries ) : null;
 
   const fullTree = {
-    changelog: data.repository.changelog,
-    readme: data.repository.readme,
-    tree: filtered,
+    changelog: data?.repository?.changelog,
+    readme: data?.repository?.readme,
+    docs: filtered,
   };
 
   return fullTree;
@@ -76,6 +79,6 @@ export const getBranches = async ( variables, token ) => {
 
   return {
     branches: data.repository.refs.nodes.map( node => node.name ),
-    defaultBranch: data.repository.defaultBranchRef.name,
+    defaultBranch: data?.repository?.defaultBranchRef?.name,
   };
 };

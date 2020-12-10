@@ -11,7 +11,7 @@ const Tree = ( { changelog, readme, tree } ) => (
   <div className="gpalab-docs-file-tree">
     { changelog && <Leaf data={ { name: 'CHANGELOG' } } style={ { marginLeft: 0 } } /> }
     { readme && <Leaf data={ { name: 'README' } } style={ { marginLeft: 0 } } /> }
-    <strong>docs/</strong>
+    { tree && <strong>docs/</strong> }
     { tree && tree.map( ( twig, idx ) => {
       if ( twig.type === 'blob' ) {
         return <Leaf key={ twig.oid } data={ twig } final={ idx === tree.length - 1 } />;

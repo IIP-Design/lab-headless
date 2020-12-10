@@ -14,11 +14,10 @@ export const QueryFileText = `
   }
 `;
 
-export const QueryDirectoryTree = ( files = [] ) => `
+export const QueryDirectoryTree = ( dirs = [], files = [] ) => `
   query QueryDirectoryTree(
     $owner: String!,
-    $repo: String!,
-    $dir: String!
+    $repo: String!
   ){
     repository( name: $repo, owner: $owner ) {
       ${files.map( file => `
@@ -28,26 +27,28 @@ export const QueryDirectoryTree = ( files = [] ) => `
           }
         }
       ` )}
-      object( expression: $dir ) {
-        ... on Tree {
-          entries {
-            name
-            oid
-            path
-            type
-            object {
-              ... on Tree {
-                entries {
-                  name
-                  oid
-                  path
-                  type
+      ${dirs.map( dir => `
+        ${dir.alias}:object( expression: "${dir.path}" ) {
+          ... on Tree {
+            entries {
+              name
+              oid
+              path
+              type
+              object {
+                ... on Tree {
+                  entries {
+                    name
+                    oid
+                    path
+                    type
+                  }
                 }
               }
             }
           }
         }
-      }
+    ` )}
     }
   }
 `;

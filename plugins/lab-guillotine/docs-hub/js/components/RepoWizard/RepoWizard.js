@@ -11,8 +11,11 @@ import './RepoWizard.css';
 const RepoWizard = ( { owner: defaultOwner, token } ) => {
   const [branch, setBranch] = useState( '' );
   const [branches, setBranches] = useState( null );
+  const [branchSet, setBranchSet] = useState( false );
   const [owner, setOwner] = useState( defaultOwner );
   const [repo, setRepo] = useState( '' );
+  const [subdirectory, setSubdirectory] = useState( '' );
+  const [subdirSet, setSubdirSet] = useState( false );
   const [tree, setTree] = useState( null );
 
   const handleInput = ( e, control ) => {
@@ -27,6 +30,9 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
         break;
       case 'repo':
         setRepo( value );
+        break;
+      case 'subdir':
+        setSubdirectory( value );
         break;
       default:
     }
@@ -44,12 +50,24 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
 
   const getTree = async () => {
     const repoTree = await getRepoFiles(
-      { owner, repo, dir: `${branch}:docs/` },
+      { owner, repo },
       token,
       branch,
+      subdirectory,
     );
 
     setTree( repoTree );
+  };
+
+  const reset = () => {
+    setBranch( '' );
+    setBranches( null );
+    setBranchSet( false );
+    setOwner( defaultOwner );
+    setRepo( '' );
+    setSubdirectory( '' );
+    setSubdirSet( false );
+    setTree( null );
   };
 
   return (
@@ -63,7 +81,13 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
       <div className="gpalab-docs-wizard-section">
         <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-repo">
           { `${__( 'Add the repo name', 'gpalab-guillotine' )}:` }
-          <input id="gpalab-docs-repo" type="text" value={ repo } onChange={ e => handleInput( e, 'repo' ) } />
+          <input
+            disabled={ !!branch }
+            id="gpalab-docs-repo"
+            type="text"
+            value={ repo }
+            onChange={ e => handleInput( e, 'repo' ) }
+          />
         </label>
         { repo && (
           <button
@@ -76,11 +100,12 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
           </button>
         ) }
       </div>
-      <div className="gpalab-docs-wizard-section">
-        { branches && (
+      { branches && (
+        <div className="gpalab-docs-wizard-section">
           <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-default-branch">
-            { `${__( 'Get GitHub Branches', 'gpalab-guillotine' )}:` }
+            { `${__( 'Choose the branch', 'gpalab-guillotine' )}:` }
             <select
+              disabled={ !!branchSet }
               id="gpalab-docs-default-branch"
               value={ branch }
               onBlur={ e => handleInput( e, 'branch' ) }
@@ -91,27 +116,69 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
               ) ) }
             </select>
           </label>
-        ) }
-        { branch && (
           <button
             className="gpalab-docs-wizard-button"
+            disabled={ !!branchSet }
             type="button"
-            onClick={ () => getTree() }
+            onClick={ () => setBranchSet( true ) }
           >
-            { __( 'Get Repo File Tree', 'gpalab-guillotine' ) }
+            { __( 'Use This Branch', 'gpalab-guillotine' ) }
           </button>
-        ) }
-      </div>
+        </div>
+      ) }
+      { branchSet && (
+        <div className="gpalab-docs-wizard-section">
+          <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-subdir">
+            { `${__( 'Search sub-directory', 'gpalab-guillotine' )}:` }
+            <input
+              disabled={ !!subdirSet }
+              id="gpalab-docs-subdir"
+              type="text"
+              value={ subdirectory }
+              onChange={ e => handleInput( e, 'subdir' ) }
+            />
+          </label>
+          <button
+            className="gpalab-docs-wizard-button"
+            disabled={ !!subdirSet }
+            type="button"
+            onClick={ () => setSubdirSet( true ) }
+          >
+            { subdirectory ? __( 'Search This Directory', 'gpalab-guillotine' ) : __( 'No, Search Root', 'gpalab-guillotine' ) }
+          </button>
+        </div>
+      ) }
       { tree && (
         <div className="gpalab-docs-tree-container">
           <strong>{ `${__( 'Results', 'gpalab-guillotine' )}:` }</strong>
           <Tree
             changelog={ tree.changelog }
             readme={ tree.readme }
-            tree={ tree.tree }
+            tree={ tree.docs }
           />
         </div>
       ) }
+
+      <div className="gpalab-docs-wizard-controls">
+        <button
+          className="gpalab-docs-wizard-button"
+          style={ { padding: '0.3rem 0' } }
+          type="button"
+          onClick={ () => reset() }
+        >
+          { __( 'Reset Form', 'gpalab-guillotine' ) }
+        </button>
+
+        <button
+          className="gpalab-docs-wizard-button"
+          style={ { display: subdirSet && !tree ? 'block' : 'none', padding: '0.3rem 0' } }
+          type="button"
+          onClick={ () => getTree() }
+        >
+          { __( 'Get Repo File Tree', 'gpalab-guillotine' ) }
+        </button>
+      </div>
+
     </div>
   );
 };

@@ -55,3 +55,33 @@ const mapContents = entries => entries.map( entry => {
  * @returns {Object[]}        A list of files/sub-directories excluding unwanted files/directories.
  */
 export const filterTree = entries => mapContents( isNotAssetsDir( noLeadingUnderscore( isNotGemfile( entries ) ) ) );
+
+/**
+ * Check whether a string ends in a slash and appends one if it does not.
+ *
+ * @param {string} string   The string to check for a trailing slash.
+ * @returns {string}   The provided string with a slash appended to the end (if once wasn't there).
+ */
+const ensureTrailingSlash = string => {
+  const hasSlash = string.slice( -1 ) === '/';
+
+  if ( hasSlash ) {
+    return string;
+  }
+
+  return `${string}/`;
+};
+
+/**
+ * Construct the pathname used by the GraphQL object expression.
+ *
+ * @param {string} branch        Branch name.
+ * @param {string} resource      File or directory name to search for.
+ * @param {string} subdirectory  Directory to search in relative to the repo root.
+ * @returns {string}             The path assembled from all the provided values.
+ */
+export const buildPath = ( branch, resource, subdirectory ) => {
+  const path = subdirectory ? ensureTrailingSlash( subdirectory ) : '';
+
+  return `${branch}:${path}${resource}`;
+};
