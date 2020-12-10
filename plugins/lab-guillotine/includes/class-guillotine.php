@@ -21,7 +21,6 @@ class Guillotine {
    * @access protected
    * @since 0.0.1
    */
-
   protected $loader;
 
   /**
@@ -60,12 +59,13 @@ class Guillotine {
     $this->define_admin_hooks();
     $this->define_public_hooks();
     $this->define_docs_hub_hooks();
+    $this->define_block_manager_hooks();
   }
 
   /**
    * Load the required dependencies for this plugin.
    *
-   * Include the following files that make up the plugin:
+   * Include the following classes that make up the plugin:
    *
    * - Guillotine\Loader. Orchestrates the hooks of the plugin.
    * - Guillotine\Admin. Defines all hooks for the admin area.
@@ -82,6 +82,9 @@ class Guillotine {
 
     // The class responsible for defining all actions that occur in the admin area.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
+
+    // The class responsible for defining all hooks that manage the functioning of Gutenberg block.
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'block-manager/class-block-manager.php';
 
     // The class responsible for defining all hooks that provide the documentation hub capabilities.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'docs-hub/class-docs-settings.php';
@@ -120,6 +123,18 @@ class Guillotine {
 
     // Frontend hooks.
     $this->loader->add_action( 'INSERT_WP_HOOK', $plugin_frontend, 'INSERT_CALLBACK' );
+  }
+
+  /**
+   * Register all of the hooks related to the Gutenberg block manager.
+   *
+   * @since 0.0.1
+   */
+  private function define_block_manager_hooks() {
+    $block_manager = new Guillotine\Block_Manager( $this->get_plugin_name(), $this->get_version() );
+
+    // Documentation hub settings page hooks.
+    $this->loader->add_action( 'allowed_block_types', $block_manager, 'set_allowed_block_types' );
   }
 
   /**
