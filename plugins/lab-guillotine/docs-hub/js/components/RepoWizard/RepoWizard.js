@@ -8,21 +8,25 @@ import Tree from '../Tree/Tree';
 
 import './RepoWizard.css';
 
-const RepoWizard = ( { owner, token } ) => {
-  const [repo, setRepo] = useState( '' );
+const RepoWizard = ( { owner: defaultOwner, token } ) => {
   const [branch, setBranch] = useState( '' );
   const [branches, setBranches] = useState( null );
+  const [owner, setOwner] = useState( defaultOwner );
+  const [repo, setRepo] = useState( '' );
   const [tree, setTree] = useState( null );
 
   const handleInput = ( e, control ) => {
     const { value } = e.target;
 
     switch ( control ) {
-      case 'repo':
-        setRepo( value );
-        break;
       case 'branch':
         setBranch( value );
+        break;
+      case 'owner':
+        setOwner( value );
+        break;
+      case 'repo':
+        setRepo( value );
         break;
       default:
     }
@@ -50,6 +54,12 @@ const RepoWizard = ( { owner, token } ) => {
 
   return (
     <div className="gpalab-docs-wizard-container">
+      <div className="gpalab-docs-wizard-section">
+        <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-owner">
+          { `${__( 'Identify repo owner', 'gpalab-guillotine' )}:` }
+          <input id="gpalab-docs-owner" type="text" value={ owner } onChange={ e => handleInput( e, 'owner' ) } />
+        </label>
+      </div>
       <div className="gpalab-docs-wizard-section">
         <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-repo">
           { `${__( 'Add the repo name', 'gpalab-guillotine' )}:` }
