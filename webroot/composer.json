@@ -7,10 +7,10 @@
       "package": {
         "name": "wordpress/wordpress",
         "type": "webroot",
-        "version": "5.5.3",
+        "version": "5.6",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/WordPress/WordPress/archive/5.5.3.zip"
+          "url": "https://github.com/WordPress/WordPress/archive/5.6.zip"
         },
         "require": {
           "fancyguy/webroot-installer": "1.1.0"
@@ -60,7 +60,7 @@
     }
   ],
   "require": {
-    "wordpress/wordpress": "5.5.3",
+    "wordpress/wordpress": "5.6",
     "fancyguy/webroot-installer": "1.1.0",
     "gpalab/ichabod": "*",
     "gpalab/neck-brace": "*",
