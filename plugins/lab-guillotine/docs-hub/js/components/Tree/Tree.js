@@ -9,9 +9,10 @@ import './Tree.css';
 
 const Tree = ( { tree } ) => (
   <div className="gpalab-docs-file-tree">
-    { tree && tree.map( twig => {
+    <strong>docs/</strong>
+    { tree && tree.map( ( twig, idx ) => {
       if ( twig.type === 'blob' ) {
-        return <Leaf key={ twig.oid } data={ twig } />;
+        return <Leaf key={ twig.oid } data={ twig } final={ idx === tree.length - 1 } />;
       }
 
       if ( twig.type === 'tree' ) {

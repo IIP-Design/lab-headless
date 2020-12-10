@@ -1,4 +1,6 @@
 .gpalab-docs-file-tree {
   display: flex;
   flex-direction: column;
+  font-family: monospace;
+  margin: 0.3rem;
 }

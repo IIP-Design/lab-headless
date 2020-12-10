@@ -51,6 +51,11 @@ export const QueryDefaultBranch = `
     $repo: String!
   ){
     repository( name: $repo, owner: $owner ) {
+      refs(refPrefix: "refs/heads/", first: 10) {
+        nodes {
+          name
+        }
+      }
       defaultBranchRef {
         name
       }

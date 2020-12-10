@@ -8,9 +8,11 @@ import './Cluster.css';
 
 const Cluster = ( { id, leaves, name } ) => (
   <div key={ id } className="gpalab-docs-cluster">
-    <strong>{ name }</strong>
+    <strong>{ `${name}/` }</strong>
     <ul className="gpalab-docs-leaves">
-      { leaves && leaves.map( leaf => <Leaf key={ leaf.oid } data={ leaf } /> ) }
+      { leaves && leaves.map( ( leaf, idx ) => (
+        <Leaf key={ leaf.oid } data={ leaf } final={ idx === leaves.length - 1 } />
+      ) ) }
     </ul>
   </div>
 );

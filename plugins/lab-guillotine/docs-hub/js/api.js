@@ -57,10 +57,13 @@ export const getRepoFiles = async ( variables, token ) => {
  *
  * @param {Object} variables Variables to be passed to the GraphQL query.
  * @param {string} token     GitHub personal access token.
- * @returns {string}         The name of the default branch.
+ * @returns {Object}         Object with two properties: a list of branches (limit 10) & the name of the default branch.
  */
-export const getDefaultBranch = async ( variables, token ) => {
+export const getBranches = async ( variables, token ) => {
   const data = await fetchAPI( QueryDefaultBranch, variables, token );
 
-  return data.repository.defaultBranchRef.name;
+  return {
+    branches: data.repository.refs.nodes.map( node => node.name ),
+    defaultBranch: data.repository.defaultBranchRef.name,
+  };
 };

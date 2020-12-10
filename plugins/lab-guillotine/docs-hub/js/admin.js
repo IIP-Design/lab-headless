@@ -1,6 +1,6 @@
 import { render } from '@wordpress/element';
 
-import RepoWizard from './components/RepoWizard';
+import RepoWizard from './components/RepoWizard/RepoWizard';
 
 const { githubDefaultOrg, githubToken } = window.gpalabDocsHub;
 

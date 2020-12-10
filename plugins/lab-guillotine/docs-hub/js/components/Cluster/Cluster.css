@@ -1,5 +1,10 @@
+.gpalab-docs-cluster {
+  margin-left: 1rem;
+}
+
 .gpalab-docs-leaves {
   display: flex;
   flex-direction: column;
   list-style: none;
+  margin: 0;
 }
