@@ -1,5 +1,5 @@
-import { buildPath, filterTree } from './utils/filters';
-import { QueryDefaultBranch, QueryDirectoryTree } from './queries/repo';
+import { buildPath, filterTree } from './filters';
+import { QueryDefaultBranch, QueryDirectoryTree } from '../queries/repo';
 
 /**
  * Executes a fetch request against the GitHub GraphQL API.

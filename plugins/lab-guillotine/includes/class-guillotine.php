@@ -58,8 +58,8 @@ class Guillotine {
     $this->load_dependencies();
     $this->define_admin_hooks();
     $this->define_public_hooks();
-    $this->define_docs_hub_hooks();
     $this->define_block_manager_hooks();
+    $this->define_docs_hub_hooks();
   }
 
   /**
@@ -70,6 +70,9 @@ class Guillotine {
    * - Guillotine\Loader. Orchestrates the hooks of the plugin.
    * - Guillotine\Admin. Defines all hooks for the admin area.
    * - Guillotine\Frontend. Defines all hooks for the public side of the site.
+   * - Guillotine\Block_Manager
+   * - Guillotine\Docs_Connect_Repo. Defines all hooks for the Docs Hub connect repo page.
+   * - Guillotine\Docs_Settings. Defines all hooks for the Docs Hub settings page.
    *
    * Create an instance of the loader which will be used to register the hooks with WordPress.
    *
@@ -87,6 +90,7 @@ class Guillotine {
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'block-manager/class-block-manager.php';
 
     // The class responsible for defining all hooks that provide the documentation hub capabilities.
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'docs-hub/class-docs-connect-repo.php';
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'docs-hub/class-docs-settings.php';
 
     // The class responsible for defining all actions that occur in the public-facing side of the site.
@@ -143,13 +147,17 @@ class Guillotine {
    * @since 0.0.1
    */
   private function define_docs_hub_hooks() {
+    $connect_repo  = new Guillotine\Docs_Connect_Repo( $this->get_plugin_name(), $this->get_version() );
     $docs_settings = new Guillotine\Docs_Settings( $this->get_plugin_name(), $this->get_version() );
 
     // Documentation hub settings page hooks.
-    $this->loader->add_action( 'init', $docs_settings, 'register_docs_hub_scripts' );
     $this->loader->add_action( 'admin_menu', $docs_settings, 'add_docs_hub_page' );
     $this->loader->add_action( 'admin_init', $docs_settings, 'populate_docs_settings' );
-    $this->loader->add_action( 'admin_enqueue_scripts', $docs_settings, 'enqueue_docs_hub' );
+
+    // Documentation hub connect a repo page hooks.
+    $this->loader->add_action( 'init', $connect_repo, 'register_connect_repo_scripts' );
+    $this->loader->add_action( 'admin_menu', $connect_repo, 'add_connect_repo_page' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $connect_repo, 'enqueue_connect_repo' );
   }
 
   /**

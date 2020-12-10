@@ -9,7 +9,7 @@
 namespace Guillotine;
 
 /**
- * Initialize admin hooks.
+ * Sets up the Documentation Hub settings configuration page.
  *
  * @package Guillotine\Docs_Settings
  * @since 0.0.1
@@ -36,7 +36,7 @@ class Docs_Settings {
    */
   public function add_docs_hub_page() {
     add_menu_page(
-      'gpalab-docs-hub',
+      __( 'Docs Hub | Settings', 'gpalab-guillotine' ),
       __( 'Docs Hub', 'gpalab-guillotine' ),
       'manage_options',
       'gpalab-docs-hub',
@@ -64,8 +64,6 @@ class Docs_Settings {
         submit_button();
       ?>
       </form>
-      <hr>
-      <div id="gpalab-docs-hub">Docs Go Here</div>
       <style>
         .gpalab-docs-hub-label{
           align-items: center;
@@ -131,54 +129,5 @@ class Docs_Settings {
       'gpalab-docs-hub',
       'gpalab-guillotine-docs-settings'
     );
-  }
-
-  /**
-   * Register the JavaScript and CSS bundles used to run the Docs Hub page.
-   *
-   * @since 0.0.1
-   */
-  public function register_docs_hub_scripts() {
-    $script_asset = require GUILLOTINE_DIR . 'docs-hub/build/admin.asset.php';
-
-    wp_register_script(
-      'gpalab-guillotine-docs-hub-js',
-      GUILLOTINE_URL . 'docs-hub/build/admin.js',
-      $script_asset['dependencies'],
-      $script_asset['version'],
-      true
-    );
-
-    wp_register_style(
-      'gpalab-guillotine-docs-hub-css',
-      GUILLOTINE_URL . 'docs-hub/build/admin.css',
-      array(),
-      $this->version
-    );
-  }
-
-  /**
-   * Enqueue the Docs Hub Javascript and CSS bundles if on teh the Docs Hub page.
-   *
-   * @param string $hook   Name of the current page.
-   *
-   * @since 0.0.1
-   */
-  public function enqueue_docs_hub( $hook ) {
-    if ( 'toplevel_page_gpalab-docs-hub' !== $hook ) {
-      return;
-    }
-
-    wp_localize_script(
-      'gpalab-guillotine-docs-hub-js',
-      'gpalabDocsHub',
-      array(
-        'githubDefaultOrg' => get_option( 'gpalab_guillotine_docs_org' ),
-        'githubToken'      => get_option( 'gpalab_guillotine_docs_token' ),
-      )
-      );
-
-    wp_enqueue_script( 'gpalab-guillotine-docs-hub-js' );
-    wp_enqueue_style( 'gpalab-guillotine-docs-hub-css' );
   }
 }
