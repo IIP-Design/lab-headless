@@ -103,3 +103,12 @@ export const buildPath = ( branch, resource, subdirectory ) => {
 
   return `${branch}:${resourcePath}`;
 };
+
+/**
+ * Removes a particular file object from a list based on the oid value.
+ *
+ * @param {Object} file        An object representing file data, requires a oid property.
+ * @param {Object[]} selected  Current list of files.
+ * @returns {Object[]}         The filtered list.
+ */
+export const removeFile = ( file, selected ) => selected.filter( item => item.oid !== file.oid );

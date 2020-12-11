@@ -46,3 +46,25 @@ export const parseBranches = nodes => {
 
   return nodes.map( node => node.name );
 };
+
+/**
+ * Convert the repo docs tree into an array of its component files.
+ *
+ * @param {Object} repoTree   The directory tree for the repo's documentation.
+ * @returns {Object[]}        List of file data objects.
+ */
+export const flattenTree = repoTree => {
+  const { changelog, readme, docs } = repoTree;
+
+  const leaves = docs.map( leaf => {
+    if ( !leaf.contents ) {
+      return leaf;
+    }
+
+    return leaf.contents;
+  } );
+
+  return [
+    ...leaves.flat(), changelog, readme,
+  ];
+};
