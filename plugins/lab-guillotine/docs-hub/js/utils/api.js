@@ -55,7 +55,7 @@ export const getRepoDocs = async ( variables, token, branch, subdirectory ) => {
 
   const data = await fetchAPI( QueryDirectoryTree( dirs, files ), variables, token );
 
-  return parseRepoTree( data );
+  return parseRepoTree( data, subdirectory );
 };
 
 /**
