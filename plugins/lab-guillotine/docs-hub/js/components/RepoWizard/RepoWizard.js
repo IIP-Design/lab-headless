@@ -1,41 +1,38 @@
-import propTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
-
-import { getBranches, getRepoDocs } from '../../utils/api';
-import { steps } from './progress-steps';
+import { useContext, useState } from '@wordpress/element';
 
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
+import { ConnectRepoContext } from '../../context/connectRepoContext';
+import { getBranches, getRepoDocs } from '../../utils/api';
+import { steps } from './progress-steps';
+
 import './RepoWizard.css';
 
-const RepoWizard = ( { owner: defaultOwner, token } ) => {
-  const [step, setStep] = useState( 0 );
-  const [branch, setBranch] = useState( '' );
-  const [branches, setBranches] = useState( null );
-  const [branchSet, setBranchSet] = useState( false );
-  const [owner, setOwner] = useState( defaultOwner );
-  const [repo, setRepo] = useState( '' );
-  const [subdirectory, setSubdirectory] = useState( '' );
-  const [subdirSet, setSubdirSet] = useState( false );
+const RepoWizard = () => {
   const [tree, setTree] = useState( null );
+
+  const {
+    dispatch,
+    state: { branch, branches, branchSet, owner, repo, subdirectory, subdirSet, token },
+  } = useContext( ConnectRepoContext );
 
   const handleInput = ( e, control ) => {
     const { value } = e.target;
 
     switch ( control ) {
       case 'branch':
-        setBranch( value );
+        dispatch( { type: 'set-branch', payload: value } );
         break;
       case 'owner':
-        setOwner( value );
+        dispatch( { type: 'set-owner', payload: value } );
         break;
       case 'repo':
-        setRepo( value );
+        dispatch( { type: 'set-repo', payload: value } );
         break;
       case 'subdir':
-        setSubdirectory( value );
+        dispatch( { type: 'set-subdir', payload: value } );
         break;
       default:
     }
@@ -47,19 +44,14 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
       token,
     );
 
-    setBranches( allBranches );
-    setBranch( defaultBranch );
-    setStep( 1 );
+    dispatch( { type: 'set-branches', payload: allBranches } );
+    dispatch( { type: 'set-branch', payload: defaultBranch } );
+    dispatch( { type: 'increment-active' } );
   };
 
-  const selectBranch = () => {
-    setBranchSet( true );
-    setStep( 2 );
-  };
-
-  const selectDirectory = () => {
-    setSubdirSet( true );
-    setStep( 3 );
+  const confirmChoice = action => {
+    dispatch( { type: `confirm-${action}` } );
+    dispatch( { type: 'increment-active' } );
   };
 
   const getTree = async () => {
@@ -71,24 +63,17 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
     );
 
     setTree( repoTree );
-    setStep( 4 );
+    dispatch( { type: 'increment-active' } );
   };
 
   const reset = () => {
-    setStep( 0 );
-    setBranch( '' );
-    setBranches( null );
-    setBranchSet( false );
-    setOwner( defaultOwner );
-    setRepo( '' );
-    setSubdirectory( '' );
-    setSubdirSet( false );
+    dispatch( { type: 'reset' } );
     setTree( null );
   };
 
   return (
     <div className="gpalab-docs-wizard-container">
-      <ProgressBar active={ step } steps={ steps } />
+      <ProgressBar steps={ steps } />
       <div className="gpalab-docs-wizard-contents">
         <div className="gpalab-docs-wizard-section">
           <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-owner">
@@ -144,7 +129,7 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
               className="gpalab-docs-wizard-button"
               disabled={ !!branchSet }
               type="button"
-              onClick={ () => selectBranch() }
+              onClick={ () => confirmChoice( 'branch' ) }
             >
               { __( 'Use This Branch', 'gpalab-guillotine' ) }
             </button>
@@ -166,7 +151,7 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
               className="gpalab-docs-wizard-button"
               disabled={ !!subdirSet }
               type="button"
-              onClick={ () => selectDirectory() }
+              onClick={ () => confirmChoice( 'subdir' ) }
             >
               { subdirectory ? __( 'Search This Directory', 'gpalab-guillotine' ) : __( 'No, Search Root', 'gpalab-guillotine' ) }
             </button>
@@ -204,11 +189,6 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
       </div>
     </div>
   );
-};
-
-RepoWizard.propTypes = {
-  owner: propTypes.string,
-  token: propTypes.string,
 };
 
 export default RepoWizard;

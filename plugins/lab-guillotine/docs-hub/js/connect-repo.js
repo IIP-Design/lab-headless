@@ -1,10 +1,8 @@
 import { render } from '@wordpress/element';
 
-import RepoWizard from './components/RepoWizard/RepoWizard';
-
-const { githubDefaultOrg, githubToken } = window.gpalabDocsHub;
+import ConnectRepo from './components/ConnectRepo';
 
 render(
-  <RepoWizard owner={ githubDefaultOrg } token={ githubToken } />,
+  <ConnectRepo />,
   document.getElementById( 'gpalab-docs-hub' ),
 );
