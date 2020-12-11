@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n';
 import { useContext, useState } from '@wordpress/element';
 
 import ProgressBar from '../ProgressBar/ProgressBar';
@@ -6,6 +5,7 @@ import Tree from '../Tree/Tree';
 
 import { ConnectRepoContext } from '../../context/connectRepoContext';
 import { getBranches, getRepoDocs } from '../../utils/api';
+import { i18nize } from '../../utils/helpers';
 import { steps } from './progress-steps';
 
 import './RepoWizard.css';
@@ -77,7 +77,7 @@ const RepoWizard = () => {
       <div className="gpalab-docs-wizard-contents">
         <div className="gpalab-docs-wizard-section">
           <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-owner">
-            { `${__( 'Identify repo owner', 'gpalab-guillotine' )}:` }
+            { `${i18nize( 'Identify repo owner' )}:` }
             <input
               disabled={ !!branch }
               id="gpalab-docs-owner"
@@ -89,7 +89,7 @@ const RepoWizard = () => {
         </div>
         <div className="gpalab-docs-wizard-section">
           <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-repo">
-            { `${__( 'Add the repo name', 'gpalab-guillotine' )}:` }
+            { `${i18nize( 'Add the repo name' )}:` }
             <input
               disabled={ !!branch }
               id="gpalab-docs-repo"
@@ -105,14 +105,14 @@ const RepoWizard = () => {
               disabled={ !!branch }
               onClick={ () => getBranch() }
             >
-              { __( 'Get GitHub Branches', 'gpalab-guillotine' ) }
+              { i18nize( 'Get GitHub Branches' ) }
             </button>
           ) }
         </div>
         { branches && (
           <div className="gpalab-docs-wizard-section">
             <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-default-branch">
-              { `${__( 'Choose the branch', 'gpalab-guillotine' )}:` }
+              { `${i18nize( 'Choose the branch' )}:` }
               <select
                 disabled={ !!branchSet }
                 id="gpalab-docs-default-branch"
@@ -131,14 +131,14 @@ const RepoWizard = () => {
               type="button"
               onClick={ () => confirmChoice( 'branch' ) }
             >
-              { __( 'Use This Branch', 'gpalab-guillotine' ) }
+              { i18nize( 'Use This Branch' ) }
             </button>
           </div>
         ) }
         { branchSet && (
           <div className="gpalab-docs-wizard-section">
             <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-subdir">
-              { `${__( 'Search sub-directory', 'gpalab-guillotine' )}:` }
+              { `${i18nize( 'Search sub-directory' )}:` }
               <input
                 disabled={ !!subdirSet }
                 id="gpalab-docs-subdir"
@@ -153,13 +153,13 @@ const RepoWizard = () => {
               type="button"
               onClick={ () => confirmChoice( 'subdir' ) }
             >
-              { subdirectory ? __( 'Search This Directory', 'gpalab-guillotine' ) : __( 'No, Search Root', 'gpalab-guillotine' ) }
+              { subdirectory ? i18nize( 'Search This Directory' ) : i18nize( 'No, Search Root' ) }
             </button>
           </div>
         ) }
         { tree && (
           <div className="gpalab-docs-tree-container">
-            <strong>{ `${__( 'Results', 'gpalab-guillotine' )}:` }</strong>
+            <strong>{ `${i18nize( 'Results' )}:` }</strong>
             <Tree
               changelog={ tree.changelog }
               readme={ tree.readme }
@@ -174,7 +174,7 @@ const RepoWizard = () => {
             type="button"
             onClick={ () => reset() }
           >
-            { __( 'Reset Form', 'gpalab-guillotine' ) }
+            { i18nize( 'Reset Form' ) }
           </button>
 
           <button
@@ -183,7 +183,7 @@ const RepoWizard = () => {
             type="button"
             onClick={ () => getTree() }
           >
-            { __( 'Get Repo File Tree', 'gpalab-guillotine' ) }
+            { i18nize( 'Get Repo File Tree' ) }
           </button>
         </div>
       </div>
