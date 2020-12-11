@@ -29,7 +29,7 @@ const isNotAssetsDir = entries => entries.filter( entry => {
 const noLeadingUnderscore = entries => entries.filter( entry => entry.name.charAt( 0 ) !== '_' );
 
 /**
- * If object entry is a file remove it's object property, otherwise convert that to a sub-tree.
+ * If object entry is a file, remove it's object property, otherwise convert that to a sub-tree.
  *
  * @param {Object[]} entries  A list of files/sub-directories in a repo directory.
  * @returns {Object[]}        A list of files/sub-directories mapped contents.
@@ -52,9 +52,15 @@ const mapContents = entries => entries.map( entry => {
  * Filters a list of directory contents to remove unwanted files and directories.
  *
  * @param {Object[]} entries  A list of files/sub-directories in a repo directory.
- * @returns {Object[]}        A list of files/sub-directories excluding unwanted files/directories.
+ * @returns {Object[]|null}   A list of files/sub-directories excluding unwanted files/directories.
  */
-export const filterTree = entries => mapContents( isNotAssetsDir( noLeadingUnderscore( isNotGemfile( entries ) ) ) );
+export const filterTree = entries => {
+  if ( !entries ) {
+    return null;
+  }
+
+  return mapContents( isNotAssetsDir( noLeadingUnderscore( isNotGemfile( entries ) ) ) );
+};
 
 /**
  * Check whether a string ends in a slash and appends one if it does not.
@@ -73,6 +79,18 @@ const ensureTrailingSlash = string => {
 };
 
 /**
+ * Constructs a filename from a resource name and possible parent directory where the resource resides.
+ *
+ * @param {string} resource      File or directory name to search for.
+ * @param {string} subdirectory  Directory to search in relative to the repo root.
+ */
+export const buildResourcePath = ( resource, subdirectory ) => {
+  const path = subdirectory ? ensureTrailingSlash( subdirectory ) : '';
+
+  return `${path}${resource || ''}`;
+};
+
+/**
  * Construct the pathname used by the GraphQL object expression.
  *
  * @param {string} branch        Branch name.
@@ -81,7 +99,7 @@ const ensureTrailingSlash = string => {
  * @returns {string}             The path assembled from all the provided values.
  */
 export const buildPath = ( branch, resource, subdirectory ) => {
-  const path = subdirectory ? ensureTrailingSlash( subdirectory ) : '';
+  const resourcePath = buildResourcePath( resource, subdirectory );
 
-  return `${branch}:${path}${resource}`;
+  return `${branch}:${resourcePath}`;
 };

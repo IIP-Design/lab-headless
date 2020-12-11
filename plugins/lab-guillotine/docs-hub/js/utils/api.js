@@ -1,4 +1,5 @@
-import { buildPath, filterTree } from './filters';
+import { buildPath } from './filters';
+import { parseBranches, parseRepoTree } from './normalizers';
 import { QueryDefaultBranch, QueryDirectoryTree } from '../queries/repo';
 
 /**
@@ -36,7 +37,7 @@ const fetchAPI = async ( query, variables, token ) => {
 };
 
 /**
- * Returns a list of files or
+ * Searches for documentation files in a GitHub repo.
  *
  * @param {Object} variables     Variables to be passed to the GraphQL query.
  * @param {string} token         GitHub personal access token.
@@ -44,7 +45,7 @@ const fetchAPI = async ( query, variables, token ) => {
  * @param {string} subdirectory  Directory relative to the repo root.
  * @returns {Object}             A list of files/sub-directories in a repo directory.
  */
-export const getRepoFiles = async ( variables, token, branch, subdirectory ) => {
+export const getRepoDocs = async ( variables, token, branch, subdirectory ) => {
   const dirs = [{ alias: 'docs', path: buildPath( branch, 'docs/', subdirectory ) }];
 
   const files = [
@@ -54,17 +55,7 @@ export const getRepoFiles = async ( variables, token, branch, subdirectory ) => 
 
   const data = await fetchAPI( QueryDirectoryTree( dirs, files ), variables, token );
 
-  const entries = data?.repository?.docs?.entries;
-
-  const filtered = entries ? filterTree( entries ) : null;
-
-  const fullTree = {
-    changelog: data?.repository?.changelog,
-    readme: data?.repository?.readme,
-    docs: filtered,
-  };
-
-  return fullTree;
+  return parseRepoTree( data );
 };
 
 /**
@@ -78,7 +69,7 @@ export const getBranches = async ( variables, token ) => {
   const data = await fetchAPI( QueryDefaultBranch, variables, token );
 
   return {
-    branches: data.repository.refs.nodes.map( node => node.name ),
+    branches: parseBranches( data?.repository?.refs?.nodes ),
     defaultBranch: data?.repository?.defaultBranchRef?.name,
   };
 };

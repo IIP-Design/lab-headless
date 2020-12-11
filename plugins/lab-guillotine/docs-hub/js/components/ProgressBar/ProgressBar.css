@@ -1,15 +1,16 @@
 .gpalab-docs-progress-bar {
   display: grid;
   list-style: none;
-  margin: 0 0 2rem;
+  margin: 0 0.5rem 1.5rem;
 }
 
 .gpalab-docs-progress-step {
+  align-items: center;
   display: flex;
   flex-direction: column;
   font-style: italic;
-  align-items: center;
   padding: 1rem;
+  text-align: center;
 }
 
 .gpalab-docs-progress-step.active {

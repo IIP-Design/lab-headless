@@ -2,7 +2,7 @@ import propTypes from 'prop-types';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 
-import { getBranches, getRepoFiles } from '../../utils/api';
+import { getBranches, getRepoDocs } from '../../utils/api';
 import { steps } from './progress-steps';
 
 import ProgressBar from '../ProgressBar/ProgressBar';
@@ -63,7 +63,7 @@ const RepoWizard = ( { owner: defaultOwner, token } ) => {
   };
 
   const getTree = async () => {
-    const repoTree = await getRepoFiles(
+    const repoTree = await getRepoDocs(
       { owner, repo },
       token,
       branch,
