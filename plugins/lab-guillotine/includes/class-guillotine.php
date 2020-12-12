@@ -85,6 +85,7 @@ class Guillotine {
 
     // The class responsible for defining all actions that occur in the admin area.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-settings.php';
 
     // The class responsible for defining all hooks that manage the functioning of Gutenberg block.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'block-manager/class-block-manager.php';
@@ -104,17 +105,11 @@ class Guillotine {
    * @since 0.0.1
    */
   private function define_admin_hooks() {
-    $plugin_admin = new Guillotine\Admin( $this->get_plugin_name(), $this->get_version() );
+    $plugin_admin    = new Guillotine\Admin( $this->get_plugin_name(), $this->get_version() );
+    $plugin_settings = new Guillotine\Settings( $this->get_plugin_name(), $this->get_version() );
 
-    // Admin hooks.
-    $this->loader->add_action( 'init', $plugin_admin, 'register_custom_post_types' );
-    $this->loader->add_action( 'init', $plugin_admin, 'register_gutenberg_plugins' );
-    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_docs_sidebar' );
-
-    // GraphQL hooks.
-    $this->loader->add_action( 'graphql_register_types', $plugin_admin, 'register_custom_graphql_primitives' );
-    $this->loader->add_action( 'graphql_register_types', $plugin_admin, 'register_custom_graphql_unions', 10, 1 );
-    $this->loader->add_action( 'graphql_register_types', $plugin_admin, 'register_custom_graphql_types' );
+    $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
+    $this->loader->add_action( 'admin_init', $plugin_settings, 'populate_guillotine_settings' );
   }
 
   /**
