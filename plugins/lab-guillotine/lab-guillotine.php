@@ -24,6 +24,16 @@ define( 'GUILLOTINE_URL', plugin_dir_url( dirname( __FILE__ ) ) . 'lab-guillotin
 define( 'GUILLOTINE_ADMIN_BUILD_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'lab-guillotine/admin/build/' );
 define( 'GUILLOTINE_ADMIN_BUILD_URL', plugin_dir_url( dirname( __FILE__ ) ) . 'lab-guillotine/admin/build/' );
 
+/**
+ * Run functions needed at startup when plugin is installed.
+ */
+function gpalab_guillotine_activate() {
+  require_once plugin_dir_path( __FILE__ ) . 'includes/class-activator.php';
+
+  GUILLOTINE\Activator::activate();
+}
+register_activation_hook( __FILE__, 'gpalab_guillotine_activate' );
+
 // Imports Guillotine class.
 require plugin_dir_path( __FILE__ ) . 'includes/class-guillotine.php';
 
