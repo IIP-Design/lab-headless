@@ -132,8 +132,10 @@ class Guillotine {
   private function define_block_manager_hooks() {
     $block_manager = new Guillotine\Block_Manager( $this->get_plugin_name(), $this->get_version() );
 
-    // Documentation hub settings page hooks.
-    $this->loader->add_action( 'allowed_block_types', $block_manager, 'set_allowed_block_types' );
+    if ( ! empty( get_option( 'gpalab_guillotine_block_manager' ) ) ) {
+      // Documentation hub settings page hooks.
+      $this->loader->add_action( 'allowed_block_types', $block_manager, 'set_allowed_block_types' );
+    }
   }
 
   /**
@@ -145,14 +147,16 @@ class Guillotine {
     $connect_repo  = new Guillotine\Docs_Connect_Repo( $this->get_plugin_name(), $this->get_version() );
     $docs_settings = new Guillotine\Docs_Settings( $this->get_plugin_name(), $this->get_version() );
 
-    // Documentation hub settings page hooks.
-    $this->loader->add_action( 'admin_menu', $docs_settings, 'add_docs_hub_page' );
-    $this->loader->add_action( 'admin_init', $docs_settings, 'populate_docs_settings' );
+    if ( ! empty( get_option( 'gpalab_guillotine_docs_hub' ) ) ) {
+      // Documentation hub settings page hooks.
+      $this->loader->add_action( 'admin_menu', $docs_settings, 'add_docs_hub_page' );
+      $this->loader->add_action( 'admin_init', $docs_settings, 'populate_docs_settings' );
 
-    // Documentation hub connect a repo page hooks.
-    $this->loader->add_action( 'init', $connect_repo, 'register_connect_repo_scripts' );
-    $this->loader->add_action( 'admin_menu', $connect_repo, 'add_connect_repo_page' );
-    $this->loader->add_action( 'admin_enqueue_scripts', $connect_repo, 'enqueue_connect_repo' );
+      // Documentation hub connect a repo page hooks.
+      $this->loader->add_action( 'init', $connect_repo, 'register_connect_repo_scripts' );
+      $this->loader->add_action( 'admin_menu', $connect_repo, 'add_connect_repo_page' );
+      $this->loader->add_action( 'admin_enqueue_scripts', $connect_repo, 'enqueue_connect_repo' );
+    }
   }
 
   /**
