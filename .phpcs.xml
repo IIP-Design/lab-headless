@@ -11,8 +11,7 @@
 <exclude-pattern>*/vendor</exclude-pattern>
 <exclude-pattern>*/node_modules</exclude-pattern>
 <exclude-pattern>./plugins/lab-guillotine/*/index.php</exclude-pattern>
-<exclude-pattern>./plugins/lab-guillotine/admin/build</exclude-pattern>
-<exclude-pattern>./plugins/lab-guillotine/docs-hub/build</exclude-pattern>
+<exclude-pattern>./plugins/lab-guillotine/*/build</exclude-pattern>
 <exclude-pattern>./webroot</exclude-pattern>
 
 <arg name="colors"/>
@@ -38,6 +37,12 @@
   <exclude name="WordPress.Arrays.ArrayIndentation.MultiLineArrayItemNotAligned" />
   <exclude name="WordPress.WhiteSpace.PrecisionAlignment" />
 </rule>
+
+<!-- Allow underscores in the custom single and archive page templates -->
+<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+    <exclude-pattern>*/single-*.php</exclude-pattern>
+    <exclude-pattern>*/archive-*.php</exclude-pattern>
+ </rule>
 
 <!-- Add custom rule to use two spaces for indents rather than tabs. -->
 <rule ref="Generic.WhiteSpace.ScopeIndent">
