@@ -90,6 +90,7 @@ class Guillotine {
 
     // The class responsible for defining all hooks that create the plugin's custom post types.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'custom-post-types/event/class-event-cpt.php';
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'custom-post-types/event/class-event-front.php';
 
     // The class responsible for defining all hooks that manage the functioning of Gutenberg block.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'block-manager/class-block-manager.php';
@@ -134,10 +135,12 @@ class Guillotine {
    * @since 0.0.1
    */
   private function define_cpt_hooks() {
-    $event_cpt = new Guillotine\Event_CPT( $this->get_plugin_name(), $this->get_version() );
+    $event_cpt   = new Guillotine\Event_CPT( $this->get_plugin_name(), $this->get_version() );
+    $event_front = new Guillotine\Event_Front( $this->get_plugin_name(), $this->get_version() );
 
     // Hooks used by the event custom post type.
     $this->loader->add_action( 'init', $event_cpt, 'register_event_cpt' );
+    $this->loader->add_filter( 'template_include', $event_front, 'include_event_single', 1 );
   }
 
 
