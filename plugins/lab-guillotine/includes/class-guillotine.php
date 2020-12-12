@@ -58,6 +58,7 @@ class Guillotine {
     $this->load_dependencies();
     $this->define_admin_hooks();
     $this->define_public_hooks();
+    $this->define_cpt_hooks();
     $this->define_block_manager_hooks();
     $this->define_docs_hub_hooks();
   }
@@ -86,6 +87,9 @@ class Guillotine {
     // The class responsible for defining all actions that occur in the admin area.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-admin.php';
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-settings.php';
+
+    // The class responsible for defining all hooks that create the plugin's custom post types.
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'custom-post-types/event/class-event-cpt.php';
 
     // The class responsible for defining all hooks that manage the functioning of Gutenberg block.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'block-manager/class-block-manager.php';
@@ -123,6 +127,19 @@ class Guillotine {
     // Frontend hooks.
     $this->loader->add_action( 'INSERT_WP_HOOK', $plugin_frontend, 'INSERT_CALLBACK' );
   }
+
+  /**
+   * Register all of the hooks related to the plugin's custom post types.
+   *
+   * @since 0.0.1
+   */
+  private function define_cpt_hooks() {
+    $event_cpt = new Guillotine\Event_CPT( $this->get_plugin_name(), $this->get_version() );
+
+    // Hooks used by the event custom post type.
+    $this->loader->add_action( 'init', $event_cpt, 'register_event_cpt' );
+  }
+
 
   /**
    * Register all of the hooks related to the Gutenberg block manager.
