@@ -104,11 +104,11 @@ class Admin {
    */
   public function register_gutenberg_plugins() {
     // Adds a documentation sidebar to the Gutenberg documents panel.
-    $script_asset = require GUILLOTINE_DIR . 'build/docs-sidebar.asset.php';
+    $script_asset = require GUILLOTINE_DIR . 'build/gpalab-docs-sidebar.asset.php';
 
     wp_register_script(
       'docs-sidebar-js',
-      GUILLOTINE_URL . 'build/docs-sidebar.js',
+      GUILLOTINE_URL . 'build/gpalab-docs-sidebar.js',
       $script_asset['dependencies'],
       $script_asset['version'],
       true
