@@ -10,13 +10,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:docs && npm run build:plugin",
-    "build:docs": "wp-scripts build docs-hub/js/*.js --output-path=docs-hub/build",
-    "build:plugin": "wp-scripts build admin/plugins/docs-sidebar.js --output-path=admin/build",
-    "dev": "npm run dev:docs && npm run dev:plugin",
-    "dev:docs": "wp-scripts start docs-hub/js/*.js --output-path=docs-hub/build",
-    "dev:plugin": "wp-scripts start admin/plugins/docs-sidebar.js --output-path=admin/build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "wp-scripts build js/*.js --output-path=build",
+    "dev": "wp-scripts start js/*.js --output-path=build"
   },
   "devDependencies": {
     "@wordpress/scripts": "^12.3.0",

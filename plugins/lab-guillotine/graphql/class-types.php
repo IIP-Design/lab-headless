@@ -22,7 +22,7 @@ class Types {
    * @since 0.0.1
    */
   public function register_styled_block_meta_types() {
-    include_once GUILLOTINE_DIR . 'admin/graphql/types/class-styled-blocks.php';
+    include_once GUILLOTINE_DIR . 'graphql/types/class-styled-blocks.php';
     $blocks = new Styled_Blocks();
 
     /** Primitive types must be registered first. */
@@ -145,7 +145,7 @@ class Types {
   /**
    * Registers union types pertaining to the Styled Block Builder plugin.
    *
-   * @param array $type_registry  List of available types.
+   * @param object $type_registry  List of available types.
    *
    * @since 0.0.1
    */

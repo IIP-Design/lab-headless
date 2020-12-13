@@ -11,7 +11,7 @@
 <exclude-pattern>*/vendor</exclude-pattern>
 <exclude-pattern>*/node_modules</exclude-pattern>
 <exclude-pattern>./plugins/lab-guillotine/*/index.php</exclude-pattern>
-<exclude-pattern>./plugins/lab-guillotine/*/build</exclude-pattern>
+<exclude-pattern>./plugins/lab-guillotine/build</exclude-pattern>
 <exclude-pattern>./webroot</exclude-pattern>
 
 <arg name="colors"/>

@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": [ "node_modules/", "admin/build/", "docs-hub/build", "vendor/" ],
+  "ignorePatterns": [ "node_modules/", "build/", "vendor/" ],
   "rules": {
     "react/jsx-pascal-case": ["error", { "allowAllCaps": true }],
     "node/no-unpublished-import": [

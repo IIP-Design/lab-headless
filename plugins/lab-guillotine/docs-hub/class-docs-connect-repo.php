@@ -76,11 +76,11 @@ class Docs_Connect_Repo {
      * @since 0.0.1
      */
   public function register_connect_repo_scripts() {
-    $script_asset = require GUILLOTINE_DIR . 'docs-hub/build/connect-repo.asset.php';
+    $script_asset = require GUILLOTINE_DIR . 'build/connect-repo.asset.php';
 
     wp_register_script(
       'gpalab-guillotine-connect-repo-js',
-      GUILLOTINE_URL . 'docs-hub/build/connect-repo.js',
+      GUILLOTINE_URL . 'build/connect-repo.js',
       $script_asset['dependencies'],
       $script_asset['version'],
       true
@@ -88,7 +88,7 @@ class Docs_Connect_Repo {
 
     wp_register_style(
       'gpalab-guillotine-connect-repo-css',
-      GUILLOTINE_URL . 'docs-hub/build/connect-repo.css',
+      GUILLOTINE_URL . 'build/connect-repo.css',
       array(),
       $this->version
     );

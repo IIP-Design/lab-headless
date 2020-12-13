@@ -143,7 +143,6 @@ class Guillotine {
     $this->loader->add_filter( 'template_include', $event_front, 'include_event_single', 1 );
   }
 
-
   /**
    * Register all of the hooks related to the Gutenberg block manager.
    *

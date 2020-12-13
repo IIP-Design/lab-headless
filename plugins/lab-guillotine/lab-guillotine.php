@@ -21,8 +21,6 @@ if ( ! defined( 'WPINC' ) ) {
 // Define constants.
 define( 'GUILLOTINE_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'lab-guillotine/' );
 define( 'GUILLOTINE_URL', plugin_dir_url( dirname( __FILE__ ) ) . 'lab-guillotine/' );
-define( 'GUILLOTINE_ADMIN_BUILD_DIR', plugin_dir_path( dirname( __FILE__ ) ) . 'lab-guillotine/admin/build/' );
-define( 'GUILLOTINE_ADMIN_BUILD_URL', plugin_dir_url( dirname( __FILE__ ) ) . 'lab-guillotine/admin/build/' );
 
 /**
  * Run functions needed at startup when plugin is installed.

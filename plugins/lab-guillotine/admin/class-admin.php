@@ -36,7 +36,7 @@ class Admin {
    */
   public function register_custom_post_types() {
     // Load in documentation custom post type.
-    include_once GUILLOTINE_DIR . 'admin/post-types/class-docs-cpt.php';
+    include_once GUILLOTINE_DIR . 'custom-post-types/docs/class-docs-cpt.php';
     $docs = new Docs_CPT();
 
     $docs->register_docs_cpt();
@@ -50,7 +50,7 @@ class Admin {
    */
   public function register_custom_graphql_primitives() {
     // Load in Types class in order to register custom types.
-    include_once GUILLOTINE_DIR . 'admin/graphql/class-types.php';
+    include_once GUILLOTINE_DIR . 'graphql/class-types.php';
     $types = new Types();
 
     $types->register_styled_block_meta_types();
@@ -65,7 +65,7 @@ class Admin {
    */
   public function register_custom_graphql_unions( $type_registry ) {
     // Load in Types class in order to register custom types.
-    include_once GUILLOTINE_DIR . 'admin/graphql/class-types.php';
+    include_once GUILLOTINE_DIR . 'graphql/class-types.php';
     $types = new Types();
 
     $types->register_styled_blocks_union( $type_registry );
@@ -78,15 +78,15 @@ class Admin {
    */
   public function register_custom_graphql_types() {
     // Load in documentation custom post type.
-    include_once GUILLOTINE_DIR . 'admin/post-types/class-docs-cpt.php';
+    include_once GUILLOTINE_DIR . 'custom-post-types/docs/class-docs-cpt.php';
     $docs = new Docs_CPT();
 
     // Load in Fields class in order to register miscellaneous fields.
-    include_once GUILLOTINE_DIR . 'admin/graphql/class-fields.php';
+    include_once GUILLOTINE_DIR . 'graphql/class-fields.php';
     $fields = new Fields();
 
     // Load in Types class in order to register custom types.
-    include_once GUILLOTINE_DIR . 'admin/graphql/class-types.php';
+    include_once GUILLOTINE_DIR . 'graphql/class-types.php';
     $types = new Types();
 
     // Documentation page custom post type.
@@ -104,11 +104,11 @@ class Admin {
    */
   public function register_gutenberg_plugins() {
     // Adds a documentation sidebar to the Gutenberg documents panel.
-    $script_asset = require GUILLOTINE_ADMIN_BUILD_DIR . 'docs-sidebar.asset.php';
+    $script_asset = require GUILLOTINE_DIR . 'build/docs-sidebar.asset.php';
 
     wp_register_script(
       'docs-sidebar-js',
-      GUILLOTINE_ADMIN_BUILD_URL . 'docs-sidebar.js',
+      GUILLOTINE_URL . 'build/docs-sidebar.js',
       $script_asset['dependencies'],
       $script_asset['version'],
       true
