@@ -102,6 +102,60 @@ class Event_CPT {
 
     register_post_type( 'gpalab_event', $args );
 
-    // $this->register_docs_meta();
+    $this->register_event_meta();
+  }
+
+  /**
+   * Register the metadata fields for the event custom post type.
+   *
+   * @since 0.0.1
+   */
+  private function register_event_meta() {
+    register_post_meta(
+      'gpalab_event',
+      '_gpalab_event_date',
+      array(
+        'show_in_rest' => true,
+        'single'       => true,
+        'type'         => 'string',
+      )
+    );
+  }
+
+  /**
+   * Register the JavaScript required for customizations of the Gutenberg Editor.
+   *
+   * @since 0.0.1
+   */
+  public function register_event_gutenberg_plugin() {
+    // Adds a sidebar to the Gutenberg documents panel for adding event .
+    $script_asset = require GUILLOTINE_DIR . 'build/gpalab-event-sidebar.asset.php';
+
+    wp_register_script(
+      'gpalab-event-sidebar-js',
+      GUILLOTINE_URL . 'build/gpalab-event-sidebar.js',
+      $script_asset['dependencies'],
+      $script_asset['version'],
+      true
+    );
+  }
+
+  /**
+   * Enqueue event custom sidebar on the event custom post type admin page.
+   *
+   * @param string $hook_suffix  The current admin page.
+   *
+   * @since 0.0.1
+   */
+  public function enqueue_event_sidebar( $hook_suffix ) {
+    $cpt = 'gpalab_event';
+
+    if ( in_array( $hook_suffix, array( 'post.php', 'post-new.php' ), true ) ) {
+      $screen = get_current_screen();
+
+      if ( is_object( $screen ) && $cpt === $screen->post_type ) {
+        wp_enqueue_script( 'gpalab-event-sidebar-js' );
+      }
+    }
   }
 }

@@ -140,6 +140,9 @@ class Guillotine {
 
     // Hooks used by the event custom post type.
     $this->loader->add_action( 'init', $event_cpt, 'register_event_cpt' );
+    $this->loader->add_action( 'init', $event_cpt, 'register_event_gutenberg_plugin' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $event_cpt, 'enqueue_event_sidebar' );
+
     $this->loader->add_filter( 'template_include', $event_front, 'include_event_single', 1 );
   }
 
