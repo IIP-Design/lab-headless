@@ -88,7 +88,7 @@ function neck_brace_theme_settings() {
   if ( ! isset( $bkgrd_color ) ) {
     set_theme_mod(
       'background_color',
-      '#FFFFFF'
+      'FFFFFF'
     );
   }
 

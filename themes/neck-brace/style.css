@@ -8,7 +8,7 @@ Description: Minimal theme to style the lab homepage when not using the headless
 Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: gpalab-basic
+Text Domain: gpalab-neck
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap');
@@ -17,14 +17,9 @@ Text Domain: gpalab-basic
   font-family: 'Open Sans', sans-serif;
   color: #212121;
 }
+
 body {
   background: #ffffff;
-}
-
-.to-the-top > span,
-.to-the-top > span > span,
-small {
-  color: white;
 }
 
 h1,
@@ -64,37 +59,13 @@ h5 {
   }
 }
 
-.site-logo {
-  max-width: 350px;
-}
-
 .cover-header-inner-wrapper {
   justify-content: center;
 }
 
 #site-header .header-navigation-wrapper,
-#site-header .mobile-nav-toggle,
-.footer-credits {
+#site-header .mobile-nav-toggle {
   display: none;
-}
-
-.footer-widgets {
-  width: 100% !important;
-  text-align: center;
-}
-
-.footer-nav-widgets-wrapper,
-.widgets-outer-wrapper {
-  border: none;
-}
-
-.footer-widgets-outer-wrapper {
-  border: none;
-  padding: 4rem;
-}
-
-.footer-widgets a {
-  color: white;
 }
 
 .entry-content
@@ -113,8 +84,8 @@ h5 {
 .cover-header + .post-inner {
   padding-top: 6rem;
 }
+
 .cover-header .entry-header h1 {
-  color: #0a2240;
   font-weight: 700;
   font-size: 16rem;
   letter-spacing: 0.15rem;
@@ -138,16 +109,6 @@ h1.entry-title::after {
   color: #038098;
 }
 
-/* .entry-header-inner.section-inner.medium::after {
-    content: "We are the Digital Lab";
-	color: #0A2240;
-    font-family: 'Open Sans', sans-serif;
-	font-size: 4.8rem;
-	font-weight: 700;
-	text-align: left;
-	margin-top: 0.5rem !important;
-} */
-
 @media screen and (max-width: 500px) {
   h2.home-subhead {
     transform: translateY(-20vh);
@@ -156,13 +117,6 @@ h1.entry-title::after {
 
 .cover-header-inner {
   padding: 0rem !important;
-}
-
-.site-title.faux-heading {
-  color: #0a2240;
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.05rem;
 }
 
 .site-title a:hover,
@@ -189,11 +143,6 @@ h1.entry-title::after {
   flex-direction: column;
 }
 
-.footer-line-one {
-  display: flex;
-  justify-content: center;
-}
-
 .textwidget.custom-html-widget > img {
   margin-right: 1rem;
 }
@@ -209,10 +158,38 @@ h1.entry-title::after {
   }
 }
 
-.semi-bold {
-  font-weight: 600;
+/* Style the site footer */
+
+.footer-lines {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
-#site-header {
-  display: none;
+.footer-lines-content {
+  margin: 0;
+}
+
+a.to-the-top,
+.to-the-top > span,
+.to-the-top > span .arrow,
+.footer-lines-content,
+.footer-lines-content > a {
+  color: #ffffff;
+}
+
+.footer-lines-content > a {
+  font-weight: 700;
+}
+
+.to-the-top {
+  align-self: flex-end;
+}
+
+#site-footer .section-inner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
