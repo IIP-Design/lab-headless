@@ -17,6 +17,9 @@ Text Domain: gpalab-basic
   font-family: 'Open Sans', sans-serif;
   color: #212121;
 }
+body {
+  background: #ffffff;
+}
 
 .to-the-top > span,
 .to-the-top > span > span,
@@ -31,6 +34,10 @@ h4,
 h5 {
   letter-spacing: 0.02rem;
   color: #0a2240;
+}
+
+.editor-styles-wrapper {
+  background: #ffffff;
 }
 
 .entry-content h3 {
