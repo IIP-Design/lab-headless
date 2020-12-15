@@ -21,18 +21,18 @@ class Event_CPT {
    * @since 0.0.1
    */
   public function register_event_cpt() {
-    // $capabilities = array(
-    // 'edit_posts'             => 'edit_docs',
-    // 'edit_others_posts'      => 'edit_others_docs',
-    // 'edit_private_posts'     => 'edit_private_docs',
-    // 'edit_published_posts'   => 'edit_published_docs',
-    // 'delete_posts'           => 'delete_docs',
-    // 'delete_others_posts'    => 'delete_others_docs',
-    // 'delete_private_posts'   => 'delete_private_docs',
-    // 'delete_published_posts' => 'delete_published_docs',
-    // 'read_private_posts'     => 'read_private_docs',
-    // 'publish_posts'          => 'delete_docs',
-    // );
+    $capabilities = array(
+      'edit_posts'             => 'gpalab_edit_events',
+      'edit_others_posts'      => 'gpalab_edit_others_events',
+      'edit_private_posts'     => 'gpalab_edit_private_events',
+      'edit_published_posts'   => 'gpalab_edit_published_events',
+      'delete_posts'           => 'gpalab_delete_events',
+      'delete_others_posts'    => 'gpalab_delete_others_events',
+      'delete_private_posts'   => 'gpalab_delete_private_events',
+      'delete_published_posts' => 'gpalab_delete_published_events',
+      'read_private_posts'     => 'gpalab_read_private_events',
+      'publish_posts'          => 'gpalab_publish_events',
+    );
 
     $labels = array(
       'name'                     => _x( 'Events', 'General name for the event post type', 'gpalab-guillotine' ),
@@ -74,10 +74,10 @@ class Event_CPT {
     $args = array(
       'can_export'            => true,
       'capability_type'       => 'gpalab_event',
-      // 'capabilities'          => $capabilities,
-      'delete_with_user'      => true,
+      'capabilities'          => $capabilities,
+      'delete_with_user'      => false,
       'exclude_from_search'   => false,
-      'description'           => __( 'Post team events', 'gpalab-guillotine' ),
+      'description'           => __( 'Lab team events', 'gpalab-guillotine' ),
       'has_archive'           => true,
       'hierarchical'          => false,
       'labels'                => $labels,
