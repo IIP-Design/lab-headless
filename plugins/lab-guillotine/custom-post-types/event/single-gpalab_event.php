@@ -44,6 +44,8 @@ get_header();
 
               $formatted = date_i18n( $format, strtotime( $date ) );
               echo '<p><strong>' . esc_html( __( 'When', 'gpalab-guillotine' ) ) . ': </strong>' . esc_html( $formatted ) . '<p>';
+
+              echo '<div class="gpalab-add-to-cal-container"><div class="gpalab-event-add-to-cal" id="gpalab-event-add-to-cal"></div></div>';
             }
 
             the_content();

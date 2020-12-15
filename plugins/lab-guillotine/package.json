@@ -24,6 +24,7 @@
     "@wordpress/edit-post": "^3.25.6",
     "@wordpress/element": "^2.18.0",
     "@wordpress/i18n": "^3.16.0",
-    "@wordpress/plugins": "^2.23.0"
+    "@wordpress/plugins": "^2.23.0",
+    "react-add-to-calendar": "^0.1.5"
   }
 }

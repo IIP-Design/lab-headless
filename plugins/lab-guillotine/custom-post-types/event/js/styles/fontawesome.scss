@@ -1,0 +1,48 @@
+// Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
+// License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+
+.fa {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  margin-right: 5px;
+  padding: 2px 5px;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* makes the font 33% larger relative to the icon container */
+  &-lg {
+    font-size: 1.33333333em;
+    line-height: 0.75em;
+    vertical-align: -15%;
+  }
+
+  &-3x {
+    font-size: 3em;
+  }
+
+  &-apple:before {
+    content: '\f179';
+  }
+
+  &-calendar-plus-o:before {
+    content: '\f271';
+  }
+
+  &-download:before {
+    content: '\f019';
+  }
+
+  &-google:before {
+    content: '\f1a0';
+  }
+
+  &-windows:before {
+    content: '\f17a';
+  }
+
+  &-yahoo:before {
+    content: '\f19e';
+  }
+}
