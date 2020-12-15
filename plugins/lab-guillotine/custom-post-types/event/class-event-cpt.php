@@ -120,6 +120,16 @@ class Event_CPT {
         'type'         => 'string',
       )
     );
+
+    register_post_meta(
+      'gpalab_event',
+      '_gpalab_event_duration',
+      array(
+        'show_in_rest' => true,
+        'single'       => true,
+        'type'         => 'string',
+      )
+    );
   }
 
   /**

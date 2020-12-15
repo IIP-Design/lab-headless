@@ -2,7 +2,7 @@
 
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 
-import MetaTextInput from './MetaTextInput';
+import MetaTextInput from '../../../js/shared/components/MetaTextInput';
 
 const DocsDocumentPanel = () => (
   <PluginDocumentSettingPanel

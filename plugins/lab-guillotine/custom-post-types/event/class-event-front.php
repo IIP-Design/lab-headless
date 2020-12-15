@@ -91,7 +91,10 @@ class Event_Front {
       // Pass PHP variable to frontend JS.
 
       $event_date = get_post_meta( $post->ID, '_gpalab_event_date', true );
-      $event_end  = date_i18n( 'Y-m-d\TH:i:s', strtotime( $event_date ) + 3600 );
+      $duration   = get_post_meta( $post->ID, '_gpalab_event_duration', true );
+      $dur_offset = isset( $duration ) ? $duration * 60 : 0;
+      $event_end  = date_i18n( 'Y-m-d\TH:i:s', strtotime( $event_date ) + $dur_offset );
+      $gmt_offset = get_option( 'gmt_offset' );
 
       wp_localize_script(
         'gpalab-event-frontend-js',
@@ -100,6 +103,7 @@ class Event_Front {
           'startTime' => $event_date,
           'endTime'   => $event_end,
           'title'     => get_the_title( $post->ID ),
+          'tz_offset' => $gmt_offset,
         )
       );
     }

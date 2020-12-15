@@ -2,6 +2,7 @@ import { render } from '@wordpress/element';
 import AddToCalendar from 'react-add-to-calendar';
 
 import { i18nize } from '../../../js/shared/utils/helpers';
+import { normalizeDateString } from './utils/normalize';
 
 import './styles/add-to-calendar.scss';
 import './styles/fontawesome.scss';
@@ -16,8 +17,8 @@ if ( attachTo ) {
       buttonTemplate={ { 'calendar-plus-o': 'left' } }
       buttonLabel={ i18nize( 'Add to Calendar' ) }
       event={ {
-        endTime: gpalabEventMeta.endTime,
-        startTime: gpalabEventMeta.startTime,
+        endTime: normalizeDateString( gpalabEventMeta.endTime, gpalabEventMeta.tz_offset ),
+        startTime: normalizeDateString( gpalabEventMeta.startTime, gpalabEventMeta.tz_offset ),
         title: gpalabEventMeta.title,
       } }
       listItems={ [

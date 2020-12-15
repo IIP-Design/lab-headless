@@ -6,7 +6,7 @@ import { withSelect, withDispatch } from '@wordpress/data';
 
 const MetaTextInput = compose(
   withDispatch( ( dispatch, { metaValue } ) => ( {
-    setRepoValue( val ) {
+    setTextValue( val ) {
       dispatch( 'core/editor' )
         .editPost(
           { meta: { [metaValue]: val } },
@@ -16,15 +16,15 @@ const MetaTextInput = compose(
   withSelect( ( select, { label, metaValue, placeholder } ) => ( {
     label,
     placeholder,
-    repo: select( 'core/editor' )
+    text: select( 'core/editor' )
       .getEditedPostAttribute( 'meta' )[metaValue],
   } ) ),
-)( ( { label, placeholder, repo, setRepoValue } ) => (
+)( ( { label, placeholder, text, setTextValue } ) => (
   <TextControl
     label={ label }
     placeholder={ placeholder }
-    value={ repo }
-    onChange={ setRepoValue }
+    value={ text }
+    onChange={ setTextValue }
   />
 ) );
 
