@@ -115,9 +115,10 @@ class Event_CPT {
       'gpalab_event',
       '_gpalab_event_date',
       array(
-        'show_in_rest' => true,
-        'single'       => true,
-        'type'         => 'string',
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'string',
+        'auth_callback' => '__return_true',
       )
     );
 
@@ -125,9 +126,10 @@ class Event_CPT {
       'gpalab_event',
       '_gpalab_event_duration',
       array(
-        'show_in_rest' => true,
-        'single'       => true,
-        'type'         => 'string',
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'string',
+        'auth_callback' => '__return_true',
       )
     );
   }
