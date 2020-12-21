@@ -42,7 +42,7 @@ class Event_CPT {
       'all_items'                => __( 'All Events', 'gpalab-guillotine' ),
       'archives'                 => __( 'Event Archives', 'gpalab-guillotine' ),
       'attributes'               => __( 'Event Attributes', 'gpalab-guillotine' ),
-      'edit_item'                => __( 'Edit Events', 'gpalab-guillotine' ),
+      'edit_item'                => __( 'Edit Event', 'gpalab-guillotine' ),
       'filter_items_list'        => __( 'Filter event list', 'gpalab-guillotine' ),
       'insert_into_item'         => __( 'Insert into Event', 'gpalab-guillotine' ),
       'item_published'           => __( 'Event published.', 'gpalab-guillotine' ),

@@ -108,4 +108,19 @@ class Event_Front {
       );
     }
   }
+
+  /**
+   * Adds the overlay-header class to the body of the event post type.
+   *
+   * @param array $classes   List of classes to be added to the page's body tag.
+   * @return array           List of classes with the overlay-header class added.
+   *
+   * @since 0.0.1
+   */
+  public function append_overlay_class( $classes ) {
+
+    $classes[] = 'overlay-header';
+
+    return $classes;
+  }
 }

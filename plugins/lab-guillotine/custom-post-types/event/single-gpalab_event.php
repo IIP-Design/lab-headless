@@ -24,11 +24,22 @@ get_header();
       ?>
       <article class="gpalab-event" id="post-<?php the_ID(); ?>">
 
-        <figure class="featured-media gpalab-featured-image">
-          <div class="featured-media-inner section-inner">
-            <?php the_post_thumbnail(); ?>
+        <?php
+        if ( has_post_thumbnail( get_the_ID() ) ) {
+          ?>
+          <div
+            class="cover-header  bg-image bg-attachment-fixed"
+            style="background-image: url(
+              <?php echo esc_url( get_the_post_thumbnail_url( get_the_ID() ) ); ?>
+            )"
+          >
+            <div class="cover-header-inner-wrapper screen-height">
+              <div class="cover-color-overlay color-accent opacity-0"></div>
+            </div>
           </div>
-        </figure>
+          <?php
+        }
+        ?>
 
         <div class="post-inner thin">
           <div class="entry-content">

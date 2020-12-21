@@ -145,6 +145,7 @@ class Guillotine {
 
     $this->loader->add_filter( 'template_include', $event_front, 'include_event_single', 1 );
     $this->loader->add_filter( 'wp_enqueue_scripts', $event_front, 'enqueue_events_frontend' );
+    $this->loader->add_filter( 'body_class', $event_front, 'append_overlay_class' );
   }
 
   /**
