@@ -17,9 +17,10 @@ if ( attachTo ) {
       buttonTemplate={ { 'calendar-plus-o': 'left' } }
       buttonLabel={ i18nize( 'Add to Calendar' ) }
       event={ {
+        description: gpalabEventMeta.description || '',
         endTime: normalizeDateString( gpalabEventMeta.endTime, gpalabEventMeta.tz_offset ),
         startTime: normalizeDateString( gpalabEventMeta.startTime, gpalabEventMeta.tz_offset ),
-        title: gpalabEventMeta.title,
+        title: gpalabEventMeta.title || '',
       } }
       listItems={ [
         { apple: 'Apple Calendar' }, { google: 'Google' }, { outlook: 'Outlook' },
