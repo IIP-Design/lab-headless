@@ -43,7 +43,7 @@ get_header();
 
         <div class="post-inner thin">
           <div class="entry-content">
-            <h2><?php the_title(); ?></h2>
+            <h2 class="gpalab-event-header"><?php the_title(); ?></h2>
 
             <?php
             $date = get_post_meta( get_the_ID(), '_gpalab_event_date', true );
