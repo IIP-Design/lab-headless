@@ -21,6 +21,7 @@ if ( attachTo ) {
         endTime: normalizeDateString( gpalabEventMeta.endTime, gpalabEventMeta.tz_offset ),
         startTime: normalizeDateString( gpalabEventMeta.startTime, gpalabEventMeta.tz_offset ),
         title: gpalabEventMeta.title || '',
+        location: '',
       } }
       listItems={ [
         { apple: 'Apple Calendar' }, { google: 'Google' }, { outlook: 'Outlook' },
