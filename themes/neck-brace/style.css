@@ -86,7 +86,7 @@ h5 {
 
 .page-template-default .entry-header,
 .cover-header {
-  margin-top: 105px;
+  margin-top: 95px;
 }
 
 .cover-header .entry-header h1 {
@@ -117,11 +117,11 @@ h5 {
 }
 
 .screen-height {
-  min-height: calc(45vh);
+  min-height: calc(50vh);
 }
 
 .admin-bar .screen-height {
-  min-height: calc(45vh - 32px);
+  min-height: calc(50vh - 32px);
 }
 
 /* Gutenberg blocks */
@@ -137,7 +137,7 @@ h5 {
 /* Nav menu text & toggles */
 
 .custom-logo {
-  height: 60px;
+  height: 55px;
 }
 
 .nav-toggle-wrapper {
@@ -159,7 +159,7 @@ span.toggle-inner {
 
 @media screen and (min-width: 1000px) {
   .header-inner {
-    padding: 3rem 0 1.5rem;
+    padding: 3rem 0 1rem;
   }
 }
 
@@ -194,6 +194,24 @@ span.toggle-inner {
   /* Reduce footer text size on mobile */
   .footer-lines {
     font-size: 14px;
+  }
+
+  .header-inner {
+    padding: 1rem;
+  }
+
+  .screen-height {
+    min-height: calc(45vh);
+  }
+
+  .admin-bar .screen-height {
+    min-height: calc(45vh - 32px);
+  }
+
+  .gpalab-event,
+  .page-template-default .entry-header,
+  .cover-header {
+    margin-top: 105px;
   }
 }
 
@@ -263,5 +281,5 @@ a.to-the-top,
 /* Event post type */
 
 .gpalab-event {
-  margin-top: 105px;
+  margin-top: 95px;
 }
