@@ -92,6 +92,8 @@ class Guillotine {
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'custom-post-types/event/class-event-cpt.php';
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'custom-post-types/event/class-event-front.php';
 
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'gutenberg-blocks/class-blocks.php';
+
     // The class responsible for defining all hooks that manage the functioning of Gutenberg block.
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'block-manager/class-block-manager.php';
 
@@ -111,10 +113,13 @@ class Guillotine {
    */
   private function define_admin_hooks() {
     $plugin_admin    = new Guillotine\Admin( $this->get_plugin_name(), $this->get_version() );
+    $plugin_blocks   = new Guillotine\Blocks( $this->get_plugin_name(), $this->get_version() );
     $plugin_settings = new Guillotine\Settings( $this->get_plugin_name(), $this->get_version() );
 
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
     $this->loader->add_action( 'admin_init', $plugin_settings, 'populate_guillotine_settings' );
+
+    $this->loader->add_action( 'init', $plugin_blocks, 'register_custom_blocks' );
   }
 
   /**
