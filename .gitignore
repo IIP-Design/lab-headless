@@ -5,6 +5,7 @@
 *.js.map
 frontend/build/
 webroot/composer.lock
+serverless/.aws-sam
 
 # Dependencies
 .pnp.js
