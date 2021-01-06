@@ -118,6 +118,7 @@ class Guillotine {
 
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
     $this->loader->add_action( 'admin_init', $plugin_settings, 'populate_guillotine_settings' );
+    $this->loader->add_action( 'update_option_gpalab_guillotine_docs_hub', $plugin_settings, 'initialize_docs_table', 10, 2 );
 
     $this->loader->add_action( 'init', $plugin_blocks, 'register_custom_blocks' );
   }

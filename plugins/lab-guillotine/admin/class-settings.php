@@ -15,6 +15,20 @@ namespace Guillotine;
  * @since 0.0.1
  */
 class Settings {
+
+  /**
+   * Initializes the class with the plugin name and version.
+   *
+   * @param string $plugin     The plugin name.
+   * @param string $version    The plugin version number.
+   *
+   * @since 0.0.1
+   */
+  public function __construct( $plugin, $version ) {
+    $this->plugin  = $plugin;
+    $this->version = $version;
+  }
+
   /**
    * Adds a settings page to social links sub-menu where the plugin can be configured.
    *
@@ -109,9 +123,39 @@ class Settings {
   }
 
   /**
+   * Check for docs hub table in the db when enabling the docs hub.
+   * If this table does not exist, create it.
+   *
+   * @param mixed $old_value  Previous value of the gpalab_guillotine_docs_hub option.
+   * @param mixed $value      New value for the gpalab_guillotine_docs_hub option.
+   *
+   * @since 0.0.1
+   */
+  public function initialize_docs_table( $old_value, $value ) {
+    global $wpdb;
+
+    // Only run initialization if docs hub is enabled.
+    if ( 'on' !== $value ) {
+      return;
+    }
+
+    $table_name = $wpdb->prefix . 'gpalab_docs_hub';
+
+    // Run create db function only if table does not already exist.
+    if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) !== $table_name ) {
+      require_once GUILLOTINE_DIR . 'docs-hub/class-database.php';
+
+      $db = new Database( $this->plugin, $this->version );
+      $db->create_docs_table();
+    }
+  }
+
+  /**
    * Return the guillotine icon as a data url.
    *
-   * @return string
+   * @return string  The base64 encoded value of the Guillotine icon.
+   *
+   * @since 0.0.1
    */
   private function get_guillotine_icon() {
     // phpcs:disable WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
