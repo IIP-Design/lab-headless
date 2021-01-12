@@ -4,8 +4,9 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
 import { ConnectRepoContext } from '../../context/connectRepoContext';
-import { flattenTree } from '../../utils/normalizers';
+import { createPageList, flattenTree } from '../../utils/normalizers';
 import { getBranches, getRepoDocs } from '../../utils/api';
+import { saveRepoData } from '../../utils/admin-ajax';
 import { i18nize } from '../../../../js/shared/utils/helpers';
 import { steps } from './progress-steps';
 
@@ -16,7 +17,18 @@ const RepoWizard = () => {
 
   const {
     dispatch,
-    state: { branch, branches, branchSet, owner, repo, subdirectory, subdirSet, token },
+    state: {
+      branch,
+      branches,
+      branchSet,
+      ignoredFiles,
+      owner,
+      repo,
+      selectedFiles,
+      subdirectory,
+      subdirSet,
+      token,
+    },
   } = useContext( ConnectRepoContext );
 
   const handleInput = ( e, control ) => {
@@ -66,6 +78,20 @@ const RepoWizard = () => {
     dispatch( { type: 'leaves-init', payload: flattenTree( repoTree ) } );
     setTree( repoTree );
     dispatch( { type: 'increment-active' } );
+  };
+
+  const saveRepo = async () => {
+    const repoData = {
+      files: createPageList( selectedFiles, ignoredFiles ),
+      repository: {
+        branch,
+        owner,
+        repo,
+        subdirectory,
+      },
+    };
+
+    saveRepoData( repoData );
   };
 
   const reset = () => {
@@ -186,6 +212,15 @@ const RepoWizard = () => {
             onClick={ () => getTree() }
           >
             { i18nize( 'Get Repo File Tree' ) }
+          </button>
+
+          <button
+            className="gpalab-docs-wizard-button"
+            style={ { display: tree ? 'block' : 'none', padding: '0.3rem 0' } }
+            type="button"
+            onClick={ () => saveRepo() }
+          >
+            { i18nize( 'Save Selected Docs Pages' ) }
           </button>
         </div>
       </div>

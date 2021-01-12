@@ -110,6 +110,8 @@ class Docs_Connect_Repo {
       'gpalab-guillotine-connect-repo-js',
       'gpalabDocsHub',
       array(
+        'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
+        'docsHubNonce'     => wp_create_nonce( 'gpalab-docs-hub-nonce' ),
         'githubDefaultOrg' => get_option( 'gpalab_guillotine_docs_org' ),
         'githubToken'      => get_option( 'gpalab_guillotine_docs_token' ),
       )

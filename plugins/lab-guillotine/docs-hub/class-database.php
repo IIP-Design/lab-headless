@@ -60,6 +60,7 @@ class Database {
       page_path varchar(255) NOT NULL,
       parent varchar(255) NOT NULL,
       created_at datetime NOT NULL,
+      included boolean NOT NULL,
       PRIMARY KEY (page_id)
     ) $charset_collate;";
 

@@ -98,6 +98,7 @@ class Guillotine {
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'block-manager/class-block-manager.php';
 
     // The class responsible for defining all hooks that provide the documentation hub capabilities.
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'docs-hub/class-docs-ajax.php';
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'docs-hub/class-docs-connect-repo.php';
     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'docs-hub/class-docs-settings.php';
 
@@ -174,18 +175,22 @@ class Guillotine {
    * @since 0.0.1
    */
   private function define_docs_hub_hooks() {
-    $connect_repo  = new Guillotine\Docs_Connect_Repo( $this->get_plugin_name(), $this->get_version() );
+    $docs_ajax     = new Guillotine\Docs_Ajax( $this->get_plugin_name(), $this->get_version() );
+    $docs_connect  = new Guillotine\Docs_Connect_Repo( $this->get_plugin_name(), $this->get_version() );
     $docs_settings = new Guillotine\Docs_Settings( $this->get_plugin_name(), $this->get_version() );
 
     if ( ! empty( get_option( 'gpalab_guillotine_docs_hub' ) ) ) {
+      // Handle data sent from the UI to the server.
+      $this->loader->add_action( 'wp_ajax_gpalab_docs_hub_save', $docs_ajax, 'handle_add_repo' );
+
       // Documentation hub settings page hooks.
       $this->loader->add_action( 'admin_menu', $docs_settings, 'add_docs_hub_page' );
       $this->loader->add_action( 'admin_init', $docs_settings, 'populate_docs_settings' );
 
       // Documentation hub connect a repo page hooks.
-      $this->loader->add_action( 'init', $connect_repo, 'register_connect_repo_scripts' );
-      $this->loader->add_action( 'admin_menu', $connect_repo, 'add_connect_repo_page' );
-      $this->loader->add_action( 'admin_enqueue_scripts', $connect_repo, 'enqueue_connect_repo' );
+      $this->loader->add_action( 'init', $docs_connect, 'register_connect_repo_scripts' );
+      $this->loader->add_action( 'admin_menu', $docs_connect, 'add_connect_repo_page' );
+      $this->loader->add_action( 'admin_enqueue_scripts', $docs_connect, 'enqueue_connect_repo' );
     }
   }
 

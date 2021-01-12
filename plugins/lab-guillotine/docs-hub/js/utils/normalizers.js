@@ -68,3 +68,19 @@ export const flattenTree = repoTree => {
     ...leaves.flat(), changelog, readme,
   ];
 };
+
+export const createPageList = ( selected, ignored ) => {
+  const selectedTrue = selected.map( item => {
+    item.selected = true;
+
+    return item;
+  } );
+
+  const selectedFalse = ignored.map( item => {
+    item.selected = false;
+
+    return item;
+  } );
+
+  return [...selectedTrue, ...selectedFalse];
+};
