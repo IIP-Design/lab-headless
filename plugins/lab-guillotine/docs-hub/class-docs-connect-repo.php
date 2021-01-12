@@ -56,7 +56,7 @@ class Docs_Connect_Repo {
   private function populate_connect_repo_page() {
     ?>
     <div class="wrap">
-      <h1><?php esc_html_e( 'Connect a New GitHub Repo', 'gpalab-guillotine' ); ?></h1>
+      <h1><?php esc_html_e( 'Connect a GitHub Repository', 'gpalab-guillotine' ); ?></h1>
       <p>
         <?php
         esc_html_e(
@@ -66,6 +66,7 @@ class Docs_Connect_Repo {
         ?>
       </p>
       <div id="gpalab-docs-hub" style="margin:1rem 0rem;"></div>
+      <div id="gpalab-docs-hub-connected"></div>
     </div>
     <?php
   }
