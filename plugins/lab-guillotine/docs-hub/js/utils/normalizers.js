@@ -56,13 +56,17 @@ export const parseBranches = nodes => {
 export const flattenTree = repoTree => {
   const { changelog, readme, docs } = repoTree;
 
-  const leaves = docs.map( leaf => {
-    if ( !leaf.contents ) {
-      return leaf;
-    }
+  let leaves = [];
 
-    return leaf.contents;
-  } );
+  if ( docs ) {
+    leaves = docs.map( leaf => {
+      if ( !leaf.contents ) {
+        return leaf;
+      }
+
+      return leaf.contents;
+    } );
+  }
 
   return [
     ...leaves.flat(), changelog, readme,
