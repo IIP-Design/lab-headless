@@ -33,11 +33,11 @@ class Docs_Ajax {
     // phpcs:enable
 
     // Construct the reference string for the repository source.
-    $parent = ! empty( $data['repository'] ) ? $this->construct_parent_name( $data['repository'] ) : '';
+    $repo_data = ! empty( $data['repository'] ) ? $this->prep_connected_repos_option( $data['repository'] ) : '';
 
     // Add parent value to the array of connected repos.
     $repos = get_option( 'gpalab_guillotine_docs_hub_repos', array() );
-    array_push( $repos, $parent );
+    array_push( $repos, $repo_data );
 
     update_option( 'gpalab_guillotine_docs_hub_repos', $repos );
 
@@ -46,26 +46,53 @@ class Docs_Ajax {
 
       foreach ( $data['files'] as $file ) {
 
-        $this->insert_docs_page( $file, $parent );
+        $this->insert_docs_page( $file, $repo_data['parent'] );
       }
     }
   }
 
   /**
-   * Cobbles together a reference string for a given repository source.
+   * Sanitizes and normalizes repo data in preparation of saving it to the DB.
    *
-   * @param object $repo_data    The parts of a repository's path.
-   * @return string              The combined path parts.
+   * @param object $repo_data   Repository data received from the AJAX call.
+   * @return object             The sanitized repository data to be stored as an option.
    *
    * @since 0.0.1
    */
-  private function construct_parent_name( $repo_data ) {
-    $owner  = ! empty( $repo_data['owner'] ) ? sanitize_text_field( $repo_data['owner'] ) . '/' : '';
+  private function prep_connected_repos_option( $repo_data ) {
+    $owner  = ! empty( $repo_data['owner'] ) ? sanitize_text_field( $repo_data['owner'] ) : '';
     $repo   = ! empty( $repo_data['repo'] ) ? sanitize_text_field( $repo_data['repo'] ) : '';
-    $subdir = ! empty( $repo_data['subdirectory'] ) ? '/' . sanitize_text_field( $repo_data['subdirectory'] ) : '';
-    $branch = ! empty( $repo_data['branch'] ) ? '@' . sanitize_text_field( $repo_data['branch'] ) : '';
+    $subdir = ! empty( $repo_data['subdirectory'] ) ? sanitize_text_field( $repo_data['subdirectory'] ) : '';
+    $branch = ! empty( $repo_data['branch'] ) ? sanitize_text_field( $repo_data['branch'] ) : '';
 
-    $parent = $owner . $repo . $subdir . $branch;
+    $data['owner']  = $owner;
+    $data['repo']   = $repo;
+    $data['subdir'] = $subdir;
+    $data['branch'] = $branch;
+    $data['parent'] = $this->construct_parent_name( $owner, $repo, $subdir, $branch );
+    $data['title']  = '' !== $subdir ? $repo . '/' . $subdir : $repo;
+
+    return $data;
+  }
+
+  /**
+   * Cobbles together a reference string for a given repository source.
+   *
+   * @param string $owner      The repository's owner.
+   * @param string $repo       The repository's name.
+   * @param string $subdir     The sub-directory within a repository.
+   * @param string $branch     The repository's branch.
+   * @return string            The combined path parts.
+   *
+   * @since 0.0.1
+   */
+  private function construct_parent_name( $owner, $repo, $subdir, $branch ) {
+    $o = ! empty( $owner ) ? $owner . '/' : '';
+    $r = ! empty( $repo ) ? $repo : '';
+    $s = ! empty( $subdir ) ? '/' . $subdir : '';
+    $b = ! empty( $branch ) ? '@' . $branch : '';
+
+    $parent = $o . $r . $s . $b;
 
     return $parent;
   }
