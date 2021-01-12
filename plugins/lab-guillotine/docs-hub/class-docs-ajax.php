@@ -35,7 +35,11 @@ class Docs_Ajax {
     // Construct the reference string for the repository source.
     $parent = ! empty( $data['repository'] ) ? $this->construct_parent_name( $data['repository'] ) : '';
 
-    // TODO: add parents to array in options called gpalab_guillotine_docs_hub_repos.
+    // Add parent value to the array of connected repos.
+    $repos = get_option( 'gpalab_guillotine_docs_hub_repos', array() );
+    array_push( $repos, $parent );
+
+    update_option( 'gpalab_guillotine_docs_hub_repos', $repos );
 
     // Iterate over the repo's doc pages, adding each to the DB.
     if ( ! empty( $data['files'] ) && is_array( $data['files'] ) ) {

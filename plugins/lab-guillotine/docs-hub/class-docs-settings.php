@@ -84,6 +84,11 @@ class Docs_Settings {
   public function populate_docs_settings() {
     register_setting(
       'gpalab_guillotine_docs_hub',
+      'gpalab_guillotine_docs_hub_repos'
+    );
+
+    register_setting(
+      'gpalab_guillotine_docs_hub',
       'gpalab_guillotine_docs_org'
     );
 
