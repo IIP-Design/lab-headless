@@ -1,12 +1,11 @@
 import propTypes from 'prop-types';
 
-import { i18nize } from '../../../../js/shared/utils/helpers';
+import PageSection from '../PageSection/PageSection';
 
 import './ConnectedRepos.css';
 
 const ConnectedRepos = ( { repos } ) => (
-  <div className="gpalab-docs-connected-container">
-    <h2 className="gpalab-docs-connected-title">{ i18nize( 'Manage Connected Repositories:' ) }</h2>
+  <PageSection title="Manage Connected Repositories">
     <ul className="gpalab-docs-connected-list">
       { repos && repos.map( repo => (
         <li key={ repo.parent } className="gpalab-docs-connected-list-item">
@@ -14,7 +13,7 @@ const ConnectedRepos = ( { repos } ) => (
         </li>
       ) ) }
     </ul>
-  </div>
+  </PageSection>
 );
 
 ConnectedRepos.propTypes = {

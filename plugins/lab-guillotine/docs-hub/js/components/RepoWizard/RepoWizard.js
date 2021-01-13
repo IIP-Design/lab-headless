@@ -1,5 +1,6 @@
 import { useContext, useState } from '@wordpress/element';
 
+import PageSection from '../PageSection/PageSection';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
@@ -100,7 +101,7 @@ const RepoWizard = () => {
   };
 
   return (
-    <div className="gpalab-docs-wizard-container">
+    <PageSection title="Connect a New Repository">
       <ProgressBar steps={ steps } />
       <div className="gpalab-docs-wizard-contents">
         <div className="gpalab-docs-wizard-section">
@@ -224,7 +225,7 @@ const RepoWizard = () => {
           </button>
         </div>
       </div>
-    </div>
+    </PageSection>
   );
 };
 
