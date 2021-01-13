@@ -1,4 +1,4 @@
-import { i18nize } from '../../../js/shared/utils/helpers';
+import { i18nize } from 'shared/utils/helpers';
 
 /**
  * The save function defines the way in which the different attributes should

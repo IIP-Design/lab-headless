@@ -15,6 +15,9 @@
   },
   "devDependencies": {
     "@wordpress/scripts": "^12.5.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "eslint-import-resolver-babel-module": "^5.2.0",
     "prop-types": "^15.7.2"
   },
   "dependencies": {

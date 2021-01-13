@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
 import { registerBlockType } from '@wordpress/blocks';
 
-import { i18nize } from '../../js/shared/utils/helpers';
+import { i18nize } from 'shared/utils/helpers';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -18,7 +18,6 @@ import { i18nize } from '../../js/shared/utils/helpers';
 import attributes from './src/attributes';
 import SpeakerBio from './src/save';
 import SpeakerBioEditor from './src/editor';
-import save from './src/save';
 
 /**
  * Every block starts by registering a new block type definition.

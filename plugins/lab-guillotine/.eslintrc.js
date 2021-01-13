@@ -1,0 +1,36 @@
+module.exports = {
+  'extends': ['../../.eslintrc'],
+  ignorePatterns: [
+    'node_modules/', 'build/', 'vendor/',
+  ],
+  parser: 'babel-eslint',
+  root: true,
+  rules: {
+    'react/jsx-pascal-case': ['error', { allowAllCaps: true }],
+    'node/no-missing-import': [
+      'error', {
+        allowModules: ['shared'],
+      },
+    ],
+    'node/no-unpublished-import': [
+      'error', {
+        allowModules: ['prop-types'],
+      },
+    ],
+    'node/no-unpublished-require': [
+      'error', {
+        allowModules: ['@wordpress/scripts'],
+      },
+    ],
+  },
+  settings: {
+    'import/resolver': {
+      'babel-module': {
+        alias: {
+          shared: './js/shared',
+        },
+        root: ['.'],
+      },
+    },
+  },
+};

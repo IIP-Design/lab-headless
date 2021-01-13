@@ -8,7 +8,7 @@ import { ConnectRepoContext } from '../../context/connectRepoContext';
 import { createPageList, flattenTree } from '../../utils/normalizers';
 import { getBranches, getRepoDocs } from '../../utils/api';
 import { saveRepoData } from '../../utils/admin-ajax';
-import { i18nize } from '../../../../js/shared/utils/helpers';
+import { i18nize } from 'shared/utils/helpers';
 import { steps } from './progress-steps';
 
 import './RepoWizard.css';

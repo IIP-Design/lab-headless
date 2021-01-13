@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 
-import { i18nize } from '../../../../js/shared/utils/helpers';
+import { i18nize } from 'shared/utils/helpers';
 
 import './PageSection.css';
 

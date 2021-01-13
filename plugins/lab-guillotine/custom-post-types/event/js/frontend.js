@@ -1,7 +1,7 @@
 import { render } from '@wordpress/element';
 import AddToCalendar from 'react-add-to-calendar';
 
-import { i18nize } from '../../../js/shared/utils/helpers';
+import { i18nize } from 'shared/utils/helpers';
 import { normalizeDateString } from './utils/normalize';
 
 import './styles/add-to-calendar.scss';

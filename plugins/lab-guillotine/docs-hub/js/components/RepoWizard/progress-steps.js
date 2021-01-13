@@ -1,4 +1,4 @@
-import { i18nize } from '../../../../js/shared/utils/helpers';
+import { i18nize } from 'shared/utils/helpers';
 
 export const steps = [
   { title: i18nize( 'Step One:' ), subtitle: i18nize( 'Set Repo Owner & Name' ) },

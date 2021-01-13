@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
 import { FormFileUpload, Placeholder } from '@wordpress/components';
 
-import { i18nize } from '../../../js/shared/utils/helpers';
+import { i18nize } from 'shared/utils/helpers';
 
 import './editor.scss';
 

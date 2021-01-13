@@ -3,8 +3,8 @@
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 
 import MetaDateTimePicker from './MetaDateTimePicker';
-import MetaTextInput from '../../../../js/shared/components/MetaTextInput';
-import { i18nize } from '../../../../js/shared/utils/helpers';
+import MetaTextInput from 'shared/components/MetaTextInput';
+import { i18nize } from 'shared/utils/helpers';
 
 const DocsDocumentPanel = () => (
   <PluginDocumentSettingPanel
