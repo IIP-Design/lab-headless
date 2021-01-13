@@ -163,7 +163,9 @@ class Guillotine {
   private function define_block_manager_hooks() {
     $block_manager = new Guillotine\Block_Manager( $this->get_plugin_name(), $this->get_version() );
 
-    if ( ! empty( get_option( 'gpalab_guillotine_block_manager' ) ) ) {
+    $enabled = get_option( 'gpalab_guillotine' );
+
+    if ( ! empty( $enabled ) && ! empty( $enabled['block_manager'] ) ) {
       // Documentation hub settings page hooks.
       $this->loader->add_action( 'allowed_block_types', $block_manager, 'set_allowed_block_types' );
     }
@@ -176,10 +178,12 @@ class Guillotine {
    */
   private function define_docs_hub_hooks() {
     $docs_ajax     = new Guillotine\Docs_Ajax( $this->get_plugin_name(), $this->get_version() );
-    $docs_connect  = new Guillotine\Docs_Connect_Repo( $this->get_plugin_name(), $this->get_version() );
+    $docs_connect  = new Guillotine\Docs_Connect_Repo( $this->get_plugin_name(), $this->get_version(), $this->get_build_dir() );
     $docs_settings = new Guillotine\Docs_Settings( $this->get_plugin_name(), $this->get_version() );
 
-    if ( ! empty( get_option( 'gpalab_guillotine_docs_hub' ) ) ) {
+    $enabled = get_option( 'gpalab_guillotine' );
+
+    if ( ! empty( $enabled ) && ! empty( $enabled['docs_hub'] ) ) {
       // Handle data sent from the UI to the server.
       $this->loader->add_action( 'wp_ajax_gpalab_docs_hub_save', $docs_ajax, 'handle_add_repo' );
 

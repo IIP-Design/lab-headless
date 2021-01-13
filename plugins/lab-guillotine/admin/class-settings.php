@@ -76,14 +76,13 @@ class Settings {
   public function populate_guillotine_settings() {
     register_setting(
       'guillotine_settings',
-      'gpalab_guillotine_block_manager'
+      'gpalab_guillotine'
     );
 
-    register_setting(
-      'guillotine_settings',
-      'gpalab_guillotine_docs_hub'
-    );
+    // Put shared strings in the parent function scope so that it isn't translated multiple times.
+    $label = __( 'Enable', 'gpalab-guillotine' );
 
+    // Plugin's feature toggles.
     add_settings_section(
       'guillotine-settings',
       __( 'Select features to enable', 'gpalab-guillotine' ),
@@ -96,12 +95,21 @@ class Settings {
     add_settings_field(
       'gpalab-guillotine-block-manager',
       __( 'Block manager', 'gpalab-guillotine' ),
-      function() {
-        $label     = __( 'Enable', 'gpalab-guillotine' );
-        $block_man = get_option( 'gpalab_guillotine_block_manager' );
-        $checked   = $block_man ? 'checked ' : '';
+      function() use ( $label ) {
+        $block_man = get_option( 'gpalab_guillotine' );
+        $checked   = $block_man['block_manager'] ? 'checked ' : '';
 
-        echo '<label for="gpalab-guillotine-block-manager" class="gpalab-docs-hub-label">' . esc_html( $label ) . ': <input id="gpalab-guillotine-block-manager" name="gpalab_guillotine_block_manager" ' . esc_html( $checked ) . 'type="checkbox" /></label>';
+        ?>
+        <label for="gpalab-guillotine-block-manager" class="gpalab-docs-hub-label">
+          <?php echo esc_html( $label ) . ': '; ?>
+          <input
+            id="gpalab-guillotine-block-manager"
+            name="gpalab_guillotine[block_manager]"
+            <?php echo esc_html( $checked ); ?>
+            type="checkbox"
+          />
+        </label>
+        <?php
       },
       'gpalab-guillotine-settings',
       'guillotine-settings'
@@ -110,12 +118,21 @@ class Settings {
     add_settings_field(
       'gpalab-guillotine-docs-hub',
       __( 'Documentation Hub', 'gpalab-guillotine' ),
-      function() {
-        $label    = __( 'Enable', 'gpalab-guillotine' );
-        $docs_hub = get_option( 'gpalab_guillotine_docs_hub' );
-        $checked  = $docs_hub ? 'checked ' : '';
+      function() use ( $label ) {
+        $docs_hub = get_option( 'gpalab_guillotine' );
+        $checked  = $docs_hub['docs_hub'] ? 'checked ' : '';
 
-        echo '<label for="gpalab-guillotine-docs-hub">' . esc_html( $label ) . ': <input id="gpalab-guillotine-docs-hub" name="gpalab_guillotine_docs_hub" ' . esc_html( $checked ) . 'type="checkbox" /></label>';
+        ?>
+        <label for="gpalab-guillotine-docs-hub">
+          <?php echo esc_html( $label ) . ': '; ?>
+          <input
+            id="gpalab-guillotine-docs-hub"
+            name="gpalab_guillotine[docs_hub]"
+            <?php echo esc_html( $checked ); ?>
+            type="checkbox"
+          />
+          </label>
+        <?php
       },
       'gpalab-guillotine-settings',
       'guillotine-settings'
@@ -126,8 +143,8 @@ class Settings {
    * Check for docs hub table in the db when enabling the docs hub.
    * If this table does not exist, create it.
    *
-   * @param mixed $old_value  Previous value of the gpalab_guillotine_docs_hub option.
-   * @param mixed $value      New value for the gpalab_guillotine_docs_hub option.
+   * @param mixed $old_value  Previous value of the gpalab_guillotine option.
+   * @param mixed $value      New value for the gpalab_guillotine option.
    *
    * @since 0.0.1
    */
@@ -135,7 +152,7 @@ class Settings {
     global $wpdb;
 
     // Only run initialization if docs hub is enabled.
-    if ( 'on' !== $value ) {
+    if ( 'on' !== $value['docs_hub'] ) {
       return;
     }
 

@@ -38,8 +38,12 @@ class Activator {
    * @since 0.0.1
    */
   private static function initialize_options() {
-    add_option( 'gpalab_guillotine_block_manager', 0 );
-    add_option( 'gpalab_guillotine_docs_hub', 0 );
+    $default_settings = array(
+      'block_manager' => 0,
+      'docs_hub'      => 0,
+    );
+
+    add_option( 'gpalab_guillotine', $default_settings );
   }
 
   /**
