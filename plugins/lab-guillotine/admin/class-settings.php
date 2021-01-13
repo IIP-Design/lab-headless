@@ -137,6 +137,47 @@ class Settings {
       'gpalab-guillotine-settings',
       'guillotine-settings'
     );
+
+    // Development tools.
+    add_settings_section(
+      'guillotine-development',
+      __( 'Development Tools', 'gpalab-guillotine' ),
+      function() {
+        ?>
+        <p>
+          <?php esc_html_e( 'Use the below settings to configure the plugin for development.', 'gpalab-guillotine' ); ?>
+        </p>
+        <p>
+          <strong><?php esc_html_e( 'WARNING: ', 'gpalab-guillotine' ); ?></strong>
+          <?php esc_html_e( 'These settings can break the functionality of the site. They should only be used while actively developing the plugin.', 'gpalab-guillotine' ); ?>
+        </p>
+        <?php
+      },
+      'gpalab-guillotine-settings'
+    );
+
+    add_settings_field(
+      'gpalab-guillotine-dev-builds',
+      __( 'Use Development Builds', 'gpalab-guillotine' ),
+      function() use ( $label ) {
+        $block_man = get_option( 'gpalab_guillotine' );
+        $checked   = $block_man['dev_build'] ? 'checked ' : '';
+
+        ?>
+        <label for="gpalab-guillotine-dev-builds" class="gpalab-docs-hub-label">
+          <?php echo esc_html( $label ) . ': '; ?>
+          <input
+            id="gpalab-guillotine-dev-builds"
+            name="gpalab_guillotine[dev_build]"
+            <?php echo esc_html( $checked ); ?>
+            type="checkbox"
+          />
+        </label>
+        <?php
+      },
+      'gpalab-guillotine-settings',
+      'guillotine-development'
+    );
   }
 
   /**

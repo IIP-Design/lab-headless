@@ -24,12 +24,14 @@ class Event_Front {
     *
     * @param string $plugin     The plugin name.
     * @param string $version    The plugin version number.
+    * @param string $build_dir  The name of the build directory.
     *
     * @since 0.0.1
     */
-  public function __construct( $plugin, $version ) {
-    $this->plugin  = $plugin;
-    $this->version = $version;
+  public function __construct( $plugin, $version, $build_dir ) {
+    $this->build_dir = $build_dir;
+    $this->plugin    = $plugin;
+    $this->version   = $version;
   }
 
   /**
@@ -69,12 +71,12 @@ class Event_Front {
     $cpt = 'gpalab_event';
 
     if ( ! is_admin() && get_post_type() === $cpt ) {
-      $script_asset = require GUILLOTINE_DIR . 'build/gpalab-event.asset.php';
+      $script_asset = require GUILLOTINE_DIR . $this->build_dir . '/gpalab-event.asset.php';
 
       // Register the stylesheets for the frontend.
       wp_enqueue_style(
         'gpalab-event-front-css',
-        GUILLOTINE_URL . 'build/gpalab-event.css',
+        GUILLOTINE_URL . $this->build_dir . '/gpalab-event.css',
         array(),
         $this->version
       );
@@ -82,7 +84,7 @@ class Event_Front {
       // Enqueue frontend JavaScript bundle.
       wp_enqueue_script(
         'gpalab-event-frontend-js',
-        GUILLOTINE_URL . 'build/gpalab-event.js',
+        GUILLOTINE_URL . $this->build_dir . '/gpalab-event.js',
         $script_asset['dependencies'],
         $script_asset['version'],
         true

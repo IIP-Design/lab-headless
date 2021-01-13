@@ -40,6 +40,7 @@ class Activator {
   private static function initialize_options() {
     $default_settings = array(
       'block_manager' => 0,
+      'dev_build'     => 0,
       'docs_hub'      => 0,
     );
 

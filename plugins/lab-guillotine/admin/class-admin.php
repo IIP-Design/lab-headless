@@ -21,12 +21,14 @@ class Admin {
    *
    * @param string $plugin     The plugin name.
    * @param string $version    The plugin version number.
+   * @param string $build_dir  The name of the build directory.
    *
    * @since 0.0.1
    */
-  public function __construct( $plugin, $version ) {
-    $this->plugin  = $plugin;
-    $this->version = $version;
+  public function __construct( $plugin, $version, $build_dir ) {
+    $this->build_dir = $build_dir;
+    $this->plugin    = $plugin;
+    $this->version   = $version;
   }
 
   /**
@@ -104,11 +106,11 @@ class Admin {
    */
   public function register_gutenberg_plugins() {
     // Adds a documentation sidebar to the Gutenberg documents panel.
-    $script_asset = require GUILLOTINE_DIR . 'build/gpalab-docs-sidebar.asset.php';
+    $script_asset = require GUILLOTINE_DIR . $this->build_dir . '/gpalab-docs-sidebar.asset.php';
 
     wp_register_script(
       'docs-sidebar-js',
-      GUILLOTINE_URL . 'build/gpalab-docs-sidebar.js',
+      GUILLOTINE_URL . $this->build_dir . '/gpalab-docs-sidebar.js',
       $script_asset['dependencies'],
       $script_asset['version'],
       true

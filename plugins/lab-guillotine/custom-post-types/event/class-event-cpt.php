@@ -15,6 +15,22 @@ namespace Guillotine;
  * @since 0.0.1
  */
 class Event_CPT {
+
+  /**
+   * Initializes the class with the plugin name and version.
+   *
+   * @param string $plugin     The plugin name.
+   * @param string $version    The plugin version number.
+   * @param string $build_dir  The name of the build directory.
+   *
+   * @since 0.0.1
+   */
+  public function __construct( $plugin, $version, $build_dir ) {
+    $this->build_dir = $build_dir;
+    $this->plugin    = $plugin;
+    $this->version   = $version;
+  }
+
   /**
    * Register the events page custom post type.
    *
@@ -141,11 +157,11 @@ class Event_CPT {
    */
   public function register_event_gutenberg_plugin() {
     // Adds a sidebar to the Gutenberg documents panel for adding event .
-    $script_asset = require GUILLOTINE_DIR . 'build/gpalab-event-sidebar.asset.php';
+    $script_asset = require GUILLOTINE_DIR . $this->build_dir . '/gpalab-event-sidebar.asset.php';
 
     wp_register_script(
       'gpalab-event-sidebar-js',
-      GUILLOTINE_URL . 'build/gpalab-event-sidebar.js',
+      GUILLOTINE_URL . $this->build_dir . '/gpalab-event-sidebar.js',
       $script_asset['dependencies'],
       $script_asset['version'],
       true

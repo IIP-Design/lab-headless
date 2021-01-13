@@ -24,6 +24,17 @@ class Guillotine {
   protected $loader;
 
   /**
+   * The directory from which the plugin should enqueue scripts and styles.
+   * Used to set development builds that are excluded from source control.
+   *
+   * @var string $build_dir
+   *
+   * @access protected
+   * @since 0.0.1
+   */
+  protected $build_dir;
+
+  /**
    * The unique identifier and version of this plugin.
    *
    * @var string $plugin_name
@@ -55,12 +66,32 @@ class Guillotine {
   public function __construct() {
     $this->plugin_name = 'guillotine';
     $this->version     = '0.0.1';
+    $this->build_dir   = $this->set_build_dir();
+
     $this->load_dependencies();
     $this->define_admin_hooks();
     $this->define_public_hooks();
     $this->define_cpt_hooks();
     $this->define_block_manager_hooks();
     $this->define_docs_hub_hooks();
+  }
+
+  /**
+   * Check whether the plugin is in development mode and set the build directory appropriately.
+   *
+   * @return string   The name of the build directory.
+   *
+   * @since 0.0.1
+   */
+  private function set_build_dir() {
+    $build_dir = 'build';
+    $settings  = get_option( 'gpalab_guillotine', array() );
+
+    if ( ! empty( $settings['dev_build'] ) && 'on' === $settings['dev_build'] ) {
+      $build_dir = 'build-dev';
+    }
+
+    return $build_dir;
   }
 
   /**
@@ -113,13 +144,13 @@ class Guillotine {
    * @since 0.0.1
    */
   private function define_admin_hooks() {
-    $plugin_admin    = new Guillotine\Admin( $this->get_plugin_name(), $this->get_version() );
-    $plugin_blocks   = new Guillotine\Blocks( $this->get_plugin_name(), $this->get_version() );
+    $plugin_admin    = new Guillotine\Admin( $this->get_plugin_name(), $this->get_version(), $this->get_build_dir() );
+    $plugin_blocks   = new Guillotine\Blocks( $this->get_plugin_name(), $this->get_version(), $this->get_build_dir() );
     $plugin_settings = new Guillotine\Settings( $this->get_plugin_name(), $this->get_version() );
 
     $this->loader->add_action( 'admin_menu', $plugin_settings, 'add_settings_page' );
     $this->loader->add_action( 'admin_init', $plugin_settings, 'populate_guillotine_settings' );
-    $this->loader->add_action( 'update_option_gpalab_guillotine_docs_hub', $plugin_settings, 'initialize_docs_table', 10, 2 );
+    $this->loader->add_action( 'update_option_gpalab_guillotine', $plugin_settings, 'initialize_docs_table', 10, 2 );
 
     $this->loader->add_action( 'init', $plugin_blocks, 'register_custom_blocks' );
   }
@@ -142,8 +173,8 @@ class Guillotine {
    * @since 0.0.1
    */
   private function define_cpt_hooks() {
-    $event_cpt   = new Guillotine\Event_CPT( $this->get_plugin_name(), $this->get_version() );
-    $event_front = new Guillotine\Event_Front( $this->get_plugin_name(), $this->get_version() );
+    $event_cpt   = new Guillotine\Event_CPT( $this->get_plugin_name(), $this->get_version(), $this->get_build_dir() );
+    $event_front = new Guillotine\Event_Front( $this->get_plugin_name(), $this->get_version(), $this->get_build_dir() );
 
     // Hooks used by the event custom post type.
     $this->loader->add_action( 'init', $event_cpt, 'register_event_cpt' );
@@ -216,6 +247,15 @@ class Guillotine {
    */
   public function get_loader() {
     return $this->loader;
+  }
+
+  /**
+   * Retrieve the name of the build directory.
+   *
+   * @since 0.0.1
+   */
+  public function get_build_dir() {
+    return $this->build_dir;
   }
 
   /**

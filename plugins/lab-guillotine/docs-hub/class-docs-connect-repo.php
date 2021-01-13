@@ -21,12 +21,14 @@ class Docs_Connect_Repo {
    *
    * @param string $plugin     The plugin name.
    * @param string $version    The plugin version number.
+   * @param string $build_dir  The name of the build directory.
    *
    * @since 0.0.1
    */
-  public function __construct( $plugin, $version ) {
-    $this->plugin  = $plugin;
-    $this->version = $version;
+  public function __construct( $plugin, $version, $build_dir ) {
+    $this->build_dir = $build_dir;
+    $this->plugin    = $plugin;
+    $this->version   = $version;
   }
 
   /**
@@ -77,11 +79,11 @@ class Docs_Connect_Repo {
      * @since 0.0.1
      */
   public function register_connect_repo_scripts() {
-    $script_asset = require GUILLOTINE_DIR . 'build/gpalab-connect-repo.asset.php';
+    $script_asset = require GUILLOTINE_DIR . $this->build_dir . '/gpalab-connect-repo.asset.php';
 
     wp_register_script(
       'gpalab-guillotine-connect-repo-js',
-      GUILLOTINE_URL . 'build/gpalab-connect-repo.js',
+      GUILLOTINE_URL . $this->build_dir . '/gpalab-connect-repo.js',
       $script_asset['dependencies'],
       $script_asset['version'],
       true
@@ -89,7 +91,7 @@ class Docs_Connect_Repo {
 
     wp_register_style(
       'gpalab-guillotine-connect-repo-css',
-      GUILLOTINE_URL . 'build/gpalab-connect-repo.css',
+      GUILLOTINE_URL . $this->build_dir . '/gpalab-connect-repo.css',
       array(),
       $this->version
     );
