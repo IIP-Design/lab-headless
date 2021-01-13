@@ -80,6 +80,11 @@ const RepoWizard = () => {
     dispatch( { type: 'increment-active' } );
   };
 
+  const reset = () => {
+    dispatch( { type: 'reset' } );
+    setTree( null );
+  };
+
   const saveRepo = async () => {
     const repoData = {
       files: createPageList( selectedFiles, ignoredFiles ),
@@ -91,12 +96,7 @@ const RepoWizard = () => {
       },
     };
 
-    saveRepoData( repoData );
-  };
-
-  const reset = () => {
-    dispatch( { type: 'reset' } );
-    setTree( null );
+    saveRepoData( repoData, reset );
   };
 
   return (

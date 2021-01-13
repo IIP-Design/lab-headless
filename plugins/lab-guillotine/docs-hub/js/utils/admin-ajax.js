@@ -1,4 +1,10 @@
-export const saveRepoData = async data => {
+/**
+ * Sends an AJAX request to save input repo data.
+ *
+ * @param {Object} data Information for the give repository to be stored in the DB.
+ * @param {onSuccess} onSuccess Function to be run when the AJAX request completes successfully.
+ */
+export const saveRepoData = async ( data, onSuccess ) => {
   // Get values provided to the client by the server
   const fromPHP = window?.gpalabDocsHub || {};
 
@@ -16,7 +22,7 @@ export const saveRepoData = async data => {
 
     const result = await response.json();
 
-    console.log( result );
+    onSuccess( result );
   } catch ( err ) {
     console.error( err );
   }
