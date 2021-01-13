@@ -75,6 +75,11 @@ export const flattenTree = repoTree => {
 
 export const createPageList = ( selected, ignored ) => {
   const selectedTrue = selected.map( item => {
+    // Skip empty items.
+    if ( !item ) {
+      return;
+    }
+
     item.selected = true;
 
     return item;
