@@ -1,6 +1,6 @@
 import { useReducer } from '@wordpress/element';
 
-import RepoWizard from './RepoWizard/RepoWizard';
+import RepoWizard from '../RepoWizard/RepoWizard';
 
 import { ConnectRepoContext, connectRepoReducer, initialState } from 'docs-hub/context/connectRepoContext';
 

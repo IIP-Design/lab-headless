@@ -1,6 +1,6 @@
 import { useReducer } from '@wordpress/element';
 
-import ConnectRepo from './ConnectRepo';
+import ConnectRepo from './ConnectRepo/ConnectRepo';
 import ConnectedRepos from './ConnectedRepos/ConnectedRepos';
 
 import { ManageDocsContext, manageDocsReducer, initialState } from 'docs-hub/context/manageDocsContext';
