@@ -24,6 +24,6 @@ export const saveRepoData = async ( data, onSuccess ) => {
 
     onSuccess( result );
   } catch ( err ) {
-    console.error( err );
+    throw new Error( `Fetch failed, ${JSON.stringify( err )}` );
   }
 };

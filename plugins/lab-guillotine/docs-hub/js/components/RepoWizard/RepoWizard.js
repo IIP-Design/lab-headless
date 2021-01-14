@@ -5,6 +5,7 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
 import { ConnectRepoContext } from 'docs-hub/context/connectRepoContext';
+import { ManageDocsContext } from 'docs-hub/context/manageDocsContext';
 import { createPageList, flattenTree } from 'docs-hub/utils/normalizers';
 import { getBranches, getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
 import { saveRepoData } from 'docs-hub/utils/admin-ajax';
@@ -31,6 +32,8 @@ const RepoWizard = () => {
       token,
     },
   } = useContext( ConnectRepoContext );
+
+  const { dispatch: reposDispatch } = useContext( ManageDocsContext );
 
   const handleInput = ( e, control ) => {
     const { value } = e.target;
@@ -86,6 +89,15 @@ const RepoWizard = () => {
     setTree( null );
   };
 
+  const onSuccess = response => {
+    const repoData = response?.data?.repo;
+
+    if ( repoData ) {
+      reposDispatch( { type: 'add-repo', payload: repoData } );
+      reset();
+    }
+  };
+
   const saveRepo = async () => {
     const withContent = await getManyFiles( selectedFiles, { owner, repo }, branch, token );
 
@@ -99,7 +111,7 @@ const RepoWizard = () => {
       },
     };
 
-    saveRepoData( repoData, reset );
+    saveRepoData( repoData, onSuccess );
   };
 
   return (

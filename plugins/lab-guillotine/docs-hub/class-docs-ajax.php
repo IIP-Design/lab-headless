@@ -49,6 +49,10 @@ class Docs_Ajax {
         $this->insert_docs_page( $file, $repo_data['parent'] );
       }
     }
+
+    $response['repo'] = $repo_data;
+
+    wp_send_json_success( $response, 200 );
   }
 
   /**
@@ -126,8 +130,10 @@ class Docs_Ajax {
       $created
     );
 
+    // phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
+    // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery
     // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
-    $wpdb->query( $query );
+    return $wpdb->query( $query );
     // phpcs:enable
   }
 

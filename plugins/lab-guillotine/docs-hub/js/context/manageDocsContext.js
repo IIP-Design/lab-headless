@@ -8,4 +8,16 @@ export const initialState = {
   repos: connectedRepos,
 };
 
-export const manageDocsReducer = ( state, action ) => {};
+export const manageDocsReducer = ( state, action ) => {
+  const { payload } = action;
+
+  switch ( action.type ) {
+    case 'add-repo':
+      return {
+        ...state,
+        repos: [...state.repos, payload],
+      };
+    default:
+      return state;
+  }
+};

@@ -29,8 +29,10 @@ const fetchAPI = async ( query, variables, token ) => {
   const json = await res.json();
 
   if ( json.errors ) {
-    console.error( json.errors );
-    throw new Error( 'Failed to fetch API' );
+    const type = json.errors?.[0]?.type || '';
+    const message = json.errors?.[0]?.message || '';
+
+    throw new Error( `Fetch failed, ${type}: ${message}` );
   }
 
   return json.data;
