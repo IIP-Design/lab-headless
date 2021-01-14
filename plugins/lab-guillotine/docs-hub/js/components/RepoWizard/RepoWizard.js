@@ -6,7 +6,7 @@ import Tree from '../Tree/Tree';
 
 import { ConnectRepoContext } from 'docs-hub/context/connectRepoContext';
 import { createPageList, flattenTree } from 'docs-hub/utils/normalizers';
-import { getBranches, getRepoDocs } from 'docs-hub/utils/api';
+import { getBranches, getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
 import { saveRepoData } from 'docs-hub/utils/admin-ajax';
 import { i18nize } from 'shared/utils/helpers';
 import { steps } from './progress-steps';
@@ -87,8 +87,10 @@ const RepoWizard = () => {
   };
 
   const saveRepo = async () => {
+    const withContent = await getManyFiles( selectedFiles, { owner, repo }, branch, token );
+
     const repoData = {
-      files: createPageList( selectedFiles, ignoredFiles ),
+      files: createPageList( withContent, ignoredFiles ),
       repository: {
         branch,
         owner,
