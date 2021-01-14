@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import Cluster from '../Cluster/Cluster';
 import Leaf from '../Leaf/Leaf';
 
+import { i18nize } from 'shared/utils/helpers';
 import { leafType } from 'docs-hub/utils/reusable-proptypes';
 
 import './Tree.css';
@@ -26,6 +27,10 @@ const Tree = ( { changelog, readme, tree } ) => (
 
       return null;
     } ) }
+
+    { !changelog && !readme && !tree && (
+      <p>{ i18nize( 'No documentation files found in this repository' ) }</p>
+    ) }
   </div>
 );
 

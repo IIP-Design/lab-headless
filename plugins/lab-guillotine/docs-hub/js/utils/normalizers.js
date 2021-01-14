@@ -93,3 +93,21 @@ export const createPageList = ( selected, ignored ) => {
 
   return [...selectedTrue, ...selectedFalse];
 };
+
+/**
+ * Compile a repository reference string from all of the repo parts.
+ *
+ * @param {string} owner The name of the GitHub owner.
+ * @param {string} repo The name of the git repository.
+ * @param {string} subdir The name of the subdirectory if any.
+ * @param {string} branch The name of the git branch.
+ * @return {string} The compiled parent string.
+ */
+export const createParentString = ( owner, repo, subdir, branch ) => {
+  const o = owner ? `${owner}/` : '';
+  const r = repo || '';
+  const s = subdir ? `/${subdir}` : '';
+  const b = branch ? `@${branch}` : '';
+
+  return `${o}${r}${s}${b}`;
+};

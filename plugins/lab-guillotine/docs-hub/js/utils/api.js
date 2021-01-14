@@ -32,7 +32,7 @@ const fetchAPI = async ( query, variables, token ) => {
     const type = json.errors?.[0]?.type || '';
     const message = json.errors?.[0]?.message || '';
 
-    throw new Error( `Fetch failed, ${type}: ${message}` );
+    return { error: { message, type } };
   }
 
   return json.data;
@@ -73,6 +73,7 @@ export const getBranches = async ( variables, token ) => {
   return {
     branches: parseBranches( data?.repository?.refs?.nodes ),
     defaultBranch: data?.repository?.defaultBranchRef?.name,
+    error: data?.error,
   };
 };
 

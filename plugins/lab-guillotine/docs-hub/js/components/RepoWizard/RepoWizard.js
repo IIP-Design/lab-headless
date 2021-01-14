@@ -1,13 +1,15 @@
 import { useContext, useState } from '@wordpress/element';
 
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
 import PageSection from '../PageSection/PageSection';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
 import { ConnectRepoContext } from 'docs-hub/context/connectRepoContext';
 import { ManageDocsContext } from 'docs-hub/context/manageDocsContext';
-import { createPageList, flattenTree } from 'docs-hub/utils/normalizers';
+import { createPageList, createParentString, flattenTree } from 'docs-hub/utils/normalizers';
 import { getBranches, getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
+import { hasFiles } from 'docs-hub/utils/helpers';
 import { saveRepoData } from 'docs-hub/utils/admin-ajax';
 import { i18nize } from 'shared/utils/helpers';
 import { steps } from './progress-steps';
@@ -23,6 +25,7 @@ const RepoWizard = () => {
       branch,
       branches,
       branchSet,
+      error,
       ignoredFiles,
       owner,
       repo,
@@ -33,7 +36,7 @@ const RepoWizard = () => {
     },
   } = useContext( ConnectRepoContext );
 
-  const { dispatch: reposDispatch } = useContext( ManageDocsContext );
+  const { dispatch: reposDispatch, state: { repos } } = useContext( ManageDocsContext );
 
   const handleInput = ( e, control ) => {
     const { value } = e.target;
@@ -56,14 +59,18 @@ const RepoWizard = () => {
   };
 
   const getBranch = async () => {
-    const { branches: allBranches, defaultBranch } = await getBranches(
+    const { branches: allBranches, defaultBranch, error } = await getBranches(
       { owner, repo },
       token,
     );
 
-    dispatch( { type: 'set-branches', payload: allBranches } );
-    dispatch( { type: 'set-branch', payload: defaultBranch } );
-    dispatch( { type: 'increment-active' } );
+    if ( error ) {
+      dispatch( { type: 'error-add', payload: error } );
+    } else {
+      dispatch( { type: 'set-branches', payload: allBranches } );
+      dispatch( { type: 'set-branch', payload: defaultBranch } );
+      dispatch( { type: 'increment-active' } );
+    }
   };
 
   const confirmChoice = action => {
@@ -72,16 +79,23 @@ const RepoWizard = () => {
   };
 
   const getTree = async () => {
-    const repoTree = await getRepoDocs(
-      { owner, repo },
-      token,
-      branch,
-      subdirectory,
-    );
+    const currentRepos = repos ? repos.map( item => item.parent ) : [];
+    const parent = createParentString( owner, repo, subdirectory, branch );
 
-    dispatch( { type: 'leaves-init', payload: flattenTree( repoTree ) } );
-    setTree( repoTree );
-    dispatch( { type: 'increment-active' } );
+    if ( !currentRepos.includes( parent ) ) {
+      const repoTree = await getRepoDocs(
+        { owner, repo },
+        token,
+        branch,
+        subdirectory,
+      );
+
+      dispatch( { type: 'leaves-init', payload: flattenTree( repoTree ) } );
+      setTree( repoTree );
+      dispatch( { type: 'increment-active' } );
+    } else {
+      dispatch( { type: 'error-add', payload: { message: i18nize( 'This repository has already been connected' ) } } );
+    }
   };
 
   const reset = () => {
@@ -231,13 +245,16 @@ const RepoWizard = () => {
 
           <button
             className="gpalab-docs-wizard-button"
-            style={ { display: tree ? 'block' : 'none', padding: '0.3rem 0' } }
+            style={ { display: tree && hasFiles( tree ) ? 'block' : 'none', padding: '0.3rem 0' } }
             type="button"
             onClick={ () => saveRepo() }
           >
             { i18nize( 'Save Selected Docs Pages' ) }
           </button>
         </div>
+        { error && (
+          <ErrorMsg error={ error } />
+        ) }
       </div>
     </PageSection>
   );

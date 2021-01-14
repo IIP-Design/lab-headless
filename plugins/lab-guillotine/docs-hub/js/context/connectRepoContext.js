@@ -9,6 +9,7 @@ export const initialState = {
   branch: '',
   branches: null,
   branchSet: false,
+  error: null,
   owner: githubDefaultOrg,
   repo: '',
   selectedFiles: [],
@@ -33,6 +34,11 @@ export const connectRepoReducer = ( state, action ) => {
       return {
         ...state,
         subdirSet: true,
+      };
+    case 'error-add':
+      return {
+        ...state,
+        error: payload,
       };
     case 'increment-active':
       return {
