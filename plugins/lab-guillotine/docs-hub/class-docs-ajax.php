@@ -113,15 +113,17 @@ class Docs_Ajax {
     $oid      = sanitize_text_field( $page_array['oid'] );
     $path     = sanitize_text_field( $page_array['path'] );
     $selected = rest_sanitize_boolean( $page_array['selected'] );
+    $created  = gmdate( 'Y-m-d H:i:s' );
 
     $query = $wpdb->prepare(
-      "INSERT INTO {$wpdb->prefix}gpalab_docs_hub (page_content, page_name, page_oid, page_path, parent, included) VALUES (%s, %s, %s, %s, %s, %s);",
+      "INSERT INTO {$wpdb->prefix}gpalab_docs_hub (page_content, page_name, page_oid, page_path, parent, included, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s);",
       $content,
       $name,
       $oid,
       $path,
       $parent,
-      $selected
+      $selected,
+      $created
     );
 
     // phpcs:disable WordPress.DB.PreparedSQL.NotPrepared
