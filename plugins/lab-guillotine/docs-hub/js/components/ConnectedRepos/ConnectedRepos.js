@@ -1,32 +1,24 @@
-import propTypes from 'prop-types';
+import { useContext } from '@wordpress/element';
 
 import PageSection from '../PageSection/PageSection';
+import Repo from '../Repo/Repo';
+
+import { ManageDocsContext } from 'docs-hub/context/manageDocsContext';
 
 import './ConnectedRepos.css';
 
-const ConnectedRepos = ( { repos } ) => (
-  <PageSection title="Manage Connected Repositories">
-    <ul className="gpalab-docs-connected-list">
-      { repos && repos.map( repo => (
-        <li key={ repo.parent } className="gpalab-docs-connected-list-item">
-          <strong>{ repo.title }</strong>
-        </li>
-      ) ) }
-    </ul>
-  </PageSection>
-);
+const ConnectedRepos = () => {
+  const { state: { repos } } = useContext( ManageDocsContext );
 
-ConnectedRepos.propTypes = {
-  repos: propTypes.arrayOf(
-    propTypes.shape( {
-      branch: propTypes.string,
-      owner: propTypes.string,
-      parent: propTypes.string,
-      repo: propTypes.string,
-      subdir: propTypes.string,
-      title: propTypes.string,
-    } ),
-  ),
+  return (
+    <PageSection title="Manage Connected Repositories">
+      <ul className="gpalab-docs-connected-list">
+        { repos && repos.map( repo => (
+          <Repo key={ repo.parent } repo={ repo } />
+        ) ) }
+      </ul>
+    </PageSection>
+  );
 };
 
 export default ConnectedRepos;

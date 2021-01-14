@@ -18,7 +18,6 @@ export const initialState = {
   token: githubToken,
 };
 
-
 export const ConnectRepoContext = createContext();
 
 export const connectRepoReducer = ( state, action ) => {
