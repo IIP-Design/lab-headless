@@ -8,9 +8,6 @@
 
 namespace Guillotine;
 
-use DateInterval;
-use DateTime;
-
 /**
  * Register a event page custom post type.
  *
@@ -95,7 +92,7 @@ class Event_Front {
       $event_date = get_post_meta( $post->ID, '_gpalab_event_date', true );
       $excerpt    = get_the_excerpt( $post->ID );
       $duration   = get_post_meta( $post->ID, '_gpalab_event_duration', true );
-      $dur_offset = isset( $duration ) ? $duration * 60 : 0;
+      $dur_offset = isset( $duration ) ? intval( $duration ) * 60 : 0;
       $event_end  = date_i18n( 'Y-m-d\TH:i:s', strtotime( $event_date ) + $dur_offset );
       $gmt_offset = get_option( 'gmt_offset' );
 
