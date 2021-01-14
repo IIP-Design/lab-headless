@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import Cluster from '../Cluster/Cluster';
 import Leaf from '../Leaf/Leaf';
 
-import { leafType } from '../../utils/reusable-proptypes';
+import { leafType } from 'docs-hub/utils/reusable-proptypes';
 
 import './Tree.css';
 

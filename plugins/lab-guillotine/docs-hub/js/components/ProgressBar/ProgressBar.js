@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
 import { useContext } from '@wordpress/element';
 
-import { ConnectRepoContext } from '../../context/connectRepoContext';
+import { ConnectRepoContext } from 'docs-hub/context/connectRepoContext';
 
 import Step from './Step';
 

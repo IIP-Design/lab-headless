@@ -4,10 +4,10 @@ import PageSection from '../PageSection/PageSection';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
-import { ConnectRepoContext } from '../../context/connectRepoContext';
-import { createPageList, flattenTree } from '../../utils/normalizers';
-import { getBranches, getRepoDocs } from '../../utils/api';
-import { saveRepoData } from '../../utils/admin-ajax';
+import { ConnectRepoContext } from 'docs-hub/context/connectRepoContext';
+import { createPageList, flattenTree } from 'docs-hub/utils/normalizers';
+import { getBranches, getRepoDocs } from 'docs-hub/utils/api';
+import { saveRepoData } from 'docs-hub/utils/admin-ajax';
 import { i18nize } from 'shared/utils/helpers';
 import { steps } from './progress-steps';
 

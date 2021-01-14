@@ -2,7 +2,7 @@ import { useReducer } from '@wordpress/element';
 
 import RepoWizard from './RepoWizard/RepoWizard';
 
-import { ConnectRepoContext, connectRepoReducer, initialState } from '../context/connectRepoContext';
+import { ConnectRepoContext, connectRepoReducer, initialState } from 'docs-hub/context/connectRepoContext';
 
 const ConnectRepo = () => {
   const [state, dispatch] = useReducer( connectRepoReducer, initialState );

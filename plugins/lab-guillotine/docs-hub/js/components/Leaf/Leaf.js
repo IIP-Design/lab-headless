@@ -1,8 +1,8 @@
 import propTypes from 'prop-types';
 import { useContext, useState } from '@wordpress/element';
 
-import { ConnectRepoContext } from '../../context/connectRepoContext';
-import { leafType } from '../../utils/reusable-proptypes';
+import { ConnectRepoContext } from 'docs-hub/context/connectRepoContext';
+import { leafType } from 'docs-hub/utils/reusable-proptypes';
 
 import './Leaf.css';
 

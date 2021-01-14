@@ -5,6 +5,7 @@ module.exports = {
       "babel-plugin-module-resolver",
       {
         alias: {
+          "docs-hub": "./docs-hub/js",
           shared: "./js/shared"
         },
         extensions: [

@@ -9,7 +9,7 @@ module.exports = {
     'react/jsx-pascal-case': ['error', { allowAllCaps: true }],
     'node/no-missing-import': [
       'error', {
-        allowModules: ['shared'],
+        allowModules: ['docs-hub', 'shared'],
       },
     ],
     'node/no-unpublished-import': [
@@ -27,6 +27,7 @@ module.exports = {
     'import/resolver': {
       'babel-module': {
         alias: {
+          'docs-hub': './docs-hub/js',
           shared: './js/shared',
         },
         root: ['.'],
