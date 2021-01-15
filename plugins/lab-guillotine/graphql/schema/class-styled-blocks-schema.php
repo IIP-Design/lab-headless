@@ -1,6 +1,6 @@
 <?php
 /**
- * Registers the Styled_Blocks class.
+ * Registers the Styled_Blocks_Schema class.
  *
  * @package GPALAB_Headless\Guillotine
  * @since 0.0.1
@@ -14,7 +14,7 @@ namespace Guillotine;
  * @package GPALAB_Headless\Guillotine
  * @since 0.0.1
  */
-class Styled_Blocks {
+class Styled_Blocks_Schema {
 
   /** Primitive types. */
 

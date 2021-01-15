@@ -153,6 +153,10 @@ class Guillotine {
     $this->loader->add_action( 'update_option_gpalab_guillotine', $plugin_settings, 'initialize_docs_table', 10, 2 );
 
     $this->loader->add_action( 'init', $plugin_blocks, 'register_custom_blocks' );
+
+    // GraphQL hooks.
+    $this->loader->add_action( 'graphql_register_types', $plugin_admin, 'register_custom_graphql_types' );
+    $this->loader->add_action( 'graphql_register_types', $plugin_admin, 'register_custom_graphql_unions', 10, 1 );
   }
 
   /**

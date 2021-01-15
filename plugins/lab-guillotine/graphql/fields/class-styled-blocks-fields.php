@@ -1,6 +1,6 @@
 <?php
 /**
- * Registers the Fields class.
+ * Registers the Styled_Blocks_Fields class.
  *
  * @package GPALAB_Headless\Guillotine
  * @since 0.0.1
@@ -14,14 +14,14 @@ namespace Guillotine;
  * @package GPALAB_Headless\Guillotine
  * @since 0.0.1
  */
-class Fields {
+class Styled_Blocks_Fields {
 
    /**
     * Adds the styled block fields to pages and posts in the GraphQL API.
     *
     * @since 0.0.1
     */
-  public function register_style_blocks_graphql() {
+  public function register_style_blocks_field() {
     // Fetch the linked blocks from post metadata.
     $resolve = function( $post ) {
       $blocks = get_post_meta( $post->ID, 'gpalab_blocks', true );

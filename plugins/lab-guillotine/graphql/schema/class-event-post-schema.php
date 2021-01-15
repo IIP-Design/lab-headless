@@ -1,6 +1,6 @@
 <?php
 /**
- * Registers the Docs_Hub_GQL class.
+ * Registers the Event_Post_Schema class.
  *
  * @package GPALAB_Headless\Guillotine
  * @since 0.0.1
@@ -9,9 +9,9 @@
 namespace Guillotine;
 
 /**
- * Describes the schema for the docs hub data.
+ * Describes the schema for the event custom post.
  *
  * @package GPALAB_Headless\Guillotine
  * @since 0.0.1
  */
-class Docs_Hub_GQL {}
+class Event_Post_Schema {}
