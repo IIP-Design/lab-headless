@@ -68,13 +68,14 @@ class Docs_Ajax {
     $repo   = ! empty( $repo_data['repo'] ) ? sanitize_text_field( $repo_data['repo'] ) : '';
     $subdir = ! empty( $repo_data['subdirectory'] ) ? sanitize_text_field( $repo_data['subdirectory'] ) : '';
     $branch = ! empty( $repo_data['branch'] ) ? sanitize_text_field( $repo_data['branch'] ) : '';
+    $title  = ! empty( $repo_data['title'] ) ? sanitize_text_field( $repo_data['title'] ) : '';
 
     $data['owner']  = $owner;
     $data['repo']   = $repo;
     $data['subdir'] = $subdir;
     $data['branch'] = $branch;
     $data['parent'] = $this->construct_parent_name( $owner, $repo, $subdir, $branch );
-    $data['title']  = '' !== $subdir ? $repo . '/' . $subdir : $repo;
+    $data['title']  = $title;
 
     return $data;
   }

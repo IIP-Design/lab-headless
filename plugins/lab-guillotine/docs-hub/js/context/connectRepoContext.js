@@ -1,6 +1,7 @@
 import { createContext } from '@wordpress/element';
 
-import { removeFile } from '../utils/filters';
+import { removeFile } from 'docs-hub/utils/filters';
+import { convertPathToTitle } from 'docs-hub/utils/normalizers';
 
 const { githubDefaultOrg, githubToken } = window.gpalabDocsHub;
 
@@ -16,6 +17,7 @@ export const initialState = {
   ignoredFiles: [],
   subdirectory: '',
   subdirSet: false,
+  title: '',
   token: githubToken,
 };
 
@@ -34,6 +36,7 @@ export const connectRepoReducer = ( state, action ) => {
       return {
         ...state,
         subdirSet: true,
+        title: state.subdirectory ? convertPathToTitle( state.subdirectory ) : convertPathToTitle( state.repo ),
       };
     case 'error-add':
       return {
@@ -86,6 +89,11 @@ export const connectRepoReducer = ( state, action ) => {
       return {
         ...state,
         subdirectory: payload,
+      };
+    case 'set-title':
+      return {
+        ...state,
+        title: payload,
       };
     case 'reset':
       return {

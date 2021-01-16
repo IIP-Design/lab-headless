@@ -32,6 +32,7 @@ const RepoWizard = () => {
       selectedFiles,
       subdirectory,
       subdirSet,
+      title,
       token,
     },
   } = useContext( ConnectRepoContext );
@@ -53,6 +54,9 @@ const RepoWizard = () => {
         break;
       case 'subdir':
         dispatch( { type: 'set-subdir', payload: value } );
+        break;
+      case 'title':
+        dispatch( { type: 'set-title', payload: value } );
         break;
       default:
     }
@@ -122,6 +126,7 @@ const RepoWizard = () => {
         owner,
         repo,
         subdirectory,
+        title,
       },
     };
 
@@ -216,6 +221,19 @@ const RepoWizard = () => {
         ) }
         { tree && (
           <div className="gpalab-docs-tree-container">
+            <label
+              className="gpalab-docs-wizard-label"
+              htmlFor="gpalab-docs-title"
+              style={ { margin: '0.5rem 0 1rem' } }
+            >
+              { `${i18nize( 'Repo name' )}:` }
+              <input
+                id="gpalab-docs-title"
+                type="text"
+                value={ title }
+                onChange={ e => handleInput( e, 'title' ) }
+              />
+            </label>
             <strong>{ `${i18nize( 'Results' )}:` }</strong>
             <Tree
               changelog={ tree.changelog }

@@ -111,3 +111,43 @@ export const createParentString = ( owner, repo, subdir, branch ) => {
 
   return `${o}${r}${s}${b}`;
 };
+
+/**
+ * Removes all of the text preceded by the final slash in a string.
+ *
+ * @param {string} string The text to check for a slash.
+ * @returns {string} Everything following the final slash in the text.
+ */
+const getEndOfPath = string => {
+  const re = /[^/]+$/;
+
+  return string.match( re )[0];
+};
+
+/**
+ * Converts a provided string into title case (i.e. every word capitalized).
+ *
+ * @param {string} string String to be converted to title case.
+ * @returns {string} Provided string in title case.
+ */
+const titleCased = string => {
+  if ( typeof string !== 'string' ) return '';
+
+  const spaced = string.replace( /-/g, ' ' );
+
+  const words = spaced.split( ' ' );
+
+  return words.map( word => word[0].toUpperCase() + word.substring( 1 ) ).join( ' ' );
+};
+
+/**
+ * Trims the final portion of a filepath and converts it to title case.
+ *
+ * @param {string} string The repo file path to be turned into a title.
+ * @returns {string} The generated title text.
+ */
+export const convertPathToTitle = string => {
+  const end = getEndOfPath( string );
+
+  return titleCased( end );
+};
