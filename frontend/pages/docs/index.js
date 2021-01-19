@@ -7,7 +7,7 @@ import Header from '../../components/Header/Header';
 import Layout from '../../components/Layout/Layout';
 import RepoList from '../../components/RepoList/RepoList';
 
-import { getAllDocsWithSlug } from '../../lib/api';
+import { getAllDocRepos } from '../../lib/api';
 
 const Docs = ( { preview, repos } ) => {
   const router = useRouter();
@@ -28,7 +28,7 @@ const Docs = ( { preview, repos } ) => {
 };
 
 export async function getStaticProps( { preview = false, previewData } ) {
-  const allRepos = await getAllDocsWithSlug();
+  const allRepos = await getAllDocRepos();
 
   return {
     props: {

@@ -83,10 +83,12 @@ export async function getAllPostsWithSlug() {
   return data?.posts;
 }
 
-export async function getAllDocsWithSlug() {
+export async function getAllDocRepos() {
   const data = await fetchAPI( `
     {
       gpalabDocsRepos {
+        location
+        name
         slug
       }
     }

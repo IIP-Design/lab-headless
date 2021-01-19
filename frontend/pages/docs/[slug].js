@@ -6,7 +6,7 @@ import Container from '../../components/Container/Container';
 import Header from '../../components/Header/Header';
 import Layout from '../../components/Layout/Layout';
 
-import { getAllDocsWithSlug, getDocAndMoreDocs } from '../../lib/api';
+import { getAllDocRepos, getDocAndMoreDocs } from '../../lib/api';
 
 const Doc = ( { name, preview } ) => {
   const router = useRouter();
@@ -37,7 +37,7 @@ export async function getStaticProps( { params, preview = false, previewData } )
 }
 
 export async function getStaticPaths() {
-  const allDocs = await getAllDocsWithSlug();
+  const allDocs = await getAllDocRepos();
 
   return {
     paths: allDocs.gpalabDocsRepos.map( ( { slug } ) => `/docs/${slug}` ) || [],
