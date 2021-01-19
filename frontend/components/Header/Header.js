@@ -1,12 +1,17 @@
 import Link from 'next/link';
 
+import style from './Header.module.scss';
+
 const Header = () => (
-  <h2 className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-20 mt-8">
+  <div className={ style.header }>
     <Link href="/">
-      <a className="hover:underline">Blog</a>
+      <img
+        alt="U.S. Department of State seal"
+        className={ style.logo }
+        src="/dos-seal.png"
+      />
     </Link>
-    .
-  </h2>
+  </div>
 );
 
 export default Header;

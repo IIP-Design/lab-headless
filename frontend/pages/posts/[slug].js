@@ -32,8 +32,8 @@ const Post = ( { blocks, post, posts, preview } ) => {
 
   return (
     <Layout preview={ preview }>
+      <Header />
       <Container>
-        <Header />
         { router.isFallback
           ? <PostTitle>Loading…</PostTitle>
           : (

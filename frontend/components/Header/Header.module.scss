@@ -1,0 +1,13 @@
+@import '../../styles/colors.scss';
+
+.header {
+  background-color: $darkBlue;
+  margin: 0;
+  padding: 1.5rem 0;
+}
+
+.logo {
+  height: 70px;
+  margin: 0 1.5rem;
+  width: 70px;
+}
