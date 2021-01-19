@@ -83,6 +83,34 @@ export async function getAllPostsWithSlug() {
   return data?.posts;
 }
 
+export async function getAllDocsWithSlug() {
+  const data = await fetchAPI( `
+    {
+      gpalabDocsRepos {
+        slug
+      }
+    }
+  ` );
+
+  return data;
+}
+
+export async function getDocAndMoreDocs( slug ) {
+  const data = await fetchAPI( `
+    query DocRepoBySlug($slug: String!) {
+      gpalabDocsRepo(slug: $slug) {
+        name
+      }
+    }
+  `, {
+    variables: {
+      slug,
+    },
+  } );
+
+  return data;
+}
+
 export async function getAllPostsForHome( preview ) {
   const data = await fetchAPI(
     `
