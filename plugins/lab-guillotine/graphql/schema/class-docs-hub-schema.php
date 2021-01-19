@@ -62,13 +62,17 @@ class Docs_Hub_Schema {
     return array(
       'description' => 'A GPA Lab documentation repository type.',
       'fields'      => array(
-        'name' => array(
+        'name'     => array(
           'type'        => 'String',
           'description' => 'The simplified name of the repository.',
         ),
-        'path' => array(
+        'location' => array(
           'type'        => 'String',
-          'description' => 'A representation of the location of the repository',
+          'description' => 'A representation of the location of the repository.',
+        ),
+        'slug'     => array(
+          'type'        => 'String',
+          'description' => 'The repo (and if needed exists sub-directory) name used to identify the repository.',
         ),
       ),
     );
