@@ -32,6 +32,6 @@ class Docs_Hub_GQL {
     include_once GUILLOTINE_DIR . 'graphql/fields/class-docs-hub-fields.php';
     $fields = new Docs_Hub_Fields();
 
-    $fields->register_docs_hub_field();
+    $fields->register_docs_hub_fields();
   }
 }

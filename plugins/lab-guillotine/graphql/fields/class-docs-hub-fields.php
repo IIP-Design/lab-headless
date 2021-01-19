@@ -21,12 +21,12 @@ class Docs_Hub_Fields {
    *
    * @since 0.0.1
    */
-  public function register_docs_hub_field() {
+  public function register_docs_hub_fields() {
     register_graphql_field(
       'RootQuery',
       'gpalabDocsPages',
       array(
-        'description' => __( 'A list of documentation pages connected in the Docs Hub', 'gpalab-guillotine' ),
+        'description' => __( 'A list of documentation pages connected through the Docs Hub', 'gpalab-guillotine' ),
         'args'        => array(
           'parent' => array(
             'description' => __( 'Specify page source in the format "owner/repo/sub-directory@branch"', 'gpalab-guillotine' ),
@@ -37,7 +37,19 @@ class Docs_Hub_Fields {
         'resolve'     => function( $root, $args ) {
           return $this->gpalab_docs_pages_resolver( $root, $args );
         },
-        'type'        => array( 'list_of' => 'gpalabDocsPage' ),
+        'type'        => array( 'list_of' => 'GpalabDocsPage' ),
+      )
+    );
+
+    register_graphql_field(
+      'RootQuery',
+      'gpalabDocsRepos',
+      array(
+        'description' => __( 'A list of documentation repositories connected through the Docs Hub', 'gpalab-guillotine' ),
+        'resolve'     => function() {
+          return $this->gpalab_docs_repos_resolver();
+        },
+        'type'        => array( 'list_of' => 'GpalabDocsRepo' ),
       )
     );
   }
@@ -81,5 +93,25 @@ class Docs_Hub_Fields {
     }
 
     return $transformed;
+  }
+
+  /**
+   * Resolve queries for documentation repositories.
+   *
+   * @since 0.0.1
+   */
+  private function gpalab_docs_repos_resolver() {
+    $repos = get_option( 'gpalab_guillotine_docs_hub_repos', array() );
+
+    $filtered = array();
+
+    foreach ( $repos as $repo ) {
+      $item['name'] = $repo['title'];
+      $item['path'] = $repo['parent'];
+
+      array_push( $filtered, $item );
+    }
+
+    return $filtered;
   }
 }

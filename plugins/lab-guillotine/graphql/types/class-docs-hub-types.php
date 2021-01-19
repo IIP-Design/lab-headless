@@ -26,8 +26,13 @@ class Docs_Hub_Types {
     $schema = new Docs_Hub_Schema();
 
     register_graphql_object_type(
-      'gpalabDocsPage',
+      'GpalabDocsPage',
       $schema->docs_page_schema()
+    );
+
+    register_graphql_object_type(
+      'GpalabDocsRepo',
+      $schema->docs_repo_schema()
     );
   }
 }
