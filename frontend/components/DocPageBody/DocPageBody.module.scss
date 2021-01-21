@@ -1,0 +1,36 @@
+.content {
+  * {
+    line-height: 1.4;
+    max-width: 100%;
+    white-space: pre-wrap;
+  }
+
+  img {
+    margin: 1rem 0;
+  }
+
+  li {
+    margin-left: 1.25rem;
+  }
+
+  ol {
+    list-style: disc;
+    margin: 0.5rem 0;
+  }
+
+  ul {
+    list-style: disc;
+    margin: 0.5rem 0;
+  }
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  pre {
+    border-radius: 5px;
+    box-shadow: 1px 6px 12px rgba($color: #333333, $alpha: 0.5);
+    line-height: 1.2;
+    margin: 1rem 0;
+  }
+}

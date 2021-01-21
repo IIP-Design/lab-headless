@@ -23,7 +23,9 @@
     "ramda": "^0.27.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-markdown": "^5.0.3"
+    "react-highlight": "^0.13.0",
+    "react-markdown": "^5.0.3",
+    "remark-gfm": "^1.0.0"
   },
   "devDependencies": {
     "jest": "^26.4.2",

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import propTypes from 'prop-types';
 
 import DocPageBody from '../DocPageBody/DocPageBody';
@@ -6,7 +7,6 @@ import TableOfContents from '../TableOfContents/TableOfContents';
 import { docsPage } from '../../lib/proptypes';
 
 import style from './DocsPage.module.scss';
-import { useState } from 'react';
 
 const DocsPage = ( { data } ) => {
   const [selected, setSelected] = useState( 'README' );
