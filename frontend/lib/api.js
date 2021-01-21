@@ -101,6 +101,7 @@ export async function getDocAndMoreDocs( slug ) {
   const data = await fetchAPI( `
     query DocRepoBySlug($slug: String!) {
       gpalabDocsRepo(slug: $slug) {
+        location
         name
       }
     }
@@ -111,6 +112,24 @@ export async function getDocAndMoreDocs( slug ) {
   } );
 
   return data;
+}
+
+export async function getRepoDocs( location ) {
+  const data = await fetchAPI( `
+    query RepoDocs($parent: String!) {
+      gpalabDocsPages(parent: $parent) {
+        pageContent
+        pageName
+        pagePath
+      }
+    }
+  `, {
+    variables: {
+      parent: location,
+    },
+  } );
+
+  return data?.gpalabDocsPages || {};
 }
 
 export async function getAllPostsForHome( preview ) {
