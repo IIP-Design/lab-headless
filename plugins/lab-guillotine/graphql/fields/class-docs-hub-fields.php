@@ -171,7 +171,10 @@ class Docs_Hub_Fields {
   private function normalize_repo( $repo ) {
     $normalized['name']     = $repo['title'];
     $normalized['location'] = $repo['parent'];
-    $normalized['slug']     = ! empty( $repo['subdir'] ) ? $repo['repo'] . '/' . $repo['subdir'] : $repo['repo'];
+
+    $normalized['slug'] = ! empty( $repo['subdir'] )
+                        ? $repo['repo'] . '-' . str_replace( '/', '-', $repo['subdir'] )
+                        : $repo['repo'];
 
     return $normalized;
   }
