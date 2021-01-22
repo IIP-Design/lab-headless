@@ -87,7 +87,7 @@ class Docs_Hub_Fields {
     // phpcs:disable WordPress.DB.DirectDatabaseQuery.NoCaching
     $results = $wpdb->get_results(
       $wpdb->prepare(
-        "SELECT * FROM {$wpdb->prefix}gpalab_docs_hub WHERE `parent` = %s",
+        "SELECT * FROM {$wpdb->prefix}gpalab_docs_hub WHERE `parent` = %s AND `included` = 1",
         $args['parent']
       )
     );
