@@ -11,7 +11,7 @@ import style from './DocPageBody.module.scss';
 const DocPageBody = ( { page, visible } ) => {
   if ( visible ) {
     return (
-      <div className={ style.content }>
+      <div className={ page.pageName === 'README' ? `${style.content} ${style.readme}` : style.content }>
         <ReactMarkdown plugins={ [gfm] } renderers={ { code: CodeBlock } }>
           { page.pageContent }
         </ReactMarkdown>

@@ -21,7 +21,7 @@ const Doc = ( { data, name, preview } ) => {
     <Layout preview={ preview }>
       <Header />
       <Container>
-        <h1>{ name }</h1>
+        <h1 style={ { textAlign: 'center' } }>{ `${name} - Documentation` }</h1>
         <DocsPage data={ data } />
       </Container>
     </Layout>
