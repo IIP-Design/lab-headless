@@ -13,7 +13,7 @@ const DocsPage = ( { data } ) => {
 
   return (
     <div className={ style.container }>
-      { data && <TableOfContents callback={ setSelected } pages={ data } /> }
+      { data && <TableOfContents callback={ setSelected } pages={ data } selected={ selected } /> }
       <div>
         { data && data.map( page => (
           <DocPageBody key={ page.pagePath } page={ page } visible={ page.pageName === selected } />

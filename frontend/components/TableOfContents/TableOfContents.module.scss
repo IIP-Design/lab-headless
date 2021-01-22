@@ -1,12 +1,45 @@
 .container {
-  margin: 1rem 0;
-}
-
-.list {
   border: 1px solid #ccd0d4;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.04);
   padding: 0.5rem;
   position: sticky;
   top: 1rem;
+}
+
+.list {
+  margin-left: 0.5rem;
+
+  > li {
+    margin: 0.3rem 0 0 0.5rem;
+  }
+}
+
+.nav {
+  margin: 1rem 0;
+}
+
+.selected {
+  background-color: #f1f1f1;
+}
+
+.with-icon {
+  align-items: center;
+  display: flex;
+  font-weight: 600;
+  margin: 0.2rem 0 0;
+  padding: 0.4rem;
+  text-align: left;
+  width: 100%;
+
+  > svg {
+    margin-right: 0.5rem;
+  }
+}
+
+.without-icon {
+  padding: 0.4rem 0.8rem;
+  margin: -0.2rem -0.4rem;
+  text-align: left;
+  width: 100%;
 }
