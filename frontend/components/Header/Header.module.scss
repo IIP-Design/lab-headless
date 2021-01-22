@@ -1,7 +1,11 @@
 @import '../../styles/colors.scss';
 
 .header {
+  align-items: center;
   background-color: $darkBlue;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
   margin: 0;
   padding: 1.5rem 0;
 }
@@ -10,4 +14,17 @@
   height: 70px;
   margin: 0 1.5rem;
   width: 70px;
+}
+
+.branding {
+  align-items: center;
+  display: flex;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.nav {
+  margin: 0 1.5rem;
 }
