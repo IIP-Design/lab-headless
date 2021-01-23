@@ -1,8 +1,13 @@
 import Link from 'next/link';
+import propTypes from 'prop-types';
 
 import Avatar from '../Avatar/Avatar';
-import Date from '../Date/Date';
+import DateString from '../DateString/DateString';
 import CoverImage from '../CoverImage/CoverImage';
+
+import { authorProps, coverImageProps } from '../../lib/proptypes';
+
+import style from './PostPreview.module.scss';
 
 const PostPreview = ( {
   title,
@@ -12,27 +17,35 @@ const PostPreview = ( {
   author,
   slug,
 } ) => (
-  <div>
-    <div className="mb-5">
+  <article>
+    <div className={ style['image-container'] }>
       <CoverImage title={ title } coverImage={ coverImage } slug={ slug } />
     </div>
-    <h3 className="text-3xl mb-3 leading-snug">
+    <h3 className={ style.title }>
       <Link as={ `/posts/${slug}` } href="/posts/[slug]">
-        <a
-          className="hover:underline"
-          dangerouslySetInnerHTML={ { __html: title } }
-        />
+        <a className={ style.link }>
+          { title }
+        </a>
       </Link>
     </h3>
-    <div className="text-lg mb-4">
-      <Date dateString={ date } />
+    <div className={ style.date }>
+      <DateString dateString={ date } />
     </div>
     <div
-      className="text-lg leading-relaxed mb-4"
+      className={ style.excerpt }
       dangerouslySetInnerHTML={ { __html: excerpt } }
     />
     <Avatar author={ author } />
-  </div>
+  </article>
 );
+
+PostPreview.propTypes = {
+  author: authorProps,
+  coverImage: coverImageProps,
+  date: propTypes.string,
+  excerpt: propTypes.string,
+  slug: propTypes.string,
+  title: propTypes.string,
+};
 
 export default PostPreview;

@@ -1,8 +1,16 @@
+import propTypes from 'prop-types';
+
+import styles from './PostTitle.module.scss';
+
 const PostTitle = ( { children } ) => (
   <h1
-    className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-tight md:leading-none mb-12 text-center md:text-left"
+    className={ styles.title }
     dangerouslySetInnerHTML={ { __html: children } }
   />
 );
+
+PostTitle.propTypes = {
+  children: propTypes.node,
+};
 
 export default PostTitle;

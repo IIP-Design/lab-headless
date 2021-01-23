@@ -5,6 +5,17 @@
   margin-top: 6rem;
 }
 
+.content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 0;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+}
+
 .text {
   align-items: center;
   color: #ffffff;

@@ -1,7 +1,7 @@
 import style from './Intro.module.scss';
 
 const Intro = () => (
-  <section className={ `max-w-2xl mx-auto ${style.container}` }>
+  <section className={ style.container }>
     <h1 className={ style.heading }>
       Hello
     </h1>

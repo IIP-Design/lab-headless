@@ -1,6 +1,4 @@
-import ErrorPage from 'next/error';
 import propTypes from 'prop-types';
-import { useRouter } from 'next/router';
 
 import Container from '../../components/Container/Container';
 import Header from '../../components/Header/Header';
@@ -9,23 +7,15 @@ import RepoList from '../../components/RepoList/RepoList';
 
 import { getAllDocRepos } from '../../lib/api';
 
-const Docs = ( { preview, repos } ) => {
-  const router = useRouter();
-
-  // if ( !router.isFallback && !doc?.slug ) {
-  //   return <ErrorPage statusCode={ 404 } />;
-  // }
-
-  return (
-    <Layout preview={ preview }>
-      <Header />
-      <Container>
-        <h1>Docs</h1>
-        <RepoList repos={ repos || [] } />
-      </Container>
-    </Layout>
-  );
-};
+const Docs = ( { preview, repos } ) => (
+  <Layout preview={ preview }>
+    <Header />
+    <Container>
+      <h1>Docs</h1>
+      <RepoList repos={ repos || [] } />
+    </Container>
+  </Layout>
+);
 
 export async function getStaticProps( { preview = false, previewData } ) {
   const allRepos = await getAllDocRepos();

@@ -5,7 +5,7 @@ import style from './Footer.module.scss';
 const Footer = () => (
   <footer className={ style.footer }>
     <Container>
-      <div className="py-20 flex flex-col lg:flex-row items-center">
+      <div className={ style.content }>
         <div className={ style.text }>
           <p>
             { 'This site is managed by the ' }

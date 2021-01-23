@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 import DocPageBody from '../DocPageBody/DocPageBody';
 import TableOfContents from '../TableOfContents/TableOfContents';
 
-import { docsPage } from '../../lib/proptypes';
+import { docsPageProps } from '../../lib/proptypes';
 
 import style from './DocsPage.module.scss';
 
@@ -25,7 +25,7 @@ const DocsPage = ( { data } ) => {
 
 DocsPage.propTypes = {
   data: propTypes.arrayOf(
-    docsPage,
+    docsPageProps,
   ),
 };
 

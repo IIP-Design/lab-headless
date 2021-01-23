@@ -6,7 +6,7 @@ import IconClock from '../Icons/IconClock';
 import IconCode from '../Icons/IconCode';
 import NavItem from './NavItem';
 
-import { docsPage } from '../../lib/proptypes';
+import { docsPageProps } from '../../lib/proptypes';
 import { getButtonStyle } from './utils';
 import { orderPages } from '../../lib/normalize';
 
@@ -87,7 +87,7 @@ const TableOfContents = ( { callback, pages = [], selected } ) => {
 
 TableOfContents.propTypes = {
   callback: propTypes.func,
-  pages: propTypes.arrayOf( docsPage ),
+  pages: propTypes.arrayOf( docsPageProps ),
   selected: propTypes.string,
 };
 

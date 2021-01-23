@@ -32,7 +32,7 @@ const Meta = () => (
     <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
     <meta
       name="description"
-      content="A statically generated blog example using Next.js."
+      content="We are the Digital Lab of the U.S. Department of State's Bureau of Global Public Affairs"
     />
     <meta property="og:image" content="http://localhost:10003/wp-content/uploads/2020/07/seal-192x192-1.png" />
   </Head>

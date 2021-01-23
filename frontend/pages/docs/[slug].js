@@ -1,4 +1,5 @@
 import ErrorPage from 'next/error';
+import Head from 'next/head';
 import propTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
@@ -8,7 +9,7 @@ import Header from '../../components/Header/Header';
 import Layout from '../../components/Layout/Layout';
 
 import { getAllDocRepos, getDocAndMoreDocs, getRepoDocs } from '../../lib/api';
-import { docsPage } from '../../lib/proptypes';
+import { docsPageProps } from '../../lib/proptypes';
 
 const Doc = ( { data, name, preview } ) => {
   const router = useRouter();
@@ -21,6 +22,11 @@ const Doc = ( { data, name, preview } ) => {
     <Layout preview={ preview }>
       <Header />
       <Container>
+        <Head>
+          <title>
+            { `Lab Docs | ${name}` }
+          </title>
+        </Head>
         <h1 style={ { textAlign: 'center' } }>{ `${name} - Documentation` }</h1>
         <DocsPage data={ data } />
       </Container>
@@ -52,9 +58,7 @@ export async function getStaticPaths() {
 }
 
 Doc.propTypes = {
-  data: propTypes.arrayOf(
-    docsPage,
-  ),
+  data: propTypes.arrayOf( docsPageProps ),
   name: propTypes.string,
   preview: propTypes.bool,
 };

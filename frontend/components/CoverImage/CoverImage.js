@@ -1,27 +1,38 @@
-import cn from 'classnames';
 import Link from 'next/link';
+import propTypes from 'prop-types';
+
+import { coverImageProps } from '../../lib/proptypes';
+
+import style from './CoverImage.module.scss';
 
 const CoverImage = ( { title, coverImage, slug } ) => {
   const image = (
     <img
+      alt=""
       src={ coverImage?.sourceUrl }
-      className={ cn( 'shadow-small', {
-        'hover:shadow-medium transition-shadow duration-200': slug,
-      } ) }
+      className={ slug ? `${style.image} ${style.linked}` : style.image }
     />
   );
 
   return (
-    <div className="sm:mx-0">
-      { slug ? (
-        <Link as={ `/posts/${slug}` } href="/posts/[slug]">
-          <a aria-label={ title }>{ image }</a>
-        </Link>
-      ) : (
-        image
-      ) }
+    <div className={ style.container }>
+      { slug
+        ? (
+          <Link as={ `/posts/${slug}` } href="/posts/[slug]">
+            <a aria-label={ title }>{ image }</a>
+          </Link>
+        )
+        : (
+          image
+        ) }
     </div>
   );
+};
+
+CoverImage.propTypes = {
+  coverImage: coverImageProps,
+  slug: propTypes.string,
+  title: propTypes.string,
 };
 
 export default CoverImage;

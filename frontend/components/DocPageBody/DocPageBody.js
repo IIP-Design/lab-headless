@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 
 import CodeBlock from '../CodeBlock/CodeBlock';
 
-import { docsPage } from '../../lib/proptypes';
+import { docsPageProps } from '../../lib/proptypes';
 
 import style from './DocPageBody.module.scss';
 
@@ -23,7 +23,7 @@ const DocPageBody = ( { page, visible } ) => {
 };
 
 DocPageBody.propTypes = {
-  page: docsPage,
+  page: docsPageProps,
   visible: propTypes.bool,
 };
 

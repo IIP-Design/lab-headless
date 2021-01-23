@@ -1,0 +1,28 @@
+.title {
+  font-weight: 700;
+  font-size: 2.75rem;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+
+  @media (min-width: 768px) {
+    font-size: 4.5rem;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  margin-bottom: 8rem;
+  row-gap: 5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 8rem;
+    column-gap: 4rem;
+  }
+
+  @media (min-width: 1024px) {
+    column-gap: 8rem;
+  }
+}

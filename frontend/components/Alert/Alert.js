@@ -1,22 +1,18 @@
-import cn from 'classnames';
 import propTypes from 'prop-types';
 
 import Container from '../Container/Container';
 
+import style from './Alert.module.scss';
+
 const Alert = ( { preview } ) => (
-  <div
-    className={ cn( 'border-b', {
-      'bg-accent-7 border-accent-7 text-white': preview,
-      'bg-accent-1 border-accent-2': !preview,
-    } ) }
-  >
+  <div className={ style.alert }>
     <Container>
       { preview && (
-        <div className="py-2 text-center text-sm">
+        <div className={ style.content }>
           { 'This is page is a preview. ' }
           <a
             href="/api/exit-preview"
-            className="underline hover:text-cyan duration-200 transition-colors"
+            className={ style.link }
           >
             Click here
           </a>

@@ -1,14 +1,22 @@
+import { tagsProps } from '../../lib/proptypes';
+
+import style from './Tags.module.scss';
+
 const Tags = ( { tags } ) => (
-  <div className="max-w-2xl mx-auto">
-    <p className="mt-8 text-lg font-bold">
+  <div className={ style.container }>
+    <p className={ style.tagged }>
       Tagged
       { tags.edges.map( ( tag, index ) => (
-        <span key={ index } className="ml-4 font-normal">
+        <span key={ index } className={ style.tag }>
           { tag.node.name }
         </span>
       ) ) }
     </p>
   </div>
 );
+
+Tags.propTypes = {
+  tags: tagsProps,
+};
 
 export default Tags;
