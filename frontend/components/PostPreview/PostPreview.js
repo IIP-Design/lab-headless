@@ -22,7 +22,7 @@ const PostPreview = ( {
       <CoverImage title={ title } coverImage={ coverImage } slug={ slug } />
     </div>
     <h3 className={ style.title }>
-      <Link as={ `/posts/${slug}` } href="/posts/[slug]">
+      <Link href={ `/posts/${slug}` }>
         <a className={ style.link }>
           { title }
         </a>

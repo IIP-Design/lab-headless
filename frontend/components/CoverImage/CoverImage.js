@@ -18,7 +18,7 @@ const CoverImage = ( { title, coverImage, slug } ) => {
     <div className={ style.container }>
       { slug
         ? (
-          <Link as={ `/posts/${slug}` } href="/posts/[slug]">
+          <Link href={ `/posts/${slug}` }>
             <a aria-label={ title }>{ image }</a>
           </Link>
         )

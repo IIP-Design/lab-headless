@@ -42,12 +42,12 @@ const TableOfContents = ( { callback, pages = [], selected } ) => {
               { docs && docs.map( item => {
                 if ( item.dirName ) {
                   return (
-                    <Fragment>
+                    <Fragment key={ item.dirName }>
                       <NavItem
                         callback={ callback }
                         item={ item.index }
-                        selected={ selected }
                         name={ item.dirName }
+                        selected={ selected }
                       />
                       <ul className={ style.list }>
                         { item.pages.map( page => (
