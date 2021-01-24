@@ -6,6 +6,11 @@
         "allowModules": ["prop-types"]
       }
     ],
+    "node/no-unpublished-require": [
+      "error", {
+        "allowModules": ["@next/bundle-analyzer"]
+      }
+    ],
     "react/no-danger": "warn"
   }
 }
