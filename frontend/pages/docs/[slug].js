@@ -1,15 +1,17 @@
-import ErrorPage from 'next/error';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import propTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
 import Container from '../../components/Container/Container';
-import DocsPage from '../../components/DocsPage/DocsPage';
 import Header from '../../components/Header/Header';
 import Layout from '../../components/Layout/Layout';
 
 import { getAllDocRepos, getDocAndMoreDocs, getRepoDocs } from '../../lib/api';
 import { docsPageProps } from '../../lib/proptypes';
+
+const ErrorPage = dynamic( () => import( /* webpackChunkName: "ErrorPage" */ 'next/error' ) );
+const DocsPage = dynamic( () => import( /* webpackChunkName: "DocsPage" */ '../../components/DocsPage/DocsPage' ) );
 
 const Doc = ( { data, name, preview } ) => {
   const router = useRouter();

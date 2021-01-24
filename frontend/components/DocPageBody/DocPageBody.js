@@ -1,12 +1,13 @@
+import dynamic from 'next/dynamic';
 import gfm from 'remark-gfm';
 import propTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 
-import CodeBlock from '../CodeBlock/CodeBlock';
-
 import { docsPageProps } from '../../lib/proptypes';
 
 import style from './DocPageBody.module.scss';
+
+const CodeBlock = dynamic( () => import( /* webpackChunkName: "CodeBlock" */ '../../components/CodeBlock/CodeBlock' ) );
 
 const DocPageBody = ( { page, visible } ) => {
   if ( visible ) {
