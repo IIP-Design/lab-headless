@@ -1,10 +1,8 @@
-import dynamic from 'next/dynamic';
+import Highlight from '../Highlight/Highlight';
 import propTypes from 'prop-types';
 
-const Highlight = dynamic( () => import( /* webpackChunkName: "Highlight" */ 'react-highlight' ) );
-
 const CodeBlock = ( { language = 'text', value } ) => (
-  <Highlight className={ language } language={ language }>
+  <Highlight className={ language } languages={ [language] }>
     { value }
   </Highlight>
 );
