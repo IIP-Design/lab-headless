@@ -3,15 +3,15 @@ import Head from 'next/head';
 import propTypes from 'prop-types';
 import { useRouter } from 'next/router';
 
-import Container from '../../components/Container/Container';
-import Header from '../../components/Header/Header';
-import Layout from '../../components/Layout/Layout';
+import Container from 'components/Container/Container';
+import Header from 'components/Header/Header';
+import Layout from 'components/Layout/Layout';
 
-import { getAllDocRepos, getDocAndMoreDocs, getRepoDocs } from '../../lib/api';
-import { docsPageProps } from '../../lib/proptypes';
+import { getAllDocRepos, getDocAndMoreDocs, getRepoDocs } from 'lib/api';
+import { docsPageProps } from 'lib/proptypes';
 
 const ErrorPage = dynamic( () => import( /* webpackChunkName: "ErrorPage" */ 'next/error' ) );
-const DocsPage = dynamic( () => import( /* webpackChunkName: "DocsPage" */ '../../components/DocsPage/DocsPage' ) );
+const DocsPage = dynamic( () => import( /* webpackChunkName: "DocsPage" */ 'components/DocsPage/DocsPage' ) );
 
 const Doc = ( { data, name, preview } ) => {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import propTypes from 'prop-types';
 
-import { coverImageProps } from '../../lib/proptypes';
+import { coverImageProps } from 'lib/proptypes';
 
 import style from './CoverImage.module.scss';
 

@@ -1,4 +1,4 @@
-import Highlight from '../Highlight/Highlight';
+import Highlight from 'components/Highlight/Highlight';
 import propTypes from 'prop-types';
 
 const CodeBlock = ( { language = 'text', value } ) => (

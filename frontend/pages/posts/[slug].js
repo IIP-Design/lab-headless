@@ -1,25 +1,24 @@
 import { Fragment, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-// import ErrorPage from 'next/error';
 import Head from 'next/head';
 import propTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { renderBlocks } from '../../node_modules/@gpa-lab/styled-blocks';
 
-import Container from '../../components/Container/Container';
-import Header from '../../components/Header/Header';
-import Layout from '../../components/Layout/Layout';
-import SectionSeparator from '../../components/SectionSeparator/SectionSeparator';
+import Container from 'components/Container/Container';
+import Header from 'components/Header/Header';
+import Layout from 'components/Layout/Layout';
+import SectionSeparator from 'components/SectionSeparator/SectionSeparator';
 
-import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api';
-import { getRelatedBlocks } from '../../lib/graphql/styled-blocks';
+import { getAllPostsWithSlug, getPostAndMorePosts } from 'lib/api';
+import { getRelatedBlocks } from 'lib/graphql/styled-blocks';
 
 const ErrorPage = dynamic( () => import( /* webpackChunkName: "ErrorPage" */ 'next/error' ) );
-const MoreStories = dynamic( () => import( /* webpackChunkName: "MoreStories" */ '../../components/MoreStories/MoreStories' ) );
-const PostBody = dynamic( () => import( /* webpackChunkName: "PostBody" */ '../../components/PostBody/PostBody' ) );
-const PostHeader = dynamic( () => import( /* webpackChunkName: "PostHeader" */ '../../components/PostHeader/PostHeader' ) );
-const PostTitle = dynamic( () => import( /* webpackChunkName: "PostTitle" */ '../../components/PostTitle/PostTitle' ) );
-const Tags = dynamic( () => import( /* webpackChunkName: "Tags" */ '../../components/Tags/Tags' ) );
+const MoreStories = dynamic( () => import( /* webpackChunkName: "MoreStories" */ 'components/MoreStories/MoreStories' ) );
+const PostBody = dynamic( () => import( /* webpackChunkName: "PostBody" */ 'components/PostBody/PostBody' ) );
+const PostHeader = dynamic( () => import( /* webpackChunkName: "PostHeader" */ 'components/PostHeader/PostHeader' ) );
+const PostTitle = dynamic( () => import( /* webpackChunkName: "PostTitle" */ 'components/PostTitle/PostTitle' ) );
+const Tags = dynamic( () => import( /* webpackChunkName: "Tags" */ 'components/Tags/Tags' ) );
 
 const Post = ( { blocks, post, posts, preview } ) => {
   const router = useRouter();

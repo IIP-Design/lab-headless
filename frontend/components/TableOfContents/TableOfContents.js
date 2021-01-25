@@ -1,14 +1,14 @@
 import { Fragment } from 'react';
 import propTypes from 'prop-types';
 
-import IconBook from '../Icons/IconBook';
-import IconClock from '../Icons/IconClock';
-import IconCode from '../Icons/IconCode';
+import IconBook from 'components/Icons/IconBook';
+import IconClock from 'components/Icons/IconClock';
+import IconCode from 'components/Icons/IconCode';
 import NavItem from './NavItem';
 
-import { docsPageProps } from '../../lib/proptypes';
+import { docsPageProps } from 'lib/proptypes';
 import { getButtonStyle } from './utils';
-import { orderPages } from '../../lib/normalize';
+import { orderPages } from 'lib/normalize';
 
 import style from './TableOfContents.module.scss';
 

@@ -1,6 +1,14 @@
 {
-  "ignorePatterns": [ ".next/", "node_modules/" ],
+  "extends": ["../.eslintrc"],
+  "ignorePatterns": [ ".next/", "node_modules/", "out/" ],
+  "parser": "babel-eslint",
+  "root": true,
   "rules": {
+    "node/no-missing-import": [
+      "error", {
+        "allowModules": ["components", "lib", "styles"]
+      }
+    ],
     "node/no-unpublished-import": [
       "error", {
         "allowModules": ["prop-types"]
@@ -12,5 +20,17 @@
       }
     ],
     "react/no-danger": "warn"
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {
+        "alias": {
+          "components": "./components",
+          "lib": "./lib",
+          "styles": "./styles"
+        },
+        "root": ["."]
+      }
+    }
   }
 }

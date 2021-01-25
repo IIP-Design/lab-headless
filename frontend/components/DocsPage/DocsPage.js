@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import propTypes from 'prop-types';
 
-import DocPageBody from '../DocPageBody/DocPageBody';
-import TableOfContents from '../TableOfContents/TableOfContents';
+import DocPageBody from 'components/DocPageBody/DocPageBody';
+import TableOfContents from 'components/TableOfContents/TableOfContents';
 
-import { docsPageProps } from '../../lib/proptypes';
+import { docsPageProps } from 'lib/proptypes';
 
 import style from './DocsPage.module.scss';
 

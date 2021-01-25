@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 
-import PostPreview from '../PostPreview/PostPreview';
+import PostPreview from 'components/PostPreview/PostPreview';
 
 import style from './MoreStories.module.scss';
 

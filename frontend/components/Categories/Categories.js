@@ -1,4 +1,4 @@
-import { categoriesProps } from '../../lib/proptypes';
+import { categoriesProps } from 'lib/proptypes';
 
 import style from './Categories.module.scss';
 

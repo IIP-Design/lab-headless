@@ -2,13 +2,13 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import propTypes from 'prop-types';
 
-import Container from '../components/Container/Container';
-import Layout from '../components/Layout/Layout';
+import Container from 'components/Container/Container';
+import Layout from 'components/Layout/Layout';
 
-import { getHomePage } from '../lib/api';
+import { getHomePage } from 'lib/api';
 
-const Intro = dynamic( () => import( /* webpackChunkName: "Intro" */ '../components/Intro/Intro' ) );
-const PostBody = dynamic( () => import( /* webpackChunkName: "PostBody" */ '../components/PostBody/PostBody' ) );
+const Intro = dynamic( () => import( /* webpackChunkName: "Intro" */ 'components/Intro/Intro' ) );
+const PostBody = dynamic( () => import( /* webpackChunkName: "PostBody" */ 'components/PostBody/PostBody' ) );
 
 const Index = ( { homePage, preview } ) => {
   const home = homePage?.edges?.[0]?.node;

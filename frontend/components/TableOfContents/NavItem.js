@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
 
-import { docsPageProps } from '../../lib/proptypes';
-import { formatTocItem } from '../../lib/format';
+import { docsPageProps } from 'lib/proptypes';
+import { formatTocItem } from 'lib/format';
 import { getButtonStyle } from './utils';
 
 const NavItem = ( { callback, item, name, selected } ) => {

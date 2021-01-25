@@ -1,6 +1,6 @@
 import propTypes from 'prop-types';
 
-import Container from '../Container/Container';
+import Container from 'components/Container/Container';
 
 import style from './Alert.module.scss';
 

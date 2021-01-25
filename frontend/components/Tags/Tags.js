@@ -1,4 +1,4 @@
-import { tagsProps } from '../../lib/proptypes';
+import { tagsProps } from 'lib/proptypes';
 
 import style from './Tags.module.scss';
 

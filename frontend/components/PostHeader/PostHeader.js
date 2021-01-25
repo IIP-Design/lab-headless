@@ -1,13 +1,13 @@
 import { Fragment } from 'react';
 import propTypes from 'prop-types';
 
-import Avatar from '../Avatar/Avatar';
-import Categories from '../Categories/Categories';
-import CoverImage from '../CoverImage/CoverImage';
-import DateString from '../DateString/DateString';
-import PostTitle from '../PostTitle/PostTitle';
+import Avatar from 'components/Avatar/Avatar';
+import Categories from 'components/Categories/Categories';
+import CoverImage from 'components/CoverImage/CoverImage';
+import DateString from 'components/DateString/DateString';
+import PostTitle from 'components/PostTitle/PostTitle';
 
-import { authorProps, categoriesProps, coverImageProps } from '../../lib/proptypes';
+import { authorProps, categoriesProps, coverImageProps } from 'lib/proptypes';
 
 import style from './PostHeader.module.scss';
 

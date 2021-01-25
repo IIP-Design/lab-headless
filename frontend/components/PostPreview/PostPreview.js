@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import propTypes from 'prop-types';
 
-import Avatar from '../Avatar/Avatar';
-import DateString from '../DateString/DateString';
-import CoverImage from '../CoverImage/CoverImage';
+import Avatar from 'components/Avatar/Avatar';
+import DateString from 'components/DateString/DateString';
+import CoverImage from 'components/CoverImage/CoverImage';
 
-import { authorProps, coverImageProps } from '../../lib/proptypes';
+import { authorProps, coverImageProps } from 'lib/proptypes';
 
 import style from './PostPreview.module.scss';
 

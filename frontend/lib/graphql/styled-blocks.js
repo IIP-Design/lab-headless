@@ -1,4 +1,4 @@
-import { fetchAPI } from '../api';
+import { fetchAPI } from 'lib/api';
 
 const fragmentArticleMeta = `
   postId

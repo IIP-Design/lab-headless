@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 import propTypes from 'prop-types';
 
-import Alert from '../Alert/Alert';
-import Footer from '../Footer/Footer';
-import GovBanner from '../GovBanner/GovBanner';
-import Meta from '../Meta/Meta';
+import Alert from 'components/Alert/Alert';
+import Footer from 'components/Footer/Footer';
+import GovBanner from 'components/GovBanner/GovBanner';
+import Meta from 'components/Meta/Meta';
 
 import style from './Layout.module.scss';
 

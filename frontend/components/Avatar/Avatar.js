@@ -1,4 +1,4 @@
-import { authorProps } from '../../lib/proptypes';
+import { authorProps } from 'lib/proptypes';
 
 import style from './Avatar.module.scss';
 

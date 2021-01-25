@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import propTypes from 'prop-types';
 
-import Container from '../../components/Container/Container';
-import Header from '../../components/Header/Header';
-import Layout from '../../components/Layout/Layout';
-import RepoList from '../../components/RepoList/RepoList';
+import Container from 'components/Container/Container';
+import Header from 'components/Header/Header';
+import Layout from 'components/Layout/Layout';
+import RepoList from 'components/RepoList/RepoList';
 
-import { getAllDocRepos } from '../../lib/api';
+import { getAllDocRepos } from 'lib/api';
 
 const Docs = ( { preview, repos } ) => (
   <Layout preview={ preview }>
