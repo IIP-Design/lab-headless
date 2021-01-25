@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import propTypes from 'prop-types';
 
 import Container from '../../components/Container/Container';
@@ -11,7 +12,12 @@ const Docs = ( { preview, repos } ) => (
   <Layout preview={ preview }>
     <Header />
     <Container>
-      <h1>Docs</h1>
+      <Head>
+        <title>
+          GPA Lab Documentation Hub
+        </title>
+      </Head>
+      <h1>GPA Lab Documentation Hub</h1>
       <RepoList repos={ repos || [] } />
     </Container>
   </Layout>
