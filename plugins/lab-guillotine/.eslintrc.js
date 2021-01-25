@@ -1,7 +1,7 @@
 module.exports = {
   'extends': ['../../.eslintrc'],
   ignorePatterns: [
-    'node_modules/', 'build/', 'vendor/',
+    'node_modules/', 'build/', 'build-dev/', 'vendor/',
   ],
   parser: 'babel-eslint',
   root: true,
