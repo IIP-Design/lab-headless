@@ -29,7 +29,7 @@
     "setup": "make setup -s -C .devcontainer"
   },
   "devDependencies": {
-    "@gpa-lab/eslint-config": "^1.3.1",
+    "@gpa-lab/eslint-config": "^1.4.0",
     "eslint": "^7.18.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jest": "^24.1.3",

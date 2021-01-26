@@ -4,21 +4,6 @@
   "parser": "babel-eslint",
   "root": true,
   "rules": {
-    "node/no-missing-import": [
-      "error", {
-        "allowModules": ["components", "lib", "styles"]
-      }
-    ],
-    "node/no-unpublished-import": [
-      "error", {
-        "allowModules": ["prop-types"]
-      }
-    ],
-    "node/no-unpublished-require": [
-      "error", {
-        "allowModules": ["@next/bundle-analyzer"]
-      }
-    ],
     "react/no-danger": "warn"
   },
   "settings": {
