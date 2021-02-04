@@ -1,4 +1,5 @@
 import { createContext } from '@wordpress/element';
+import { assign, createMachine, interpret } from 'xstate';
 
 import { removeFile } from 'docs-hub/utils/filters';
 import { convertPathToTitle } from 'docs-hub/utils/normalizers';
@@ -6,20 +7,128 @@ import { convertPathToTitle } from 'docs-hub/utils/normalizers';
 const { githubDefaultOrg, githubToken } = window.gpalabDocsHub;
 
 export const initialState = {
-  active: 0,
   branch: '',
   branches: null,
   branchSet: false,
+  disabled: [],
   error: null,
   owner: githubDefaultOrg,
   repo: '',
   selectedFiles: [],
   ignoredFiles: [],
+  showButton: null,
   subdirectory: '',
   subdirSet: false,
+  step: 'one',
   title: '',
   token: githubToken,
 };
+
+const setButton = step => {
+  switch ( step ) {
+    case 'one':
+      return 'branches';
+    default:
+      return null;
+  }
+};
+
+const handleDeactivation = ctx => {
+  switch ( ctx.step ) {
+    case 'one':
+      return [
+        ...ctx.disabled, 'ownerField', 'repoField', 'getBranchesButton',
+      ];
+    case 'two':
+      return [
+        ...ctx.disabled, 'branchesField', 'setBranchButton',
+      ];
+    case 'three':
+      return [
+        ...ctx.disabled, 'subdirField', 'subdirButton',
+      ];
+    default:
+      return ctx.disabled;
+  }
+};
+
+export const repoWizardMachine = createMachine( {
+  initial: 'awaitingInput',
+  context: initialState,
+  states: {
+    awaitingInput: {
+      initial: 'one',
+      states: {
+        one: {
+          exit: ['deactivateInputs'],
+          on: {
+            NEXT: {
+              actions: assign( { step: 'two' } ),
+              cond: 'hasRepo',
+              target: 'two',
+            },
+          },
+        },
+        two: {
+          exit: ['deactivateInputs'],
+          on: {
+            NEXT: {
+              actions: assign( { step: 'three' } ),
+              target: 'three',
+            },
+          },
+        },
+        three: {
+          exit: ['deactivateInputs'],
+          on: {
+            NEXT: {
+              actions: assign( { step: 'four' } ),
+              target: 'four',
+            },
+          },
+        },
+        four: {
+          on: {
+            NEXT: {
+              actions: assign( { step: 'five' } ),
+              target: 'five',
+            },
+          },
+        },
+        five: {
+          type: 'final',
+        },
+      },
+    },
+    error: {},
+    pending: {},
+  },
+  on: {
+    INPUT: {
+      actions: 'handleInput',
+    },
+    RESET: {
+      actions: 'reset',
+      target: 'awaitingInput',
+    },
+  },
+}, {
+  actions: {
+    deactivateInputs: assign( ctx => ( {
+      disabled: handleDeactivation( ctx ),
+    } ) ),
+    handleInput: assign( ( cxt, evt ) => ( {
+      [evt.name]: evt.value,
+      showButton: setButton( cxt.step ),
+    } ) ),
+    reset: assign( initialState ),
+  },
+  guards: {
+    hasRepo: ctx => ctx.owner && ctx.repo,
+  },
+} );
+
+export const repoWizardService = interpret( repoWizardMachine, { devTools: true } );
 
 export const ConnectRepoContext = createContext();
 
@@ -74,31 +183,6 @@ export const connectRepoReducer = ( state, action ) => {
       return {
         ...state,
         branches: payload,
-      };
-    case 'set-owner':
-      return {
-        ...state,
-        owner: payload,
-      };
-    case 'set-repo':
-      return {
-        ...state,
-        repo: payload,
-      };
-    case 'set-subdir':
-      return {
-        ...state,
-        subdirectory: payload,
-      };
-    case 'set-title':
-      return {
-        ...state,
-        title: payload,
-      };
-    case 'reset':
-      return {
-        ...state,
-        ...initialState,
       };
     default:
       return state;

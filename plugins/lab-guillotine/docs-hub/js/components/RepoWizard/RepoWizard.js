@@ -1,11 +1,11 @@
-import { useContext, useState } from '@wordpress/element';
+import { useContext, useEffect, useState } from '@wordpress/element';
 
 import ErrorMsg from '../ErrorMsg/ErrorMsg';
 import PageSection from '../PageSection/PageSection';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
-import { ConnectRepoContext } from 'docs-hub/context/connectRepoContext';
+import { ConnectRepoContext, repoWizardService } from 'docs-hub/context/connectRepoContext';
 import { ManageDocsContext } from 'docs-hub/context/manageDocsContext';
 import { createPageList, createParentString, flattenTree } from 'docs-hub/utils/normalizers';
 import { getBranches, getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
@@ -18,48 +18,40 @@ import './RepoWizard.css';
 
 const RepoWizard = () => {
   const [tree, setTree] = useState( null );
+  const [context, setContext] = useState( {} );
+
+  useEffect( () => {
+    repoWizardService.start();
+    repoWizardService.onTransition( state => {
+      setContext( state.context );
+    } );
+
+    return () => {
+      repoWizardService.stop();
+    };
+  }, [] );
 
   const {
     dispatch,
     state: {
-      branch,
       branches,
       branchSet,
       error,
       ignoredFiles,
-      owner,
-      repo,
       selectedFiles,
-      subdirectory,
       subdirSet,
-      title,
       token,
     },
   } = useContext( ConnectRepoContext );
 
+  const { branch, disabled, owner, repo, showButton, subdir, step, title } = context;
+
   const { dispatch: reposDispatch, state: { repos } } = useContext( ManageDocsContext );
 
-  const handleInput = ( e, control ) => {
-    const { value } = e.target;
+  const handleInput = e => {
+    const { value, name } = e.target;
 
-    switch ( control ) {
-      case 'branch':
-        dispatch( { type: 'set-branch', payload: value } );
-        break;
-      case 'owner':
-        dispatch( { type: 'set-owner', payload: value } );
-        break;
-      case 'repo':
-        dispatch( { type: 'set-repo', payload: value } );
-        break;
-      case 'subdir':
-        dispatch( { type: 'set-subdir', payload: value } );
-        break;
-      case 'title':
-        dispatch( { type: 'set-title', payload: value } );
-        break;
-      default:
-    }
+    repoWizardService.send( { type: 'INPUT', name, value } );
   };
 
   const getBranch = async () => {
@@ -74,35 +66,39 @@ const RepoWizard = () => {
       dispatch( { type: 'set-branches', payload: allBranches } );
       dispatch( { type: 'set-branch', payload: defaultBranch } );
       dispatch( { type: 'increment-active' } );
+      repoWizardService.send( { type: 'NEXT' } );
     }
   };
 
   const confirmChoice = action => {
     dispatch( { type: `confirm-${action}` } );
     dispatch( { type: 'increment-active' } );
+    repoWizardService.send( { type: 'NEXT' } );
   };
 
   const getTree = async () => {
     const currentRepos = repos ? repos.map( item => item.parent ) : [];
-    const parent = createParentString( owner, repo, subdirectory, branch );
+    const parent = createParentString( owner, repo, subdir, branch );
 
     if ( !currentRepos.includes( parent ) ) {
       const repoTree = await getRepoDocs(
         { owner, repo },
         token,
         branch,
-        subdirectory,
+        subdir,
       );
 
       dispatch( { type: 'leaves-init', payload: flattenTree( repoTree ) } );
       setTree( repoTree );
       dispatch( { type: 'increment-active' } );
+      repoWizardService.send( { type: 'NEXT' } );
     } else {
       dispatch( { type: 'error-add', payload: { message: i18nize( 'This repository has already been connected' ) } } );
     }
   };
 
   const reset = () => {
+    repoWizardService.send( { type: 'RESET' } );
     dispatch( { type: 'reset' } );
     setTree( null );
   };
@@ -125,7 +121,7 @@ const RepoWizard = () => {
         branch,
         owner,
         repo,
-        subdirectory,
+        subdirectory: subdir,
         title,
       },
     };
@@ -133,19 +129,22 @@ const RepoWizard = () => {
     saveRepoData( repoData, onSuccess );
   };
 
+  const isDisabled = name => ( disabled ? disabled.includes( name ) : false );
+
   return (
     <PageSection title="Connect a New Repository">
-      <ProgressBar steps={ steps } />
+      <ProgressBar active={ step } steps={ steps } />
       <div className="gpalab-docs-wizard-contents">
         <div className="gpalab-docs-wizard-section">
           <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-owner">
             { `${i18nize( 'Identify repo owner' )}:` }
             <input
-              disabled={ !!branch }
+              disabled={ isDisabled( 'ownerField' ) }
               id="gpalab-docs-owner"
+              name="owner"
               type="text"
               value={ owner }
-              onChange={ e => handleInput( e, 'owner' ) }
+              onChange={ e => handleInput( e ) }
             />
           </label>
         </div>
@@ -153,18 +152,19 @@ const RepoWizard = () => {
           <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-repo">
             { `${i18nize( 'Add the repo name' )}:` }
             <input
-              disabled={ !!branch }
+              disabled={ isDisabled( 'repoField' ) }
               id="gpalab-docs-repo"
+              name="repo"
               type="text"
               value={ repo }
-              onChange={ e => handleInput( e, 'repo' ) }
+              onChange={ e => handleInput( e ) }
             />
           </label>
-          { repo && (
+          { showButton === 'branches' && (
             <button
               className="gpalab-docs-wizard-button"
               type="button"
-              disabled={ !!branch }
+              disabled={ isDisabled( 'getBranchesButton' ) }
               onClick={ () => getBranch() }
             >
               { i18nize( 'Get GitHub Branches' ) }
@@ -176,11 +176,12 @@ const RepoWizard = () => {
             <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-default-branch">
               { `${i18nize( 'Choose the branch' )}:` }
               <select
-                disabled={ !!branchSet }
+                disabled={ isDisabled( 'branchesField' ) }
                 id="gpalab-docs-default-branch"
+                name="branch"
                 value={ branch }
-                onBlur={ e => handleInput( e, 'branch' ) }
-                onChange={ e => handleInput( e, 'branch' ) }
+                onBlur={ e => handleInput( e ) }
+                onChange={ e => handleInput( e ) }
               >
                 { branches.map( branchRef => (
                   <option key={ branchRef } value={ branchRef }>{ branchRef }</option>
@@ -189,7 +190,7 @@ const RepoWizard = () => {
             </label>
             <button
               className="gpalab-docs-wizard-button"
-              disabled={ !!branchSet }
+              disabled={ isDisabled( 'setBranchButton' ) }
               type="button"
               onClick={ () => confirmChoice( 'branch' ) }
             >
@@ -202,20 +203,21 @@ const RepoWizard = () => {
             <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-subdir">
               { `${i18nize( 'Search sub-directory' )}:` }
               <input
-                disabled={ !!subdirSet }
+                disabled={ isDisabled( 'subdirField' ) }
                 id="gpalab-docs-subdir"
+                name="subdir"
                 type="text"
-                value={ subdirectory }
-                onChange={ e => handleInput( e, 'subdir' ) }
+                value={ subdir }
+                onChange={ e => handleInput( e ) }
               />
             </label>
             <button
               className="gpalab-docs-wizard-button"
-              disabled={ !!subdirSet }
+              disabled={ isDisabled( 'subdirButton' ) }
               type="button"
               onClick={ () => confirmChoice( 'subdir' ) }
             >
-              { subdirectory ? i18nize( 'Search This Directory' ) : i18nize( 'No, Search Root' ) }
+              { subdir ? i18nize( 'Search This Directory' ) : i18nize( 'No, Search Root' ) }
             </button>
           </div>
         ) }
@@ -230,8 +232,9 @@ const RepoWizard = () => {
               <input
                 id="gpalab-docs-title"
                 type="text"
+                name="title"
                 value={ title }
-                onChange={ e => handleInput( e, 'title' ) }
+                onChange={ e => handleInput( e ) }
               />
             </label>
             <strong>{ `${i18nize( 'Results' )}:` }</strong>
