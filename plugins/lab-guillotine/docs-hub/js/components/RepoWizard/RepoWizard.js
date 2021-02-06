@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from '@wordpress/element';
+import { useContext, useState } from '@wordpress/element';
+import { useMachine } from '@xstate/react';
 
 import ErrorMsg from '../ErrorMsg/ErrorMsg';
 import PageSection from '../PageSection/PageSection';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
-import { ConnectRepoContext, repoWizardService } from 'docs-hub/context/connectRepoContext';
+import { ConnectRepoContext, repoWizardService, repoWizardMachine2 } from 'docs-hub/context/connectRepoContext';
 import { ManageDocsContext } from 'docs-hub/context/manageDocsContext';
 import { createPageList, createParentString, flattenTree } from 'docs-hub/utils/normalizers';
-import { getBranches, getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
+import { getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
 import { hasFiles } from 'docs-hub/utils/helpers';
 import { saveRepoData } from 'docs-hub/utils/admin-ajax';
 import { i18nize } from 'shared/utils/helpers';
@@ -18,25 +19,15 @@ import './RepoWizard.css';
 
 const RepoWizard = () => {
   const [tree, setTree] = useState( null );
-  const [context, setContext] = useState( {} );
 
-  useEffect( () => {
-    repoWizardService.start();
-    repoWizardService.onTransition( state => {
-      setContext( state.context );
-    } );
+  const [{ context, value: xstate }, send] = useMachine( repoWizardMachine2, { devTools: true } );
 
-    return () => {
-      repoWizardService.stop();
-    };
-  }, [] );
+  console.log( context, xstate );
 
   const {
     dispatch,
     state: {
-      branches,
       branchSet,
-      error,
       ignoredFiles,
       selectedFiles,
       subdirSet,
@@ -44,30 +35,14 @@ const RepoWizard = () => {
     },
   } = useContext( ConnectRepoContext );
 
-  const { branch, disabled, owner, repo, showButton, subdir, step, title } = context;
+  const { branch, branches, disabled, error, owner, repo, subdir, step, title, visible } = context;
 
   const { dispatch: reposDispatch, state: { repos } } = useContext( ManageDocsContext );
 
   const handleInput = e => {
     const { value, name } = e.target;
 
-    repoWizardService.send( { type: 'INPUT', name, value } );
-  };
-
-  const getBranch = async () => {
-    const { branches: allBranches, defaultBranch, error } = await getBranches(
-      { owner, repo },
-      token,
-    );
-
-    if ( error ) {
-      dispatch( { type: 'error-add', payload: error } );
-    } else {
-      dispatch( { type: 'set-branches', payload: allBranches } );
-      dispatch( { type: 'set-branch', payload: defaultBranch } );
-      dispatch( { type: 'increment-active' } );
-      repoWizardService.send( { type: 'NEXT' } );
-    }
+    send( { type: 'INPUT', name, value } );
   };
 
   const confirmChoice = action => {
@@ -98,7 +73,7 @@ const RepoWizard = () => {
   };
 
   const reset = () => {
-    repoWizardService.send( { type: 'RESET' } );
+    send( { type: 'RESET' } );
     dispatch( { type: 'reset' } );
     setTree( null );
   };
@@ -160,18 +135,18 @@ const RepoWizard = () => {
               onChange={ e => handleInput( e ) }
             />
           </label>
-          { showButton === 'branches' && (
+          { visible?.getBranchesButton && (
             <button
               className="gpalab-docs-wizard-button"
               type="button"
               disabled={ isDisabled( 'getBranchesButton' ) }
-              onClick={ () => getBranch() }
+              onClick={ () => send( { type: 'FETCH' } ) }
             >
               { i18nize( 'Get GitHub Branches' ) }
             </button>
           ) }
         </div>
-        { branches && (
+        { visible?.setBranchSection && (
           <div className="gpalab-docs-wizard-section">
             <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-default-branch">
               { `${i18nize( 'Choose the branch' )}:` }
@@ -198,7 +173,7 @@ const RepoWizard = () => {
             </button>
           </div>
         ) }
-        { branchSet && (
+        { visible?.setSubdirSection && (
           <div className="gpalab-docs-wizard-section">
             <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-subdir">
               { `${i18nize( 'Search sub-directory' )}:` }
@@ -221,7 +196,7 @@ const RepoWizard = () => {
             </button>
           </div>
         ) }
-        { tree && (
+        { visible?.tree && (
           <div className="gpalab-docs-tree-container">
             <label
               className="gpalab-docs-wizard-label"
