@@ -6,7 +6,7 @@ import PageSection from '../PageSection/PageSection';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
-import { ConnectRepoContext, repoWizardService, repoWizardMachine2 } from 'docs-hub/context/connectRepoContext';
+import { ConnectRepoContext, repoWizardMachine } from 'docs-hub/context/connectRepoContext';
 import { ManageDocsContext } from 'docs-hub/context/manageDocsContext';
 import { createPageList, createParentString, flattenTree } from 'docs-hub/utils/normalizers';
 import { getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
@@ -20,14 +20,13 @@ import './RepoWizard.css';
 const RepoWizard = () => {
   const [tree, setTree] = useState( null );
 
-  const [{ context, value: xstate }, send] = useMachine( repoWizardMachine2, { devTools: true } );
+  const [{ context, value: xstate }, send] = useMachine( repoWizardMachine, { devTools: true } );
 
   console.log( context, xstate );
 
   const {
     dispatch,
     state: {
-      branchSet,
       ignoredFiles,
       selectedFiles,
       subdirSet,
@@ -35,7 +34,9 @@ const RepoWizard = () => {
     },
   } = useContext( ConnectRepoContext );
 
-  const { branch, branches, disabled, error, owner, repo, subdir, step, title, visible } = context;
+  const {
+    branch, branches, disabled, error, owner, repo, subdir, step, title, visible,
+  } = context;
 
   const { dispatch: reposDispatch, state: { repos } } = useContext( ManageDocsContext );
 
@@ -43,12 +44,6 @@ const RepoWizard = () => {
     const { value, name } = e.target;
 
     send( { type: 'INPUT', name, value } );
-  };
-
-  const confirmChoice = action => {
-    dispatch( { type: `confirm-${action}` } );
-    dispatch( { type: 'increment-active' } );
-    repoWizardService.send( { type: 'NEXT' } );
   };
 
   const getTree = async () => {
@@ -66,9 +61,14 @@ const RepoWizard = () => {
       dispatch( { type: 'leaves-init', payload: flattenTree( repoTree ) } );
       setTree( repoTree );
       dispatch( { type: 'increment-active' } );
-      repoWizardService.send( { type: 'NEXT' } );
     } else {
-      dispatch( { type: 'error-add', payload: { message: i18nize( 'This repository has already been connected' ) } } );
+      send( {
+        type: 'ERROR',
+        error: {
+          message: i18nize( 'This repository has already been connected' ),
+          type: i18nize( 'Duplicate Repo' ),
+        },
+      } );
     }
   };
 
@@ -167,7 +167,7 @@ const RepoWizard = () => {
               className="gpalab-docs-wizard-button"
               disabled={ isDisabled( 'setBranchButton' ) }
               type="button"
-              onClick={ () => confirmChoice( 'branch' ) }
+              onClick={ () => send( { type: 'SUBMIT' } ) }
             >
               { i18nize( 'Use This Branch' ) }
             </button>
@@ -190,7 +190,7 @@ const RepoWizard = () => {
               className="gpalab-docs-wizard-button"
               disabled={ isDisabled( 'subdirButton' ) }
               type="button"
-              onClick={ () => confirmChoice( 'subdir' ) }
+              onClick={ () => getTree() }
             >
               { subdir ? i18nize( 'Search This Directory' ) : i18nize( 'No, Search Root' ) }
             </button>

@@ -1,5 +1,5 @@
 import { createContext } from '@wordpress/element';
-import { actions, assign, createMachine, forwardTo, interpret, pure, send } from 'xstate';
+import { actions, assign, createMachine, interpret } from 'xstate';
 
 import { removeFile } from 'docs-hub/utils/filters';
 import { convertPathToTitle } from 'docs-hub/utils/normalizers';
@@ -18,7 +18,7 @@ export const initialState = {
   selectedFiles: [],
   ignoredFiles: [],
   showButton: null,
-  subdirectory: '',
+  subdir: '',
   subdirSet: false,
   step: 'one',
   title: '',
@@ -59,9 +59,35 @@ const handleDeactivation = ctx => {
   }
 };
 
+const getTree = async repos => {
+  const currentRepos = repos ? repos.map( item => item.parent ) : [];
+  const parent = createParentString( owner, repo, subdir, branch );
+
+  // if ( !currentRepos.includes( parent ) ) {
+  //   const repoTree = await getRepoDocs(
+  //     { owner, repo },
+  //     token,
+  //     branch,
+  //     subdir,
+  //   );
+
+  //   dispatch( { type: 'leaves-init', payload: flattenTree( repoTree ) } );
+  //   setTree( repoTree );
+  //   dispatch( { type: 'increment-active' } );
+  // } else {
+  //   send( {
+  //     type: 'ERROR',
+  //     error: {
+  //       message: i18nize( 'This repository has already been connected' ),
+  //       type: i18nize( 'Duplicate Repo' ),
+  //     },
+  //   } );
+  // }
+};
+
 const setVisible = ( ctx, item, val ) => ( { visible: { ...ctx.visible, [item]: val } } );
 
-export const repoWizardMachine2 = createMachine( {
+export const repoWizardMachine = createMachine( {
   id: 'repoWizard',
   initial: 'awaitingInput',
   context: initialState,
@@ -80,9 +106,38 @@ export const repoWizardMachine2 = createMachine( {
         },
         stepTwo: {
           entry: 'showSetBranchSection',
+          exit: assign( { step: 'three' } ),
+          on: {
+            INPUT: {
+              actions: 'handleInput',
+            },
+            SUBMIT: {
+              cond: 'hasBranch',
+              target: 'stepThree',
+            },
+          },
         },
-        stepThree: {},
-        stepFour: {},
+        stepThree: {
+          entry: 'showSetSubdirSectionSection',
+          exit: assign( { step: 'four' } ),
+          on: {
+            INPUT: {
+              actions: 'handleInput',
+            },
+            SUBMIT: {
+              actions: 'setTitle',
+              target: 'stepFour',
+            },
+          },
+        },
+        stepFour: {
+          on: {
+            ERROR: {
+              target: '#error.duplicate',
+              actions: assign( ( _, evt ) => ( { error: evt.error } ) ),
+            },
+          },
+        },
         stepFive: {},
       },
     },
@@ -99,6 +154,7 @@ export const repoWizardMachine2 = createMachine( {
             },
           },
         },
+        duplicate: {},
       },
     },
     pending: {
@@ -118,6 +174,7 @@ export const repoWizardMachine2 = createMachine( {
                 actions: assign( {
                   branch: ( _, evt ) => evt.data.defaultBranch,
                   branches: ( _, evt ) => evt.data.branches,
+                  step: 'two',
                 } ),
               },
               {
@@ -155,93 +212,18 @@ export const repoWizardMachine2 = createMachine( {
         return assign( setVisible( ctx, 'getBranchesButton', false ) );
       }
     } ),
+    setTitle: assign( ctx => ( {
+      title: ctx.subdir ? convertPathToTitle( ctx.subdir ) : convertPathToTitle( ctx.repo ),
+    } ) ),
     showSetBranchSection: assign( ctx => setVisible( ctx, 'setBranchSection', true ) ),
+    showSetSubdirSectionSection: assign( ctx => setVisible( ctx, 'setSubdirSection', true ) ),
     reset: assign( initialState ),
   },
   guards: {
+    hasBranch: ctx => !!ctx.branch,
     hasNoError: ( _, evt ) => !evt.data.error,
   },
 } );
-
-export const repoWizardMachine = createMachine(
-  {
-    initial: 'awaitingInput',
-    context: initialState,
-    states: {
-      awaitingInput: {
-        initial: 'one',
-        states: {
-          one: {
-            exit: ['deactivateInputs'],
-            on: {
-              NEXT: {
-                actions: assign( { step: 'two' } ),
-                target: 'two',
-              },
-            },
-          },
-          two: {
-            exit: ['deactivateInputs'],
-            on: {
-              NEXT: {
-                actions: assign( { step: 'three' } ),
-                target: 'three',
-              },
-            },
-          },
-          three: {
-            exit: ['deactivateInputs'],
-            on: {
-              NEXT: {
-                actions: assign( { step: 'four' } ),
-                target: 'four',
-              },
-            },
-          },
-          four: {
-            on: {
-              NEXT: {
-                actions: assign( { step: 'five' } ),
-                target: 'five',
-              },
-            },
-          },
-          five: {
-            type: 'final',
-          },
-        },
-      },
-      error: {},
-      pending: {},
-    },
-    on: {
-      INPUT: {
-        actions: 'handleInput',
-      },
-      RESET: {
-        actions: 'reset',
-        target: 'awaitingInput',
-      },
-    },
-  },
-  {
-    actions: {
-      deactivateInputs: assign( ctx => ( {
-        disabled: handleDeactivation( ctx ),
-      } ) ),
-      handleInput: assign( ( cxt, evt ) => ( {
-        [evt.name]: evt.value,
-        showButton: setButton( cxt.step ),
-      } ) ),
-      reset: assign( initialState ),
-    },
-    guards: {
-      hasRepo: ctx => ctx.owner && ctx.repo,
-    },
-  },
-);
-
-export const repoWizardService = interpret( repoWizardMachine, { devTools: true } );
 
 export const ConnectRepoContext = createContext();
 
@@ -249,19 +231,6 @@ export const connectRepoReducer = ( state, action ) => {
   const { payload } = action;
 
   switch ( action.type ) {
-    case 'confirm-branch':
-      return {
-        ...state,
-        branchSet: true,
-      };
-    case 'confirm-subdir':
-      return {
-        ...state,
-        subdirSet: true,
-        title: state.subdirectory
-          ? convertPathToTitle( state.subdirectory )
-          : convertPathToTitle( state.repo ),
-      };
     case 'error-add':
       return {
         ...state,
@@ -288,16 +257,6 @@ export const connectRepoReducer = ( state, action ) => {
       return {
         ...state,
         selectedFiles: payload,
-      };
-    case 'set-branch':
-      return {
-        ...state,
-        branch: payload,
-      };
-    case 'set-branches':
-      return {
-        ...state,
-        branches: payload,
       };
     default:
       return state;
