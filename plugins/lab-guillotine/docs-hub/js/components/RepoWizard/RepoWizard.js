@@ -6,7 +6,7 @@ import PageSection from '../PageSection/PageSection';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
-import { repoWizardMachine } from 'docs-hub/context/connectRepoContext';
+import { repoWizardMachine } from 'docs-hub/machines/repo-wizard';
 import { ManageDocsContext } from 'docs-hub/context/manageDocsContext';
 import { createPageList } from 'docs-hub/utils/normalizers';
 import { getManyFiles } from 'docs-hub/utils/api';
