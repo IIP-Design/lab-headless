@@ -6,7 +6,7 @@
 .gpalab-docs-wizard-controls {
   display: flex;
   justify-content: space-between;
-  margin: 1rem 0.5rem;
+  margin: 1rem 0rem;
 }
 
 .gpalab-docs-wizard-section {
