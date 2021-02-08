@@ -12,7 +12,14 @@ export const initialState = {
   branch: '',
   branches: null,
   branchSet: false,
-  disabled: [],
+  disabled: {
+    ownerField: false,
+    repoField: false,
+    subdirField: false,
+    getBranchesButton: false,
+    branchesField: false,
+    setBranchButton: false,
+  },
   error: null,
   owner: githubDefaultOrg,
   repo: '',
@@ -47,7 +54,23 @@ const isDupRepo = ( ctx, evt ) => {
   return currentRepos.includes( parent );
 };
 
-const setVisible = ( ctx, item, val ) => ( { visible: { ...ctx.visible, [item]: val } } );
+const setVisible = ( el, val ) => assign( ctx => ( { visible: { ...ctx.visible, [el]: val } } ) );
+const setDisabled = ( els, val ) => assign( ctx => {
+  const fields = {};
+
+  els.forEach( el => {
+    fields[el] = val;
+  } );
+
+  return ( { disabled: { ...ctx.disabled, ...fields } } );
+} );
+
+const hide = el => setVisible( el, false );
+const show = el => setVisible( el, true );
+
+const disable = els => setDisabled( els, true );
+const enable = els => setDisabled( els, false );
+
 
 export const repoWizardMachine = createMachine( {
   id: 'repoWizard',
@@ -67,7 +90,12 @@ export const repoWizardMachine = createMachine( {
           },
         },
         stepTwo: {
-          entry: 'showSetBranchSection',
+          entry: [
+            show( 'setBranchSection' ),
+            disable( [
+              'getBranchesButton', 'ownerField', 'repoField', 'subdirField',
+            ] ),
+          ],
           exit: assign( { step: 'three' } ),
           on: {
             INPUT: {
@@ -80,8 +108,10 @@ export const repoWizardMachine = createMachine( {
           },
         },
         stepThree: {
-          entry: 'showSetSubdirSectionSection',
-          exit: assign( { step: 'four' } ),
+          entry: [
+            show( 'getTreeButton' ),
+            disable( ['branchesField', 'setBranchButton'] ),
+          ],
           on: {
             INPUT: {
               actions: 'handleInput',
@@ -106,8 +136,8 @@ export const repoWizardMachine = createMachine( {
       id: 'error',
       states: {
         branches: {
-          entry: assign( ctx => setVisible( ctx, 'getBranchesButton', false ) ),
-          exit: assign( { error: null } ),
+          entry: hide( 'getBranchesButton' ),
+          exit: 'clearError',
           on: {
             INPUT: {
               target: '#awaitingInput.stepOne',

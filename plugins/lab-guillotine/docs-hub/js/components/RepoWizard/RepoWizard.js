@@ -70,7 +70,7 @@ const RepoWizard = () => {
           <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-owner">
             { `${i18nize( 'Identify repo owner' )}:` }
             <input
-              disabled={ isDisabled( 'ownerField' ) }
+              disabled={ disabled?.ownerField || false }
               id="gpalab-docs-owner"
               name="owner"
               type="text"
@@ -79,11 +79,12 @@ const RepoWizard = () => {
             />
           </label>
         </div>
+
         <div className="gpalab-docs-wizard-section">
           <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-repo">
             { `${i18nize( 'Add the repo name' )}:` }
             <input
-              disabled={ isDisabled( 'repoField' ) }
+              disabled={ disabled?.repoField || false }
               id="gpalab-docs-repo"
               name="repo"
               type="text"
@@ -109,7 +110,7 @@ const RepoWizard = () => {
             <button
               className="gpalab-docs-wizard-button"
               type="button"
-              disabled={ isDisabled( 'getBranchesButton' ) }
+              disabled={ disabled?.getBranchesButton || false }
               onClick={ () => send( { type: 'FETCH' } ) }
             >
               { i18nize( 'Get GitHub Branches' ) }
@@ -122,7 +123,7 @@ const RepoWizard = () => {
             <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-default-branch">
               { `${i18nize( 'Choose the branch' )}:` }
               <select
-                disabled={ isDisabled( 'branchesField' ) }
+                disabled={ disabled?.branchesField || false }
                 id="gpalab-docs-default-branch"
                 name="branch"
                 value={ branch }
@@ -136,7 +137,7 @@ const RepoWizard = () => {
             </label>
             <button
               className="gpalab-docs-wizard-button"
-              disabled={ isDisabled( 'setBranchButton' ) }
+              disabled={ disabled?.setBranchButton || false }
               type="button"
               onClick={ () => send( { type: 'SUBMIT' } ) }
             >
