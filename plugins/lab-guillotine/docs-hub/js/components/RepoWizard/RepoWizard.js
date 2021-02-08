@@ -1,4 +1,4 @@
-import { useContext, useState } from '@wordpress/element';
+import { useContext } from '@wordpress/element';
 import { useMachine } from '@xstate/react';
 
 import ErrorMsg from '../ErrorMsg/ErrorMsg';
@@ -6,10 +6,10 @@ import PageSection from '../PageSection/PageSection';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Tree from '../Tree/Tree';
 
-import { ConnectRepoContext, repoWizardMachine } from 'docs-hub/context/connectRepoContext';
+import { repoWizardMachine } from 'docs-hub/context/connectRepoContext';
 import { ManageDocsContext } from 'docs-hub/context/manageDocsContext';
-import { createPageList, createParentString, flattenTree } from 'docs-hub/utils/normalizers';
-import { getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
+import { createPageList } from 'docs-hub/utils/normalizers';
+import { getManyFiles } from 'docs-hub/utils/api';
 import { hasFiles } from 'docs-hub/utils/helpers';
 import { saveRepoData } from 'docs-hub/utils/admin-ajax';
 import { i18nize } from 'shared/utils/helpers';
@@ -18,24 +18,14 @@ import { steps } from './progress-steps';
 import './RepoWizard.css';
 
 const RepoWizard = () => {
-  const [tree, setTree] = useState( null );
-
   const [{ context, value: xstate }, send] = useMachine( repoWizardMachine, { devTools: true } );
 
   console.log( context, xstate );
 
   const {
-    dispatch,
-    state: {
-      ignoredFiles,
-      selectedFiles,
-      subdirSet,
-      token,
-    },
-  } = useContext( ConnectRepoContext );
-
-  const {
-    branch, branches, disabled, error, owner, repo, subdir, step, title, visible,
+    branch, branches, disabled, error, owner,
+    repo, subdir, step, title, tree, visible,
+    ignoredFiles, selectedFiles, token,
   } = context;
 
   const { dispatch: reposDispatch, state: { repos } } = useContext( ManageDocsContext );
@@ -46,44 +36,12 @@ const RepoWizard = () => {
     send( { type: 'INPUT', name, value } );
   };
 
-  const getTree = async () => {
-    const currentRepos = repos ? repos.map( item => item.parent ) : [];
-    const parent = createParentString( owner, repo, subdir, branch );
-
-    if ( !currentRepos.includes( parent ) ) {
-      const repoTree = await getRepoDocs(
-        { owner, repo },
-        token,
-        branch,
-        subdir,
-      );
-
-      dispatch( { type: 'leaves-init', payload: flattenTree( repoTree ) } );
-      setTree( repoTree );
-      dispatch( { type: 'increment-active' } );
-    } else {
-      send( {
-        type: 'ERROR',
-        error: {
-          message: i18nize( 'This repository has already been connected' ),
-          type: i18nize( 'Duplicate Repo' ),
-        },
-      } );
-    }
-  };
-
-  const reset = () => {
-    send( { type: 'RESET' } );
-    dispatch( { type: 'reset' } );
-    setTree( null );
-  };
-
   const onSuccess = response => {
     const repoData = response?.data?.repo;
 
     if ( repoData ) {
       reposDispatch( { type: 'add-repo', payload: repoData } );
-      reset();
+      send( { type: 'RESET' } );
     }
   };
 
@@ -103,8 +61,6 @@ const RepoWizard = () => {
 
     saveRepoData( repoData, onSuccess );
   };
-
-  const isDisabled = name => ( disabled ? disabled.includes( name ) : false );
 
   return (
     <PageSection title="Connect a New Repository">
@@ -135,6 +91,20 @@ const RepoWizard = () => {
               onChange={ e => handleInput( e ) }
             />
           </label>
+        </div>
+
+        <div className="gpalab-docs-wizard-section">
+          <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-subdir">
+            { `${i18nize( 'Search sub-directory (optional)' )}:` }
+            <input
+              disabled={ disabled?.subdirField || false }
+              id="gpalab-docs-subdir"
+              name="subdir"
+              type="text"
+              value={ subdir }
+              onChange={ e => handleInput( e ) }
+            />
+          </label>
           { visible?.getBranchesButton && (
             <button
               className="gpalab-docs-wizard-button"
@@ -146,6 +116,7 @@ const RepoWizard = () => {
             </button>
           ) }
         </div>
+
         { visible?.setBranchSection && (
           <div className="gpalab-docs-wizard-section">
             <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-default-branch">
@@ -173,29 +144,7 @@ const RepoWizard = () => {
             </button>
           </div>
         ) }
-        { visible?.setSubdirSection && (
-          <div className="gpalab-docs-wizard-section">
-            <label className="gpalab-docs-wizard-label" htmlFor="gpalab-docs-subdir">
-              { `${i18nize( 'Search sub-directory' )}:` }
-              <input
-                disabled={ isDisabled( 'subdirField' ) }
-                id="gpalab-docs-subdir"
-                name="subdir"
-                type="text"
-                value={ subdir }
-                onChange={ e => handleInput( e ) }
-              />
-            </label>
-            <button
-              className="gpalab-docs-wizard-button"
-              disabled={ isDisabled( 'subdirButton' ) }
-              type="button"
-              onClick={ () => getTree() }
-            >
-              { subdir ? i18nize( 'Search This Directory' ) : i18nize( 'No, Search Root' ) }
-            </button>
-          </div>
-        ) }
+
         { visible?.tree && (
           <div className="gpalab-docs-tree-container">
             <label
@@ -220,21 +169,22 @@ const RepoWizard = () => {
             />
           </div>
         ) }
+
         <div className="gpalab-docs-wizard-controls">
           <button
             className="gpalab-docs-wizard-button"
             style={ { padding: '0.3rem 0' } }
             type="button"
-            onClick={ () => reset() }
+            onClick={ () => send( { type: 'RESET' } ) }
           >
             { i18nize( 'Reset Form' ) }
           </button>
 
           <button
             className="gpalab-docs-wizard-button"
-            style={ { display: subdirSet && !tree ? 'block' : 'none', padding: '0.3rem 0' } }
+            style={ { display: visible?.getTreeButton ? 'block' : 'none', padding: '0.3rem 0' } }
             type="button"
-            onClick={ () => getTree() }
+            onClick={ () => send( { type: 'FETCH', repos } ) }
           >
             { i18nize( 'Get Repo File Tree' ) }
           </button>

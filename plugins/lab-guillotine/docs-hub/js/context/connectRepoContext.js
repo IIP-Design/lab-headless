@@ -1,9 +1,10 @@
 import { createContext } from '@wordpress/element';
-import { actions, assign, createMachine, interpret } from 'xstate';
+import { actions, assign, createMachine } from 'xstate';
 
 import { removeFile } from 'docs-hub/utils/filters';
-import { convertPathToTitle } from 'docs-hub/utils/normalizers';
+import { convertPathToTitle, createPageList, createParentString, flattenTree } from 'docs-hub/utils/normalizers';
 import { getBranches, getManyFiles, getRepoDocs } from 'docs-hub/utils/api';
+import { i18nize } from 'shared/utils/helpers';
 
 const { githubDefaultOrg, githubToken } = window.gpalabDocsHub;
 
@@ -23,66 +24,27 @@ export const initialState = {
   step: 'one',
   title: '',
   token: githubToken,
+  tree: {},
   visible: {
     getBranchesButton: false,
+    getTreeButton: false,
     setBranchSection: false,
-    setSubdirSection: false,
     tree: false,
   },
 };
 
-const setButton = step => {
-  switch ( step ) {
-    case 'one':
-      return 'branches';
-    default:
-      return null;
-  }
+const dupRepoError = {
+  message: i18nize( 'This repository has already been connected' ),
+  type: i18nize( 'Duplicate Repo' ),
 };
 
-const handleDeactivation = ctx => {
-  switch ( ctx.step ) {
-    case 'one':
-      return [
-        ...ctx.disabled, 'ownerField', 'repoField', 'getBranchesButton',
-      ];
-    case 'two':
-      return [
-        ...ctx.disabled, 'branchesField', 'setBranchButton',
-      ];
-    case 'three':
-      return [
-        ...ctx.disabled, 'subdirField', 'subdirButton',
-      ];
-    default:
-      return ctx.disabled;
-  }
-};
-
-const getTree = async repos => {
-  const currentRepos = repos ? repos.map( item => item.parent ) : [];
+const isDupRepo = ( ctx, evt ) => {
+  const { owner, repo, subdir, branch } = ctx;
   const parent = createParentString( owner, repo, subdir, branch );
 
-  // if ( !currentRepos.includes( parent ) ) {
-  //   const repoTree = await getRepoDocs(
-  //     { owner, repo },
-  //     token,
-  //     branch,
-  //     subdir,
-  //   );
+  const currentRepos = evt.repos ? evt.repos.map( item => item.parent ) : [];
 
-  //   dispatch( { type: 'leaves-init', payload: flattenTree( repoTree ) } );
-  //   setTree( repoTree );
-  //   dispatch( { type: 'increment-active' } );
-  // } else {
-  //   send( {
-  //     type: 'ERROR',
-  //     error: {
-  //       message: i18nize( 'This repository has already been connected' ),
-  //       type: i18nize( 'Duplicate Repo' ),
-  //     },
-  //   } );
-  // }
+  return currentRepos.includes( parent );
 };
 
 const setVisible = ( ctx, item, val ) => ( { visible: { ...ctx.visible, [item]: val } } );
@@ -124,19 +86,18 @@ export const repoWizardMachine = createMachine( {
             INPUT: {
               actions: 'handleInput',
             },
-            SUBMIT: {
-              actions: 'setTitle',
-              target: 'stepFour',
-            },
+            FETCH: [
+              {
+                actions: 'setTitle',
+                cond: 'noDupRepo',
+                target: '#pending.tree',
+              },
+              { target: '#error.duplicate' },
+            ],
           },
         },
         stepFour: {
-          on: {
-            ERROR: {
-              target: '#error.duplicate',
-              actions: assign( ( _, evt ) => ( { error: evt.error } ) ),
-            },
-          },
+          entry: show( 'tree' ),
         },
         stepFive: {},
       },
@@ -154,7 +115,25 @@ export const repoWizardMachine = createMachine( {
             },
           },
         },
-        duplicate: {},
+        duplicate: {
+          entry: assign( () => ( { error: dupRepoError } ) ),
+          exit: 'clearError',
+          on: {
+            INPUT: {
+              target: '#awaitingInput.stepThree',
+              actions: 'handleInput',
+            },
+          },
+        },
+        tree: {
+          exit: 'clearError',
+          on: {
+            INPUT: {
+              target: '#awaitingInput.stepThree',
+              actions: 'handleInput',
+            },
+          },
+        },
       },
     },
     pending: {
@@ -163,10 +142,7 @@ export const repoWizardMachine = createMachine( {
         branches: {
           invoke: {
             id: 'fetchBranches',
-            src: ctx => getBranches(
-              { owner: ctx.owner, repo: ctx.repo },
-              ctx.token,
-            ),
+            src: ( { owner, repo, token } ) => getBranches( { owner, repo }, token ),
             onDone: [
               {
                 cond: 'hasNoError',
@@ -179,12 +155,37 @@ export const repoWizardMachine = createMachine( {
               },
               {
                 target: '#error.branches',
-                actions: assign( { error: ( _, evt ) => evt.data.error } ),
+                actions: 'genericError',
               },
             ],
             onError: {
               target: '#error.branches',
-              actions: assign( { error: ( _, evt ) => evt.data.error } ),
+              actions: 'genericError',
+            },
+          },
+        },
+        tree: {
+          entry: assign( { step: 'four' } ),
+          invoke: {
+            id: 'fetchTree',
+            src: ( { branch, owner, repo, subdir, token } ) => getRepoDocs( { owner, repo }, token, branch, subdir ),
+            onDone: [
+              {
+                cond: 'hasNoError',
+                target: '#awaitingInput.stepFour',
+                actions: assign( {
+                  selectedFiles: ( _, evt ) => flattenTree( evt.data ),
+                  tree: ( _, evt ) => evt.data,
+                } ),
+              },
+              {
+                target: '#error.tree',
+                actions: 'genericError',
+              },
+            ],
+            onError: {
+              target: '#error.tree',
+              actions: 'genericError',
             },
           },
         },
@@ -199,29 +200,30 @@ export const repoWizardMachine = createMachine( {
   },
 }, {
   actions: {
-    handleInput: assign( ( cxt, evt ) => ( {
+    handleInput: assign( ( _, evt ) => ( {
       [evt.name]: evt.value,
     } ) ),
+    clearError: assign( { error: null } ),
+    genericError: assign( { error: ( _, evt ) => evt.data.error } ),
     toggleGetBranchesButton: actions.pure( ctx => {
       const fullRepo = ctx.owner && ctx.repo;
       const visibility = ctx.visible.getBranchesButton;
 
       if ( fullRepo && !visibility ) {
-        return assign( setVisible( ctx, 'getBranchesButton', true ) );
+        return show( 'getBranchesButton' );
       } if ( !fullRepo && visibility ) {
-        return assign( setVisible( ctx, 'getBranchesButton', false ) );
+        return hide( 'getBranchesButton', false );
       }
     } ),
     setTitle: assign( ctx => ( {
       title: ctx.subdir ? convertPathToTitle( ctx.subdir ) : convertPathToTitle( ctx.repo ),
     } ) ),
-    showSetBranchSection: assign( ctx => setVisible( ctx, 'setBranchSection', true ) ),
-    showSetSubdirSectionSection: assign( ctx => setVisible( ctx, 'setSubdirSection', true ) ),
     reset: assign( initialState ),
   },
   guards: {
     hasBranch: ctx => !!ctx.branch,
     hasNoError: ( _, evt ) => !evt.data.error,
+    noDupRepo: ( ctx, evt ) => !isDupRepo( ctx, evt ),
   },
 } );
 
@@ -231,16 +233,6 @@ export const connectRepoReducer = ( state, action ) => {
   const { payload } = action;
 
   switch ( action.type ) {
-    case 'error-add':
-      return {
-        ...state,
-        error: payload,
-      };
-    case 'increment-active':
-      return {
-        ...state,
-        active: state.active + 1,
-      };
     case 'leaf-add':
       return {
         ...state,
@@ -252,11 +244,6 @@ export const connectRepoReducer = ( state, action ) => {
         ...state,
         ignoredFiles: [...state.ignoredFiles, payload],
         selectedFiles: removeFile( payload, state.selectedFiles ),
-      };
-    case 'leaves-init':
-      return {
-        ...state,
-        selectedFiles: payload,
       };
     default:
       return state;
