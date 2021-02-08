@@ -40,21 +40,62 @@ export const initialState = {
   },
 };
 
+/* HELPERS */
 const dupRepoError = {
   message: i18nize( 'This repository has already been connected' ),
   type: i18nize( 'Duplicate Repo' ),
 };
 
-const isDupRepo = ( ctx, evt ) => {
+/**
+ * Compare selected repo against the list of already connected repos.
+ *
+ * @param {Object} ctx An XState context object.
+ * @param {Object[]} repos A list of repository data provided to the XState event.
+ * @returns {boolean}
+ */
+const isDupRepo = ( ctx, repos ) => {
   const { owner, repo, subdir, branch } = ctx;
   const parent = createParentString( owner, repo, subdir, branch );
 
-  const currentRepos = evt.repos ? evt.repos.map( item => item.parent ) : [];
+  const currentRepos = repos ? repos.map( item => item.parent ) : [];
 
   return currentRepos.includes( parent );
 };
 
-const setVisible = ( el, val ) => assign( ctx => ( { visible: { ...ctx.visible, [el]: val } } ) );
+const constructTitle = ( subdir, repo ) => ( {
+  title: subdir ? convertPathToTitle( subdir ) : convertPathToTitle( repo ),
+} );
+
+/**
+ * Sets the value of the provided element to true/false in the visible array.
+ *
+ * @param {string} el The name of the element to hide/show.
+ * @param {boolean} val Whether to make visible (true) or hide (false)
+ * @returns {assign} An XState assign function to update the context accordingly.
+ */
+const setVisibility = ( el, val ) => assign( ctx => ( { visible: { ...ctx.visible, [el]: val } } ) );
+
+const hide = el => setVisibility( el, false );
+const show = el => setVisibility( el, true );
+
+const manageBranchesBtn = ( owner, repo, visible ) => {
+  const fullRepo = owner && repo;
+  const visibility = visible.getBranchesButton;
+
+  if ( fullRepo && !visibility ) {
+    return show( 'getBranchesButton' );
+  } if ( !fullRepo && visibility ) {
+    return hide( 'getBranchesButton', false );
+  }
+};
+
+/**
+ * Sets the value of the provided element to true/false in the disabled array.
+ *
+ * @param {string[]} els List of elements add to/remove from the disabled list.
+ * @param {boolean} val Whether to make visible (true) or hide (false)
+ * @returns {assign} An XState assign function to update the context accordingly.
+ */
 const setDisabled = ( els, val ) => assign( ctx => {
   const fields = {};
 
@@ -65,13 +106,10 @@ const setDisabled = ( els, val ) => assign( ctx => {
   return ( { disabled: { ...ctx.disabled, ...fields } } );
 } );
 
-const hide = el => setVisible( el, false );
-const show = el => setVisible( el, true );
-
 const disable = els => setDisabled( els, true );
 const enable = els => setDisabled( els, false );
 
-
+/* State Machine */
 export const repoWizardMachine = createMachine( {
   id: 'repoWizard',
   initial: 'awaitingInput',
@@ -84,9 +122,9 @@ export const repoWizardMachine = createMachine( {
         stepOne: {
           on: {
             INPUT: {
-              actions: ['handleInput', 'toggleGetBranchesButton'],
+              actions: ['handleInput', 'toggleBranchesBtn'],
             },
-            FETCH: '#pending.branches',
+            FETCH_BRANCHES: '#pending.branches',
           },
         },
         stepTwo: {
@@ -116,7 +154,7 @@ export const repoWizardMachine = createMachine( {
             INPUT: {
               actions: 'handleInput',
             },
-            FETCH: [
+            FETCH_TREE: [
               {
                 actions: 'setTitle',
                 cond: 'noDupRepo',
@@ -127,9 +165,13 @@ export const repoWizardMachine = createMachine( {
           },
         },
         stepFour: {
-          entry: show( 'tree' ),
+          entry: [hide( 'getTreeButton' ), show( 'tree' )],
+          on: {
+            INPUT: {
+              actions: 'handleInput',
+            },
+          },
         },
-        stepFive: {},
       },
     },
     error: {
@@ -230,30 +272,17 @@ export const repoWizardMachine = createMachine( {
   },
 }, {
   actions: {
-    handleInput: assign( ( _, evt ) => ( {
-      [evt.name]: evt.value,
-    } ) ),
+    handleInput: assign( ( _, { name, value } ) => ( { [name]: value } ) ),
     clearError: assign( { error: null } ),
     genericError: assign( { error: ( _, evt ) => evt.data.error } ),
-    toggleGetBranchesButton: actions.pure( ctx => {
-      const fullRepo = ctx.owner && ctx.repo;
-      const visibility = ctx.visible.getBranchesButton;
-
-      if ( fullRepo && !visibility ) {
-        return show( 'getBranchesButton' );
-      } if ( !fullRepo && visibility ) {
-        return hide( 'getBranchesButton', false );
-      }
-    } ),
-    setTitle: assign( ctx => ( {
-      title: ctx.subdir ? convertPathToTitle( ctx.subdir ) : convertPathToTitle( ctx.repo ),
-    } ) ),
+    toggleBranchesBtn: actions.pure( ( { owner, repo, visible } ) => manageBranchesBtn( owner, repo, visible ) ),
+    setTitle: assign( ( { subdir, repo } ) => constructTitle( subdir, repo ) ),
     reset: assign( initialState ),
   },
   guards: {
     hasBranch: ctx => !!ctx.branch,
     hasNoError: ( _, evt ) => !evt.data.error,
-    noDupRepo: ( ctx, evt ) => !isDupRepo( ctx, evt ),
+    noDupRepo: ( ctx, { repos } ) => !isDupRepo( ctx, repos ),
   },
 } );
 

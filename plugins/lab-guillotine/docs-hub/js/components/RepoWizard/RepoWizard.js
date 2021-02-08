@@ -18,17 +18,17 @@ import { steps } from './progress-steps';
 import './RepoWizard.css';
 
 const RepoWizard = () => {
-  const [{ context, value: xstate }, send] = useMachine( repoWizardMachine, { devTools: true } );
-
-  console.log( context, xstate );
+  const [{ context }, send] = useMachine( repoWizardMachine, { devTools: true } );
 
   const {
-    branch, branches, disabled, error, owner,
-    repo, subdir, step, title, tree, visible,
-    ignoredFiles, selectedFiles, token,
+    branch, branches, disabled,
+    error, ignoredFiles, owner,
+    repo, selectedFiles, step,
+    subdir, title, token, tree,
+    visible,
   } = context;
 
-  const { dispatch: reposDispatch, state: { repos } } = useContext( ManageDocsContext );
+  const { dispatch, state: { repos } } = useContext( ManageDocsContext );
 
   const handleInput = e => {
     const { value, name } = e.target;
@@ -40,7 +40,7 @@ const RepoWizard = () => {
     const repoData = response?.data?.repo;
 
     if ( repoData ) {
-      reposDispatch( { type: 'add-repo', payload: repoData } );
+      dispatch( { type: 'add-repo', payload: repoData } );
       send( { type: 'RESET' } );
     }
   };
@@ -111,7 +111,7 @@ const RepoWizard = () => {
               className="gpalab-docs-wizard-button"
               type="button"
               disabled={ disabled?.getBranchesButton || false }
-              onClick={ () => send( { type: 'FETCH' } ) }
+              onClick={ () => send( { type: 'FETCH_BRANCHES' } ) }
             >
               { i18nize( 'Get GitHub Branches' ) }
             </button>
@@ -185,7 +185,7 @@ const RepoWizard = () => {
             className="gpalab-docs-wizard-button"
             style={ { display: visible?.getTreeButton ? 'block' : 'none', padding: '0.3rem 0' } }
             type="button"
-            onClick={ () => send( { type: 'FETCH', repos } ) }
+            onClick={ () => send( { type: 'FETCH_TREE', repos } ) }
           >
             { i18nize( 'Get Repo File Tree' ) }
           </button>
