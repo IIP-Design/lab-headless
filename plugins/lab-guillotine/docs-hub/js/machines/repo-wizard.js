@@ -37,6 +37,7 @@ const initialContext = {
 };
 
 /* HELPERS */
+
 const dupRepoError = {
   message: i18nize( 'This repository has already been connected' ),
   type: i18nize( 'Duplicate Repo' ),
@@ -47,7 +48,9 @@ const dupRepoError = {
  *
  * @param {Object} ctx An XState context object.
  * @param {Object[]} repos A list of repository data provided to the XState event.
- * @returns {boolean}
+ * @returns {boolean} Whether or not the current repo has already been connected.
+ *
+ * @see createParentString
  */
 const isDupRepo = ( ctx, repos ) => {
   const { owner, repo, subdir, branch } = ctx;
@@ -58,6 +61,13 @@ const isDupRepo = ( ctx, repos ) => {
   return currentRepos.includes( parent );
 };
 
+/**
+ * Generates a repo title depending on the provided values.
+ *
+ * @param {string} subdir The (optional) name of the sub-directory to search.
+ * @param {string} repo The name of the GitHub repository.
+ * @returns {string} The generated project title.
+ */
 const constructTitle = ( subdir, repo ) => ( {
   title: subdir ? convertPathToTitle( subdir ) : convertPathToTitle( repo ),
 } );
@@ -71,9 +81,33 @@ const constructTitle = ( subdir, repo ) => ( {
  */
 const setVisibility = ( el, val ) => assign( ctx => ( { visible: { ...ctx.visible, [el]: val } } ) );
 
+/**
+ * Implements the setVisibility function to make a given element hidden.
+ *
+ * @param {string} el The element name to be hidden.
+ * @returns {setVisibility} A function to hide the provided element.
+ *
+ * @see setVisibility
+ */
 const hide = el => setVisibility( el, false );
+
+/**
+ * Implements the setVisibility function to make a given element visible.
+ *
+ * @param {string} el The element name to be shown.
+ * @returns {setVisibility} A function to show the provided element.
+ *
+ * @see setVisibility
+ */
 const show = el => setVisibility( el, true );
 
+/**
+ * Manages the visibility of the get branches button depending on the in
+ * @param {string} owner The value of the owner field.
+ * @param {string} repo The value of the repo name field.
+ * @param {Object} visible List of all elements whose visibility can be toggled and their current visibility.
+ * @returns {hide|show} The function to hide/show the get branches button.
+ */
 const manageBranchesBtn = ( owner, repo, visible ) => {
   const fullRepo = owner && repo;
   const visibility = visible.getBranchesButton;
@@ -89,7 +123,7 @@ const manageBranchesBtn = ( owner, repo, visible ) => {
  * Sets the value of the provided element to true/false in the disabled array.
  *
  * @param {string[]} els List of elements add to/remove from the disabled list.
- * @param {boolean} val Whether to make visible (true) or hide (false)
+ * @param {boolean} val Whether to make visible (true) or hide (false).
  * @returns {assign} An XState assign function to update the context accordingly.
  */
 const setDisabled = ( els, val ) => assign( ctx => {
@@ -102,7 +136,24 @@ const setDisabled = ( els, val ) => assign( ctx => {
   return ( { disabled: { ...ctx.disabled, ...fields } } );
 } );
 
+/**
+ * Implements the setDisabled function to disable a given list of elements.
+ *
+ * @param {string[]} els A list of element names to be disabled.
+ * @returns {setDisabled} A function to disable the provided elements.
+ *
+ * @see setDisabled
+ */
 const disable = els => setDisabled( els, true );
+
+/**
+ * Implements the setDisabled function to enable a given list of elements.
+ *
+ * @param {string[]} els A list of element names to be enabled.
+ * @returns {setDisabled} A function to enable the provided elements.
+ *
+ * @see setDisabled
+ */
 const enable = els => setDisabled( els, false );
 
 /* State Machine */
