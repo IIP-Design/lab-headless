@@ -12,11 +12,9 @@
  */
 
 $bureau_url = '<a href="https://www.state.gov/bureaus-offices/under-secretary-for-public-diplomacy-and-public-affairs/bureau-of-global-public-affairs/">Bureau of Global Public Affairs</a>';
-$state_url  = '<a href="https://state.gov/">U.S. Department of State</a>';
 
-/* translators: %1$s: HTML anchor link to Bureau site, %2$s: HTML anchor link to Department site. */
-$site_links = __( 'This site is managed by the %1$s within the %2$s.', 'gpalab-neck' );
-$contact    = __( 'Contact us at', 'gpalab-neck' );
+/* translators: %s: HTML anchor link to Bureau site */
+$site_links = __( 'An official website of the %s.', 'gpalab-neck' );
 
 /* translators: %s: HTML character for up arrow. */
 $to_top = __( 'To the top %s', 'gpalab-neck' );
@@ -29,10 +27,15 @@ $up = __( 'Up %s', 'gpalab-neck' );
         <div class="section-inner">
 
           <div class="footer-lines">
+            <img
+              alt="Department of State Seal"
+              height="60px"
+              width="60px"
+              src=<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/dos_stamp_white.png' ); ?>
+            />
             <p class="footer-lines-content">
-              <?php printf( esc_html( $site_links ), wp_kses( $bureau_url, 'post' ), wp_kses( $state_url, 'post' ) ); ?>
+              <?php printf( esc_html( $site_links ), wp_kses( $bureau_url, 'post' ) ); ?>
             </p>
-            <p class="footer-lines-content"><?php echo esc_html( $contact ); ?>: <a href="mailto:gpa-lab@america.gov">gpa-lab@america.gov</a></p>
           </div>
 
           <a class="to-the-top" href="#site-header">

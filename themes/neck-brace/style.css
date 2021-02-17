@@ -220,13 +220,10 @@ span.toggle-inner {
 .footer-lines {
   align-items: center;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
 }
 
 .footer-lines-content {
-  margin: 0;
+  margin: 0 0 0 1rem;
 }
 
 .footer-lines-content > a {
@@ -248,7 +245,7 @@ a.to-the-top,
 #site-footer .section-inner {
   align-items: center;
   display: flex;
-  flex-direction: column;
+  max-width: 930px;
 }
 
 /* Override .gov banner */
