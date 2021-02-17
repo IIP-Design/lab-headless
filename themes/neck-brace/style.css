@@ -74,12 +74,12 @@ h5 {
 /* Site page width */
 
 .entry-header-inner.section-inner.medium {
-  max-width: 72rem;
+  max-width: 930px;
 }
 
 .entry-content
   > *:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.is-style-wide) {
-  max-width: 72rem;
+  max-width: 930px;
 }
 
 /* Cover page set up */
