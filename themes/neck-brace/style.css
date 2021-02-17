@@ -240,10 +240,6 @@ a.to-the-top,
   color: #ffffff;
 }
 
-.to-the-top {
-  align-self: flex-end;
-}
-
 #site-footer .section-inner {
   align-items: center;
   display: flex;
