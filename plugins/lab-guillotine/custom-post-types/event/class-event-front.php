@@ -49,7 +49,17 @@ class Event_Front {
         if ( $theme_file ) {
           $template = $theme_file;
         } else {
-          $template = GUILLOTINE_DIR . 'custom-post-types/event/single-gpalab_event.php';
+          $template = GUILLOTINE_DIR . 'custom-post-types/event/template/single-gpalab_event.php';
+        }
+      }
+
+      if ( is_archive() ) {
+        $theme_file = locate_template( array( 'archive-gpalab_event.php' ) );
+
+        if ( $theme_file ) {
+          $template = $theme_file;
+        } else {
+          $template = GUILLOTINE_DIR . 'custom-post-types/event/template/archive-gpalab_event.php';
         }
       }
     }
