@@ -220,6 +220,8 @@ span.toggle-inner {
 .footer-lines {
   align-items: center;
   display: flex;
+  max-width: 85%;
+  text-align: center;
 }
 
 .footer-lines-content {
