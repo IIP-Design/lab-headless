@@ -48,16 +48,7 @@ get_header();
             <?php
             $date = get_post_meta( get_the_ID(), '_gpalab_event_date', true );
 
-            if ( ! empty( $date ) ) {
-              $date_format = get_option( 'date_format' );
-              $time_format = get_option( 'time_format' );
-              $format      = $date_format . ' ' . $time_format . ' T';
-
-              $formatted = date_i18n( $format, strtotime( $date ) );
-              echo '<p><strong>' . esc_html( __( 'When', 'gpalab-guillotine' ) ) . ': </strong>' . esc_html( $formatted ) . '<p>';
-
-              echo '<div class="gpalab-add-to-cal-container"><div class="gpalab-event-add-to-cal" id="gpalab-event-add-to-cal"></div></div>';
-            }
+            require 'template-parts/add-to-cal.php';
 
             the_content();
             ?>
