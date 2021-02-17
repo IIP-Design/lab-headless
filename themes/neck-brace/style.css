@@ -280,3 +280,70 @@ a.to-the-top,
 .gpalab-event {
   margin-top: 95px;
 }
+
+/* Event archive page */
+
+h1.entry-header.events-archive-header {
+  font-size: 12rem;
+}
+
+.gpalab-events-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 700px) {
+  .gpalab-events-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+h2.gpalab-events-title {
+  margin: 0 auto 45px;
+}
+
+.gpalab-event-card {
+  border: 1px solid #f1f1f1;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  margin: 0.5rem;
+}
+
+.gpalab-event-card-content {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 182px);
+}
+.gpalab-event-card-image {
+  height: 182px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.gpalab-event-card-link {
+  text-decoration: none;
+}
+
+h5.gpalab-event-card-title {
+  line-height: 30px;
+  margin: 0 0 25px;
+  max-height: 90px;
+  overflow: hidden;
+  padding-right: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.gpalab-event-card-date {
+  font-size: 15px;
+  margin: 0;
+}
+
+.gpalab-event-upcoming-content {
+  margin: 1rem 0;
+  padding: 1rem 0;
+}
