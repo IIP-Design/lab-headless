@@ -71,6 +71,17 @@ h5 {
   cursor: pointer;
 }
 
+.section-inner {
+  width: 100%;
+  max-width: 930px;
+}
+
+.faux-heading > a {
+  background-color: #0d7ea2;
+  color: #ffffff;
+  padding: 0.8rem;
+}
+
 /* Site page width */
 
 .entry-header-inner.section-inner.medium {
@@ -109,7 +120,7 @@ h5 {
 }
 
 .overlay-header #site-header {
-  background-color: #0a2240;
+  background-color: #ffffff;
 }
 
 .to-the-content-wrapper {
@@ -145,27 +156,55 @@ h5 {
 }
 
 .primary-menu > li {
+  color: #0a2240;
+  font-weight: 700;
   margin: 1rem 0 0 1.6rem;
-  color: #ffffff;
+}
+
+.primary-menu > li > a {
+  line-height: 30px;
+}
+
+.primary-menu > li > a:hover {
+  text-decoration: none;
+}
+
+.primary-menu li.current-menu-item > a {
+  border-bottom: 2px solid #0d7ea2;
+  text-decoration: none;
 }
 
 .header-inner .toggle svg > *,
 button.close-nav-toggle svg > *,
 span.toggle-inner {
-  color: #ffffff;
+  color: #0a2240;
 }
 
 /* Media queries */
 
 @media screen and (min-width: 1000px) {
   .header-inner {
-    padding: 3rem 0 1rem;
+    padding: 4rem 0 2rem;
   }
 }
 
 @media screen and (max-width: 700px) {
   .cover-header .entry-header h1 {
     font-size: 15rem;
+  }
+
+  .header-inner {
+    padding: 2rem 1rem;
+  }
+
+  .overlay-header #site-header {
+    margin-top: 34px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .footer-lines {
+    font-size: 16px;
   }
 }
 
@@ -183,10 +222,6 @@ span.toggle-inner {
     padding-top: 4rem;
   }
 
-  .overlay-header #site-header {
-    margin-top: 34px;
-  }
-
   .entry-content > .gpalab-event-header {
     margin-top: 1rem;
   }
@@ -194,10 +229,6 @@ span.toggle-inner {
   /* Reduce footer text size on mobile */
   .footer-lines {
     font-size: 14px;
-  }
-
-  .header-inner {
-    padding: 1rem;
   }
 
   .screen-height {
@@ -225,7 +256,7 @@ span.toggle-inner {
 }
 
 .footer-lines-content {
-  margin: 0 0 0 1rem;
+  margin: 0 0 0 2rem;
 }
 
 .footer-lines-content > a {
@@ -238,12 +269,19 @@ a.to-the-top,
 .footer-lines-content,
 .footer-lines-content > a {
   color: #ffffff;
+  font-size: 1.6rem;
 }
 
 #site-footer .section-inner {
   align-items: center;
   display: flex;
   max-width: 930px;
+}
+
+@media screen and (max-width: 940px) {
+  #site-footer .section-inner {
+    padding: 0 1.5rem;
+  }
 }
 
 /* Override .gov banner */
