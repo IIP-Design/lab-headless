@@ -22,7 +22,7 @@ $past_title   = __( 'Past Events', 'gpalab-neck' );
   <div
     class="cover-header  bg-image bg-attachment-fixed"
     style="background-image: url(
-      <?php echo esc_url( GUILLOTINE_URL . 'custom-post-types/event/assets/brick-seal.jpg' ); ?>
+      <?php the_post_thumbnail_url(); ?>
     )"
   >
     <div class="cover-header-inner-wrapper screen-height">
@@ -30,7 +30,6 @@ $past_title   = __( 'Past Events', 'gpalab-neck' );
         <div class="cover-color-overlay color-accent opacity-0"></div>
         <header class="entry-header has-text-align-center">
           <div class="entry-header-inner section-inner medium">
-            <h1 class="entry-header events-archive-header"><?php esc_html_e( 'Our Events', 'gpalab-neck' ); ?></h1>
           </div>
         </header>
       </div>
@@ -54,7 +53,6 @@ $past_title   = __( 'Past Events', 'gpalab-neck' );
 
         ?>
         <article class="gpalab-event-upcoming" id="event-<?php the_ID(); ?>">
-          <?php the_post_thumbnail(); ?>
           <h3 class="gpalab-event-upcoming-title"><?php the_title(); ?></h3>
           <?php require 'template-parts/add-to-cal.php'; ?>
           <div class="gpalab-event-upcoming-content">
