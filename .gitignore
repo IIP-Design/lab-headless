@@ -28,8 +28,10 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-.devcontainer/config/*
-!.devcontainer/config/template.conf
+.lab-dev/config/caddy-config/
+.lab-dev/config/caddy-data/
+.lab-dev/config/*.conf
+!.lab-dev/config/template.conf
 
 # Local Settings
 .DS_Store

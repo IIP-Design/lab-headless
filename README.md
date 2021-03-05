@@ -17,7 +17,7 @@ If you need to generate new salts and keys you can do so by visiting: https://ap
 In order to run the startup scripts you need to make the script files executable. To do so, in your terminal, navigate to the `lab-headless` directory and run the following command:
 
 ```
-chmod -R +x .devcontainer/scripts/
+chmod -R +x .lab-dev/scripts/
 ```
 
 ### 3. Run the Setup Scripts

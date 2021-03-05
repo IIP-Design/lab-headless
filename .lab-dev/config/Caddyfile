@@ -1,0 +1,7 @@
+lab.dev.local {
+  reverse_proxy lab_web:80
+}
+
+adminer.local {
+  reverse_proxy lab_adminer:8080
+}

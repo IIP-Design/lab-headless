@@ -8,9 +8,8 @@ services:
       - db
     environment:
       - 'DB_PORT=3306'
-      - 'DB_HOST=db'
-    ports:
-      - 80:80
+    expose:
+      - '80'
     volumes:
       - ../plugins:/www/local/sites-enabled/lab_dev/wp-content/plugins
       - ../themes:/www/local/sites-enabled/lab_dev/wp-content/themes
@@ -20,21 +19,34 @@ services:
   db:
     container_name: lab_db
     image: gpalab/mariadb
-    ports:
-      - 3306:3306
+    expose:
+      - '3306'
     volumes:
       - mariadb:/var/lib/mysql
 
   adminer:
     container_name: lab_adminer
-    image: adminer:latest
+    image: gpalab/adminer
     environment:
       ADMINER_DEFAULT_SERVER: lab_db
+    expose:
+      - '8080'
+
+  caddy:
+    container_name: lab_caddy
+    image: 'caddy:latest'
+    depends_on:
+      - adminer
+      - wordpress
     ports:
-      - 9090:8080
+      - '80:80'
+      - '443:443'
     volumes:
-      - ./adminer/adminer.css:/var/www/html/adminer.css
+      - ./config/caddy-config:/config
+      - ./config/caddy-data:/data
+      - ./config/Caddyfile:/etc/caddy/Caddyfile
 
 volumes:
   mariadb:
     driver: local
+    name: lab_db

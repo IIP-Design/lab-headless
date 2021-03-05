@@ -15,6 +15,12 @@ setup:
 	./scripts/clean-webroot.sh N
 	./scripts/build-site.sh
 
+shutdown:
+	./scripts/docker-down.sh
+
+start:
+	./scripts/docker-up.sh
+
 wp:
 	./scripts/docker-up.sh N
 	./scripts/clean-webroot.sh N
