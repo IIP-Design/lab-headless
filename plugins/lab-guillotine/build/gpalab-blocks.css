@@ -1,2 +1,1 @@
-.wp-block-speaker-bio-gpalab-speaker-bio{border:1px dotted #f00}
-
+.gpalab-speaker-field-group{display:flex;flex-direction:column}.gpalab-speaker-field-group>label{display:flex;flex-direction:column;margin:.5rem 0}.components-placeholder__fieldset .gpalab-speaker-form{align-items:center;display:-ms-grid;display:grid;grid-column-gap:1rem;-ms-grid-columns:30% 1fr;grid-template-columns:30% 1fr}.gpalab-speaker-file-uploader{height:100%;border:1px solid #efefef;display:flex;flex-direction:column;justify-content:center;align-items:center}

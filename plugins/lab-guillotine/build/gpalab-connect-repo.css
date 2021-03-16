@@ -1,3 +1,33 @@
+.gpalab-docs-error-container {
+  align-items: center;
+  border: 1px solid #ccd0d4;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  padding: 1rem 0.5rem;
+}
+
+.gpalab-docs-error-title {
+  color: #a00a00;
+}
+
+.gpalab-docs-section-container {
+  background-color: #ffffff;
+  border: 1px solid #ccd0d4;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+  padding: 1rem 0.5rem;
+}
+
+.gpalab-docs-section-title {
+  margin: 0.5rem 0.5rem 1.5rem;
+}
+
 .gpalab-docs-progress-bar {
   display: -ms-grid;
   display: grid;
@@ -48,16 +78,6 @@ input.gpalab-docs-leaf-checkbox {
   margin: 0.3rem;
 }
 
-.gpalab-docs-wizard-container {
-  background-color: #ffffff;
-  border: 1px solid #ccd0d4;
-  border-radius: 5px;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.04);
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 0.5rem;
-}
-
 .gpalab-docs-wizard-contents {
   margin: 0 1rem;
   width: calc(560px + 1rem);
@@ -66,7 +86,7 @@ input.gpalab-docs-leaf-checkbox {
 .gpalab-docs-wizard-controls {
   display: flex;
   justify-content: space-between;
-  margin: 1rem 0.5rem;
+  margin: 1rem 0rem;
 }
 
 .gpalab-docs-wizard-section {
@@ -99,5 +119,21 @@ input.gpalab-docs-leaf-checkbox {
   flex-direction: column;
   margin: 1rem 0;
   padding: 0.5rem;
+}
+
+.gpalab-docs-connected-repo-item {
+  background-color: #f1f1f1;
+  border: 1px solid #ccd0d4;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.04);
+  margin: 0.5rem;
+  padding: 1rem 0.5rem;
+}
+
+.gpalab-docs-connected-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
 }
 
