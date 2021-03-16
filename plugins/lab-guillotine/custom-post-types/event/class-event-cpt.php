@@ -148,6 +148,17 @@ class Event_CPT {
         'auth_callback' => '__return_true',
       )
     );
+
+    register_post_meta(
+      'gpalab_event',
+      '_gpalab_event_show_atc',
+      array(
+        'show_in_rest'  => true,
+        'single'        => true,
+        'type'          => 'boolean',
+        'auth_callback' => '__return_true',
+      )
+    );
   }
 
   /**

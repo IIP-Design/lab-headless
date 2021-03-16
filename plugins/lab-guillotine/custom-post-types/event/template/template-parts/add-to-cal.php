@@ -15,7 +15,9 @@ if ( ! empty( $date ) ) {
   $formatted = date_i18n( $format, strtotime( $date ) );
   echo '<p>' . esc_html( $formatted ) . '<p>';
 
-  // if ( $date > gmdate( 'Y-m-dTH:i:s' ) ) {
-  // echo '<div class="gpalab-add-to-cal-container"><div class="gpalab-event-add-to-cal" id="gpalab-event-add-to-cal"></div></div>';
-  // }
+  $show_add_to_cal = get_post_meta( get_the_ID(), '_gpalab_event_show_atc', true );
+
+  if ( $show_add_to_cal && $date > gmdate( 'Y-m-dTH:i:s' ) ) {
+    echo '<span class="gpalab-add-to-cal-container"><div class="gpalab-event-add-to-cal" id="gpalab-event-add-to-cal"></div></span>';
+  }
 }
