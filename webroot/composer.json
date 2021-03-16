@@ -7,10 +7,10 @@
       "package": {
         "name": "wordpress/wordpress",
         "type": "webroot",
-        "version": "5.6.2",
+        "version": "5.7",
         "dist": {
           "type": "zip",
-          "url": "https://github.com/WordPress/WordPress/archive/5.6.2.zip"
+          "url": "https://github.com/WordPress/WordPress/archive/5.7.zip"
         },
         "require": {
           "fancyguy/webroot-installer": "1.1.0"
@@ -60,7 +60,7 @@
     }
   ],
   "require": {
-    "wordpress/wordpress": "5.6.2",
+    "wordpress/wordpress": "5.7",
     "fancyguy/webroot-installer": "1.1.0",
     "gpalab/ichabod": "*",
     "gpalab/neck-brace": "*",
@@ -70,12 +70,12 @@
     "iip-design/styled-block-builder": "v3.0.2",
     "iip-design/wp-hide-login-form": "v1.1.0",
     "humanmade/s3-uploads": "2.2.2",
-    "wp-graphql/wp-graphql": "1.1.8",
+    "wp-graphql/wp-graphql": "1.2.6",
     "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.6",
     "wpackagist-plugin/google-apps-login": "3.4.3",
     "wpackagist-plugin/wordpress-mu-domain-mapping": "0.5.5.1",
     "wpackagist-plugin/wp-ses": "1.4.4",
-    "wpackagist-theme/twentytwenty": "1.6"
+    "wpackagist-theme/twentytwenty": "1.7"
   },
   "extra": {
     "dropin-paths": {
