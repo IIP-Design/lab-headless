@@ -2,7 +2,7 @@
 
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post';
 
-import MetaDateTimePicker from './MetaDateTimePicker';
+import MetaDateTimePicker from 'shared/components/MetaDateTimePicker';
 import MetaTextInput from 'shared/components/MetaTextInput';
 import { i18nize } from 'shared/utils/helpers';
 

@@ -13,9 +13,7 @@ const MetaTextInput = compose(
         );
     },
   } ) ),
-  withSelect( ( select, { label, metaValue, placeholder } ) => ( {
-    label,
-    placeholder,
+  withSelect( ( select, { metaValue } ) => ( {
     text: select( 'core/editor' )
       .getEditedPostAttribute( 'meta' )[metaValue],
   } ) ),
