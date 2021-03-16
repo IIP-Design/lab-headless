@@ -15,7 +15,7 @@ if ( ! empty( $date ) ) {
   $formatted = date_i18n( $format, strtotime( $date ) );
   echo '<p>' . esc_html( $formatted ) . '<p>';
 
-  if ( $date > gmdate( 'Y-m-dTH:i:s' ) ) {
-    echo '<div class="gpalab-add-to-cal-container"><div class="gpalab-event-add-to-cal" id="gpalab-event-add-to-cal"></div></div>';
-  }
+  // if ( $date > gmdate( 'Y-m-dTH:i:s' ) ) {
+  // echo '<div class="gpalab-add-to-cal-container"><div class="gpalab-event-add-to-cal" id="gpalab-event-add-to-cal"></div></div>';
+  // }
 }
