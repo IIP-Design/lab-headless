@@ -23,6 +23,7 @@ services:
       - '3306'
     volumes:
       - mariadb:/var/lib/mysql
+      - mariaconf:/etc/mysql
 
   adminer:
     container_name: lab_adminer
@@ -32,8 +33,14 @@ services:
     expose:
       - '8080'
 
+networks:
+  default:
+    name: lab_net
 
 volumes:
   mariadb:
     driver: local
     name: lab_db
+  mariaconf:
+    driver: local
+    name: lab_db_conf
