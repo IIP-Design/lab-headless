@@ -34,11 +34,12 @@ This single command will:
 1. Run Docker Compose to bring the virtual machine up
 1. Import a clean WordPress database into the the MariaDB container
 1. Clone the Lab site webroot and build the WordPress instance
-1. Initialize a Caddy webserver to run the dev site locally
 
-### 4. Map the URL to Localhost
+### 4. Running the Caddy Server
 
-The included Caddy webserver allows you to access your VM at the URL `lab.dev.local`. To do so, open your Mac's hosts file by running the command:
+This repo contains a Caddy webserver that allows you to access your VM at the URL `lab.dev.local`. However, in order to allow for maximum flexibility, this proxy server is not integrated with the rest of the development site. To start up the Caddy server, run `npm run caddy-start`.
+
+You must also map the `lab.dev.local` to you localhost. To do so, open your Mac's hosts file by running the command:
 
 ```
 sudo nano /etc/hosts
@@ -62,12 +63,14 @@ You can now login into the WordPress backend by going to [lab.dev.local/wp-admin
 
 In addition to the setup script, we provide several scripts to help manage the development container. Run the following scripts from the project root to rebuild the project's Docker images, reinstall the development WordPress instance, or refresh the WordPress site's database. _[Note that you must have make installed on your computer for these scripts to work]_
 
-| Command              | Description                                                  |
-| -------------------- | ------------------------------------------------------------ |
-| `npm run setup`      | Create the dev site for the first time                       |
-| `npm run dev-start`  | Start up the containers required to run the development site |
-| `npm run dev-stop`   | Suspend the containers required to run the development site  |
-| `npm run cleanup`    | Removes extraneous files from the webroot sub-directory      |
-| `npm run images`     | Rebuild the WP and MariaDB Docker images                     |
-| `npm run rebuild-wp` | Reinstall WordPress and plugins on the dev container         |
-| `npm run reset-db`   | Drop the dev site's database and recreate with a clean db    |
+| Command               | Description                                                  |
+| --------------------- | ------------------------------------------------------------ |
+| `npm run setup`       | Create the dev site for the first time                       |
+| `npm run dev-start`   | Start up the containers required to run the development site |
+| `npm run dev-stop`    | Suspend the containers required to run the development site  |
+| `npm run caddy-start` | Start the local webserver                                    |
+| `npm run caddy-stop`  | Suspend the local webserver                                  |
+| `npm run cleanup`     | Removes extraneous files from the webroot sub-directory      |
+| `npm run images`      | Rebuild the WP and MariaDB Docker images                     |
+| `npm run rebuild-wp`  | Reinstall WordPress and plugins on the dev container         |
+| `npm run reset-db`    | Drop the dev site's database and recreate with a clean db    |

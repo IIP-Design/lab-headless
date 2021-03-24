@@ -32,19 +32,6 @@ services:
     expose:
       - '8080'
 
-  caddy:
-    container_name: lab_caddy
-    image: 'caddy:latest'
-    depends_on:
-      - adminer
-      - wordpress
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - ./config/caddy-config:/config
-      - ./config/caddy-data:/data
-      - ./config/Caddyfile:/etc/caddy/Caddyfile
 
 volumes:
   mariadb:

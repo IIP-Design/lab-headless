@@ -23,7 +23,7 @@ docker exec -i lab_web sed -i '/"type": "path"/I,+6 d' $DIR/composer.json
 echo "\xE2\x8F\xB1  Installing site dependencies with Composer, this may take a few minutes...\n"
 
 docker exec -i lab_web rm -f $DIR/composer.lock
-docker exec -i lab_web composer install -n -d $DIR
+docker exec -i lab_web composer update -n -d $DIR
 
 # Remove unneeded default themes and plugins.
 docker exec -i lab_web rm -rf $DIR/wp/wp-content/themes/twenty*

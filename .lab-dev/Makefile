@@ -1,3 +1,9 @@
+caddy-start:
+	./scripts/caddy-start.sh
+
+caddy-stop:
+	./scripts/caddy-stop.sh
+
 cleanup:
 	./scripts/clean-webroot.sh
 

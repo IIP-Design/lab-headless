@@ -12,6 +12,8 @@
     "build": "npm run build:front && npm run build:guillotine",
     "build:front": "npm run build --prefix frontend",
     "build:guillotine": "npm run build --prefix plugins/lab-guillotine",
+    "caddy-start": "make caddy-start -s -C .lab-dev",
+    "caddy-stop": "make caddy-stop -s -C .lab-dev",
     "cleanup": "make cleanup -s -C .lab-dev",
     "dev": "npm run dev:front && npm run dev:guillotine",
     "dev:front": "npm run dev --prefix frontend",
