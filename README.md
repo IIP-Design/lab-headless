@@ -6,11 +6,11 @@ Clone this repository onto your local machine (by running the command `git clone
 
 ### 1. Setup WordPress Configs
 
-Navigate to the `lab-headless` directory you just created. In the `.lab-dev/config` sub-directory, copy the file `template.conf` as `lab.conf` and change all the fields labeled as `[REPLACE ME]`.
+Navigate to the `lab-headless` directory you just created. In the `.lab-dev/config`sub-directory, create a new file named `lab.conf` and copy over the contents of the `template.conf` file found in the same directory. In the new `lab.conf` file, change all the fields labeled as [REPLACE ME].
 
 If you need to generate new salts and keys you can do so by visiting: https://api.wordpress.org/secret-key/1.1/salt/.
 
-**Note:** When filled out this file contains sensitive information. Do not commit it to version control.
+**Note:** When filled out, the `lab.conf` file contains sensitive information. Do not commit it to version control.
 
 ### 2. Set Permission on Build Scripts
 
@@ -35,11 +35,15 @@ This single command will:
 1. Import a clean WordPress database into the the MariaDB container
 1. Clone the Lab site webroot and build the WordPress instance
 
+**Note:** You must have [make](https://www.gnu.org/software/make/manual/make.html) installed on your computer for the setup script to work.
+
 ### 4. Running the Caddy Server
 
-This repo contains a Caddy webserver that allows you to access your VM at the URL `lab.dev.local`. However, in order to allow for maximum flexibility, this proxy server is not integrated with the rest of the development site. To start up the Caddy server, run `npm run caddy-start`.
+All of the services with this repo run within Docker containers and are not bound to your system localhost. Therefore, if you want to access the development site in the browser you will need to use some sort of proxy to connect the container to your localhost. While you are welcome to set up your own solution, we recommend using the either the Caddy webserver found in this repo or the [GPA Lab universal proxy](https://github.com/IIP-Design/lab-tools/tree/main/packages/universal-proxy).
 
-You must also map the `lab.dev.local` to you localhost. To do so, open your Mac's hosts file by running the command:
+The Caddy webserver found in this repo allows you to access the local content site at the URL `lab.dev.local`. To start up the Caddy server, run `npm run caddy-start`.
+
+You must also map the `lab.dev.local` URL to you localhost. To do so, open your Mac's hosts file by running the command:
 
 ```
 sudo nano /etc/hosts
@@ -51,13 +55,25 @@ Within this file, add the line:
 127.0.0.1 lab.dev.local
 ```
 
+Optionally, if you intend to use the included Adminer database client [described below](#6-adminer) you should also add the following line to the hosts file.
+
+```
+127.0.0.1 lab.adminer.local
+```
+
 Enter `Ctrl + o` and `Ctrl + x` to save the file and exit. The URL `lab.dev.local` is now mapped to your localhost.
 
-**Note:** Caddy provisions the dev site a self-signed SSL certificate. Your browser may notify you that this certificate is not valid, nevertheless, it is safe to proceed.
+**Note:** Caddy provisions the dev site a self-signed SSL certificate. Your browser may notify you that this certificate is not valid, nevertheless, it is safe to proceed. To avoid these error entirely, you will have to add the root certificate to your key chain as described [here](https://github.com/IIP-Design/lab-tools/tree/main/packages/universal-proxy#ssl-certificates). If following those directions, note that the mentioned `config` directory is a sub directory of the `.lab-dev` directory in this repository.
 
 ### 5. Login to the WordPress Admin
 
-You can now login into the WordPress backend by going to [lab.dev.local/wp-admin](http://lab.dev.local/wp-admin) in your browser. The site is set up with a default super admin user. You can login as this user with the username `dev_admin` and the password `admin`.
+You can now login into the WordPress backend by going to [lab.dev.local/wp-admin](http://lab.dev.local/wp-admin) in your browser. The site is set up with a default super admin user. You can login as this user with the username `dev_admin` and the password `admin`. The first time you log in you may be prompted to update the database and/or confirm the admin user. If you see these messages, simply click the `Update WordPress Database` or `This email is correct` button to confirm.
+
+### 6. Adminer
+
+This repo includes a built-in browser-based database client via Adminer. If using the included Caddy server or the GPA Lab universal proxy you will be able to access Adminer at the URL lab.adminer.local (after mapping the URL as described [above](#4-running-the-caddy-server)). The database name, username, and password for this development DB are all `lab_dev`.
+
+If you prefer to connect directly to the database using a different client, it is available at port 3306 of the `lab_db` Docker container.
 
 ## Dev Helper Scripts
 
