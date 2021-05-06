@@ -70,6 +70,7 @@ if ( $bucket_env && $bucket_region ) {
     'enable-object-prefix' => true,
     'force-https' => true,
     'object-prefix' => 'lab/uploads/',
+    'object-versioning' => true,
     'provider' => 'aws',
     'region' => getenv('LAB_S3_UPLOADS_REGION'),
     'remove-local-file' => true,
