@@ -58,19 +58,26 @@ define( 'SECURE_AUTH_SALT', getenv( 'LAB_SECURE_AUTH_SALT' ) );
 define( 'LOGGED_IN_SALT', getenv( 'LAB_LOGGED_IN_SALT' ) );
 define( 'NONCE_SALT', getenv( 'LAB_NONCE_SALT' ) );
 
-/** AWS S3 Uploads directory */
-if ( isset( $_SERVER['LAB_S3_UPLOADS_BUCKET'] ) ) {
-  define( 'S3_UPLOADS_BUCKET', getenv( 'LAB_S3_UPLOADS_BUCKET' ) );
-}
-if ( isset( $_SERVER['LAB_S3_UPLOADS_BUCKET_URL'] ) ) {
-  define( 'S3_UPLOADS_BUCKET_URL', getenv( 'LAB_S3_UPLOADS_BUCKET_URL' ) );
-}
-if ( isset( $_SERVER['LAB_S3_UPLOADS_REGION'] ) ) {
-  define( 'S3_UPLOADS_REGION', getenv( 'LAB_S3_UPLOADS_REGION' ) );
-}
+/** AWS S3 Uploads directory **/
+$bucket_env = isset( $_SERVER['LAB_S3_UPLOADS_BUCKET'] );
+$bucket_region = isset( $_SERVER['LAB_S3_UPLOADS_REGION'] );
 
-/** Use instance profile to connect to AWS S3 */
-define( 'S3_UPLOADS_USE_INSTANCE_PROFILE', true );
+if ( $bucket_env && $bucket_region ) {
+
+  define( 'AS3CF_SETTINGS', serialize( array(
+    'bucket' => getenv('LAB_S3_UPLOADS_BUCKET'),
+    'copy-to-s3' => true,
+    'enable-object-prefix' => true,
+    'force-https' => true,
+    'object-prefix' => 'lab/uploads/',
+    'provider' => 'aws',
+    'region' => getenv('LAB_S3_UPLOADS_REGION'),
+    'remove-local-file' => true,
+    'use-server-roles' => true,
+    'use-yearmonth-folders' => true,
+  ) ) );
+
+}
 
 /** Use instance profile to connect to AWS SES */
 define( 'WPOSES_AWS_USE_EC2_IAM_ROLE', true );
