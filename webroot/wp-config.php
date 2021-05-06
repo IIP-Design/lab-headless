@@ -59,17 +59,18 @@ define( 'LOGGED_IN_SALT', getenv( 'LAB_LOGGED_IN_SALT' ) );
 define( 'NONCE_SALT', getenv( 'LAB_NONCE_SALT' ) );
 
 /** AWS S3 Uploads directory **/
-$bucket_env = isset( $_SERVER['LAB_S3_UPLOADS_BUCKET'] );
-$bucket_region = isset( $_SERVER['LAB_S3_UPLOADS_REGION'] );
+$bucket_set = isset( $_SERVER['LAB_S3_UPLOADS_BUCKET'] );
+$region_set = isset( $_SERVER['LAB_S3_UPLOADS_REGION'] );
 
-if ( $bucket_env && $bucket_region ) {
+if ( $bucket_set && $region_set ) {
+  $bucket = getenv('LAB_S3_UPLOADS_BUCKET');
 
   define( 'AS3CF_SETTINGS', serialize( array(
-    'bucket' => getenv('LAB_S3_UPLOADS_BUCKET'),
+    'bucket' => $bucket,
     'copy-to-s3' => true,
     'enable-object-prefix' => true,
     'force-https' => true,
-    'object-prefix' => 'lab/uploads/',
+    'object-prefix' => 'staticlab.america.gov' === $bucket ? 'uploads/' : 'lab/uploads/',
     'object-versioning' => true,
     'provider' => 'aws',
     'region' => getenv('LAB_S3_UPLOADS_REGION'),
