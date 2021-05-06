@@ -65,19 +65,15 @@ if ( isset( $_SERVER['LAB_S3_UPLOADS_BUCKET'] ) ) {
 if ( isset( $_SERVER['LAB_S3_UPLOADS_BUCKET_URL'] ) ) {
   define( 'S3_UPLOADS_BUCKET_URL', getenv( 'LAB_S3_UPLOADS_BUCKET_URL' ) );
 }
-if ( isset( $_SERVER['LAB_S3_UPLOADS_KEY'] ) ) {
-  define( 'S3_UPLOADS_KEY', getenv( 'LAB_S3_UPLOADS_KEY' ) );
-}
-if ( isset( $_SERVER['LAB_S3_UPLOADS_SECRET'] ) ) {
-  define( 'S3_UPLOADS_SECRET', getenv( 'LAB_S3_UPLOADS_SECRET' ) );
-}
 if ( isset( $_SERVER['LAB_S3_UPLOADS_REGION'] ) ) {
   define( 'S3_UPLOADS_REGION', getenv( 'LAB_S3_UPLOADS_REGION' ) );
 }
 
-/** AWS SES Service Account Keys */
-define( 'WPOSES_AWS_ACCESS_KEY_ID', getenv( 'LAB_SES_ACCESS_KEY' ) );
-define( 'WPOSES_AWS_SECRET_ACCESS_KEY', getenv( 'LAB_SES_SECRET_KEY' ) );
+/** Use instance profile to connect to AWS S3 */
+define( 'S3_UPLOADS_USE_INSTANCE_PROFILE', true );
+
+/** Use instance profile to connect to AWS SES */
+define( 'WPOSES_AWS_USE_EC2_IAM_ROLE', true );
 
 /**
  * WordPress Database Table prefix.
@@ -137,7 +133,7 @@ define( 'WP_DEFAULT_THEME', 'gpalab-ichabod' );
 
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
-	define( 'ABSPATH', dirname( __FILE__ ) . '/' );
+  define( 'ABSPATH', dirname( __FILE__ ) . '/' );
 }
 
 /** Sets up WordPress vars and included files. */
