@@ -129,8 +129,20 @@ function neck_brace_theme_settings() {
 }
 
 /**
+ * Remove the current WordPress version from the site head.
+ * This adds a modicum of security by obscuring the underlying infrastructure.
+ *
+ * @since 1.1.0
+ */
+function remove_wp_version() {
+  return '';
+}
+
+
+/**
  * All theme filters.
  */
+add_filter( 'the_generator', 'remove_wp_version' );
 
  /**
  * All theme actions.
