@@ -29,4 +29,8 @@ docker exec -i lab_web composer update -n -d $DIR
 docker exec -i lab_web rm -rf $DIR/wp/wp-content/themes/twenty*
 docker exec -i lab_web rm -rf $DIR/wp/wp-content/plugins/hello.php
 
+# Ensure that the uploads directory exists and has the correct permissions.
+docker exec -i lab_web mkdir -p $DIR/wp-content/uploads
+docker exec -i lab_web chown -R deploy:deploy $DIR/wp-content/uploads
+
 echo "\n\xF0\x9F\x98\x81  Hooray, the dev site has been built!\n"
