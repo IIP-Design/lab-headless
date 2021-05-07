@@ -59,26 +59,34 @@ define( 'LOGGED_IN_SALT', getenv( 'LAB_LOGGED_IN_SALT' ) );
 define( 'NONCE_SALT', getenv( 'LAB_NONCE_SALT' ) );
 
 /** AWS S3 Uploads directory **/
-$bucket_set = isset( $_SERVER['LAB_S3_UPLOADS_BUCKET'] );
-$region_set = isset( $_SERVER['LAB_S3_UPLOADS_REGION'] );
+if ( isset( $_SERVER['LAB_S3_UPLOADS_BUCKET'] ) && isset( $_SERVER['LAB_S3_UPLOADS_REGION'] ) ) {
+  // Determine the prefix to be appended to uploaded files.
+  $prefix  = isset( $_SERVER['LAB_S3_UPLOADS_PREFIX'] ) ? getenv('LAB_S3_UPLOADS_PREFIX') : 'uploads/';
 
-if ( $bucket_set && $region_set ) {
-  $bucket = getenv('LAB_S3_UPLOADS_BUCKET');
-
-  define( 'AS3CF_SETTINGS', serialize( array(
-    'bucket' => $bucket,
+  // Settings that are shared by both  IAM role and key-secret authentication methods.
+  $s3_settings = array(
+    'bucket' => getenv('LAB_S3_UPLOADS_BUCKET'),
     'copy-to-s3' => true,
     'enable-object-prefix' => true,
     'force-https' => true,
-    'object-prefix' => 'staticlab.america.gov' === $bucket ? 'uploads/' : 'lab/uploads/',
+    'object-prefix' => $prefix,
     'object-versioning' => true,
     'provider' => 'aws',
     'region' => getenv('LAB_S3_UPLOADS_REGION'),
     'remove-local-file' => true,
-    'use-server-roles' => true,
     'use-yearmonth-folders' => true,
-  ) ) );
+  );
 
+  // By default we try to connect using server roles.
+  if ( ! isset( $_SERVER['LAB_S3_UPLOADS_IAM_ROLES'] ) || 'false' !== $_SERVER['LAB_S3_UPLOADS_IAM_ROLES'] ) {
+    $s3_settings['use-server-roles'] = true;
+  } elseif ( isset( $_SERVER['LAB_S3_UPLOADS_KEY'] ) && isset( $_SERVER['LAB_S3_UPLOADS_SECRET'] ) ) {
+    // Fallback to access/secret key when not using server roles.
+    $s3_settings['access-key-id'] = getenv('LAB_S3_UPLOADS_KEY');
+    $s3_settings['secret-access-key'] = getenv('LAB_S3_UPLOADS_SECRET');
+  }
+
+  define( 'AS3CF_SETTINGS', serialize( $s3_settings ) );
 }
 
 /** Use instance profile to connect to AWS SES */
