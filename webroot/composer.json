@@ -52,6 +52,10 @@
     },
     {
       "type": "git",
+      "url": "git@github.com:IIP-Design/wp-elasticsearch-feeder.git"
+    },
+    {
+      "type": "git",
       "url": "git@github.com:IIP-Design/wp-hide-login-form.git"
     },
     {
@@ -68,6 +72,7 @@
     "gpalab/social-link-optimizer": "v1.2.1",
     "gpalab/uswpds": "dev-master",
     "iip-design/styled-block-builder": "v3.0.2",
+    "iip-design/wp-elasticsearch-feeder": "dev-develop",
     "iip-design/wp-hide-login-form": "v1.1.0",
     "wp-graphql/wp-graphql": "1.3.8",
     "wpackagist-plugin/amazon-s3-and-cloudfront": "2.5.3",
